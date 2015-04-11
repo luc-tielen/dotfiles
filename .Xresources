@@ -1,0 +1,55 @@
+Xft.hinting: 1
+Xft.antialias: 1
+
+xterm*Background:	black
+xterm*Foreground:	green
+xterm*cursorColor:	LightBlue
+xterm*pointerColor:	blue
+xterm*faceName:	Inconsolata-g:pixelsize=16
+
+!xft:Dejavu Sans Mono Book:pixelsize=16
+URxvt.font:	xft:Inconsolata-g:pixelsize=16
+URxvt.scrollBar:	false
+URxvt.jumpScroll:	true
+! Semi-transparent:
+URxvt.depth:	32
+URxvt.background:	rgba:0000/0000/0000/DFFF
+URxvt.pointerColor: yellow	
+URxvt.cursorColor:	LightBlue
+
+! Tekst kopieren en plakken: (ctrl-c, ctrl-shift-v)
+URxvt.keysym.Shift-Control-V: perl:clipboard:paste
+URxvt.iso14755: False
+URxvt.perl-ext-common: default,clipboard,matcher
+
+! Clickable links in terminal programmas (weechat etc.)
+URxvt.url-launcher: /usr/bin/chromium
+URxvt.matcher.button: 1
+
+! Kleuren:
+URxvt.foreground:   #DDDDDD
+
+! Black 
+*color0:              #333333
+*color8:              #3D3D3D
+! Red 
+*color1:              #f03669
+*color9:              #c75b79
+! Green 
+*color2:              #b8e346
+*color10:              #c8e37e
+! Yellow 
+*color3:              #ffa402
+*color11:              #ffbe4a
+! Blue 
+*color4:              #02a2ff
+*color12:              #71cbff
+! Magenta 
+*color5:              #875c8d
+*color13:              #e41f66
+! Cyan 
+*color6:              #6fa9d3
+*color14:              #0078CE
+! White 
+*color7:              #899CA1
+*color15:              #C0C0C0
