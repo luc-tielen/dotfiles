@@ -102,6 +102,10 @@ Plugin 'vim-scripts/CSApprox'               " Make gvim colorschemes work in vim
 Plugin 'vim-erlang/vim-erlang-omnicomplete' " Erlang autocompletion
 Plugin 'elixir-lang/vim-elixir'             " Elixir support for vim
 Plugin 'mattreduce/vim-mix'                 " Mix support for vim
+Plugin 'rust-lang/rust.vim'                 " Rust support for vim
+Plugin 'petRUShka/vim-opencl'               " OpenCL support for vim
+Plugin 'kergoth/vim-bitbake'                " Yocto/Bitbake plugin
+Plugin 'leafo/moonscript-vim'               " Moonscript highlight + indent
 " End of Vundle plugins
 call vundle#end()   
 
@@ -154,8 +158,11 @@ set smarttab                          " Tabs at start of line use shiftwidth
                                       " instead of tabstop
 
 " Indentation specific for certain files:
-autocmd FileType mkd set ts=4 sw=4 sts=4 noet " Makefile: tab = 4 wide (no spaces)
-autocmd FileType ruby set ts=2 sw=2 sts=2     " Ruby:     tab = 2 spaces
+autocmd FileType mkd set ts=4 sw=4 sts=4 noet " Makefile:   tab = 4 wide (no spaces)
+autocmd FileType ruby set ts=2 sw=2 sts=2     " Ruby:       tab = 2 spaces
+autocmd FileType lua set ts=2 sw=2 sts=2      " Lua:        tab = 2 spaces
+autocmd FileType moon set ts=2 sw=2 sts=2     " Moonscript: tab = 2 spaces
+autocmd FileType html set ts=2 sw=2 sts=2     " HTML:       tab = 2 spaces
 
 " }}}
 
@@ -189,4 +196,10 @@ nnoremap <leader><space> :noh<cr>
 nnoremap <tab> %
 vnoremap <tab> %
 
+" Shortcuts for tags
+nnoremap <leader>t <C-]><CR>
+
+" Easier shortcut to copy paste to vim from clipboard
+nnoremap <C-v> "*p<CR>
+vnoremap <C-c> "+y<CR>
 " }}}
