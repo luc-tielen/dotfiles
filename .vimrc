@@ -80,9 +80,6 @@ set guifont=Inconsolata-g\ 12 " Great looking font, size = 12.
 
 " Plugins {{{
 
-" Able to use pathogen for plugins:
-execute pathogen#infect()  
-
 filetype off                      " Disable filetype until plugins are
                                   " loaded => see below (needed for Vundle)
 set rtp+=~/.vim/bundle/vundle.vim " Add Vundle to the path
@@ -98,7 +95,6 @@ Plugin 'scrooloose/nerdcommenter'           " Easily (un)comment text
 Plugin 'Valloric/YouCompleteMe'             " Autocompletion plugin
 Plugin 'scrooloose/syntastic'               " Syntax checking
 Plugin 'Sirver/ultisnips'                   " Snippets support (requires python)
-Plugin 'vim-scripts/CSApprox'               " Make gvim colorschemes work in vim
 Plugin 'vim-erlang/vim-erlang-omnicomplete' " Erlang autocompletion
 Plugin 'elixir-lang/vim-elixir'             " Elixir support for vim
 Plugin 'mattreduce/vim-mix'                 " Mix support for vim
@@ -141,7 +137,7 @@ autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTreeType") && b:NERDTree
 " Colorscheme plugin:
 " TODO change colorscheme based on filetypes!
 " colorscheme badwolf
-colorscheme wombat256
+colorscheme wombat256mod
 set background=dark
 
 " }}}
