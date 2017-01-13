@@ -14,9 +14,6 @@ fi
 # Use Xresources:
 xrdb ~/.Xresources &
 
-# Belgian keyboard:
-setxkbmap be &
-
 # Activate numlock:
 numlockx &
 
