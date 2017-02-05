@@ -1,2 +1,4 @@
 .emacs.d/elpa
 .emacs.d/auto-save-list
+.emacs.d/projectile-bookmarks.eld
+.emacs.d/semanticdb/*
