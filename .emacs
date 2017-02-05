@@ -16,10 +16,14 @@
 
 (require 'setup-general)
 (require 'setup-helm)
+(require 'setup-helm-gtags)
 (require 'setup-evil-mode)
 (require 'setup-spaceline)
+(require 'setup-cedet)
+(require 'setup-c)
+(require 'setup-sh)
 (require 'setup-lua)
-    
+
 
 ;; TODO flycheck, flymake, magit, ... (plugins)
 
@@ -39,7 +43,7 @@
  '(haskell-tags-on-save t)
  '(package-selected-packages
    (quote
-    (use-package helm sublime-themes opencl-mode tangotango-theme spaceline smooth-scrolling paradox lua-mode haskell-mode flycheck evil-space evil-search-highlight-persist evil-magit evil-leader color-theme-sanityinc-tomorrow)))
+    (company-c-headers helm-projectile projectile helm-swoop helm-grepint use-package helm sublime-themes opencl-mode tangotango-theme spaceline smooth-scrolling paradox lua-mode haskell-mode flycheck evil-space evil-search-highlight-persist evil-magit evil-leader color-theme-sanityinc-tomorrow)))
  '(paradox-github-token t))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
