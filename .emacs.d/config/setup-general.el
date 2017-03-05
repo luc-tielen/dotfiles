@@ -100,8 +100,10 @@
 	     :config
 	     (smooth-scrolling-mode 1)
 	     (setq smooth-scroll-margin 5)
-	     (setq scroll-step 1
-		   scroll-conservatively 10000))
+	     (setq scroll-step 1 scroll-conservatively 10000)
+         (setq mouse-wheel-scroll-amount '(1 ((shift) . 1)))
+         (setq mouse-wheel-progressive-speed nil)
+         (setq mouse-wheel-follow-mouse 't))
 
 ;; Whitespace mode (shows all whitespace chars)
 (global-set-key (kbd "C-c w") 'whitespace-mode)
