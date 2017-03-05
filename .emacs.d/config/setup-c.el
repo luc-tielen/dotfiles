@@ -2,8 +2,6 @@
 ;; Company mode for C / C++
 (use-package cc-mode
   :config
-  (define-key c-mode-map [(tab)] 'company-complete)
-  (define-key c++-mode-map [(tab)] 'company-complete)
   (define-key c-mode-map [(control space)] 'company-complete)
   (define-key c++-mode-map [(control space)] 'company-complete))
 

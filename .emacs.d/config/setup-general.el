@@ -46,7 +46,7 @@
 ;; Whitespace settings
 (setq-default indent-tabs-mode nil)  ;; spaces, not tabs!
 (delete-selection-mode)
-(global-set-key (kbd "RET") 'newline-and-ident)  ;; Auto indent after pressing enter.
+(global-set-key (kbd "RET") 'newline-and-indent)  ;; Auto indent after pressing enter.
 
 ;; Show whitespace in diff mode
 (add-hook 'diff-mode-hook (lambda ()
