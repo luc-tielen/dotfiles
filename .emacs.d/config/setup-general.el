@@ -70,12 +70,23 @@
   (add-hook 'text-mode 'ws-butler-mode)
   (add-hook 'fundamental-mode 'ws-butler-mode))
 
+;; Rainbow parentheses
+(use-package rainbow-delimiters
+  :init
+  (add-hook 'prog-mode-hook #'rainbow-delimiters-mode))
+
 ;; Better highlighting of certain actions
 (use-package volatile-highlights
   :init
   (volatile-highlights-mode t)
   (vhl/define-extension 'evil 'evil-paste-after 'evil-paste-before 'evil-paste-pop 'evil-move)
   (vhl/install-extension 'evil))
+
+;; Highlight TODO
+(use-package fic-mode
+  :defer t
+  :init
+  (add-hook 'prog-mode-hook 'fic-mode))
 
 ;; Code snippets
 (use-package yasnippet
