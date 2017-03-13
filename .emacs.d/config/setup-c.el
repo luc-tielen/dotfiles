@@ -13,7 +13,9 @@
 
 ;; Proper indentation of C code
 (setq c-default-style "linux"
-      c-basic-offset 4)
+      c-basic-offset 4
+      c++-default-style "linux"
+      c++-basic-offset 4)
 
 ;; In C++ mode, treat .h as a C++ file
 (add-to-list 'auto-mode-alist '("\\.h\\'" . c++-mode))
