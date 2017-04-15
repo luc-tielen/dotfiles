@@ -23,6 +23,7 @@
 (require 'setup-c)
 (require 'setup-sh)
 (require 'setup-lua)
+(require 'setup-python)
 
 
 ;; TODO flycheck, flymake, magit, ... (plugins)
