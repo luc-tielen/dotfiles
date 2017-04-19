@@ -40,7 +40,7 @@
       mark-ring-max 5000
       kill-ring-max 5000
       kill-whole-line t
-      mode-require-final-newline t  ;; Add newline to end of file
+      require-final-newline t       ;; Add newline to end of file
       tab-width 4)                  ;; Default to 4 visible spaces to display tab
 
 ;; Whitespace settings
@@ -105,6 +105,11 @@
   :init
   (global-company-mode 1)
   (delete 'company-semantic company-backends))  ;; semantic has precedence over clang -> delete it
+
+;; Flycheck
+(use-package flycheck
+  :init
+  (add-hook 'after-init-hook #'global-flycheck-mode))
 
 ;; Better scrolling
 (use-package smooth-scrolling

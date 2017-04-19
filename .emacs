@@ -24,9 +24,10 @@
 (require 'setup-sh)
 (require 'setup-lua)
 (require 'setup-python)
+(require 'setup-haskell)
 
 
-;; TODO flycheck, flymake, magit, ... (plugins)
+;; TODO flymake, magit, ... (plugins)
 
 
 (custom-set-variables
