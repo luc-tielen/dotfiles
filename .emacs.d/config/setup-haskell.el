@@ -15,6 +15,10 @@
   :config
   '(add-hook 'flycheck-mode-hook #'flycheck-haskell-setup))
 
+(use-package intero
+  :config
+  '(add-hook 'haskell-mode-hook 'intero-mode))
+
 (use-package helm-hoogle)
 
 (provide 'setup-haskell)

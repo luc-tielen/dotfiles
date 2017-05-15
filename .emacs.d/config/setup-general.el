@@ -8,6 +8,8 @@
 ;; GUI related settings
 (load-theme 'sanityinc-tomorrow-night t)
 (setq inhibit-startup-message t)  ;; disables startup screen
+(set-face-attribute 'default t :font "Inconsolata 13")
+(set-frame-font "Inconsolata 13" nil t)
 
 ;; GC related settings
 (setq gc-cons-threshold 100000000)
