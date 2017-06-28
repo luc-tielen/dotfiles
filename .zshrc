@@ -5,9 +5,10 @@
 # If not running interactively, don't do anything
 [[ $- != *i* ]] && return
 
-export EDITOR=gvim
+export EDITOR=emacs
 export BROWSER=chromium
-
+export PATH="${PATH}:/home/luc/.local/bin/"
+     
 # Prompt:
 PS1='[\u@\h \W]\$ '
 
@@ -30,6 +31,7 @@ alias R='sudo pacman -Rns'
 alias S='pacman -Ss'
 alias Y='yaourt -S'
 alias L='yaourt -Ss'
+alias tree='tree -C'
 alias shutdown='sudo shutdown -h 0'
 alias yt='youtube-viewer'
 alias tv='sudo systemctl start teamviewerd && /opt/teamviewer8/tv_bin/TeamViewer'
@@ -109,5 +111,3 @@ if (( ${+terminfo[smkx]} )) && (( ${+terminfo[rmkx]} )); then
     zle -N zle-line-init
     zle -N zle-line-finish
 fi
-
-export PATH="$PATH:$HOME/.rvm/bin" # Add RVM to PATH for scripting
