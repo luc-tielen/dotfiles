@@ -114,6 +114,8 @@
   :init
   (global-company-mode 1)
   (setq company-tooltip-align-annotations t)
+  ;; (setq company-idle-delay 1000)
+  ;; (setq company-minimum-prefix-length 1)
   (delete 'company-semantic company-backends))  ;; semantic has precedence over clang -> delete it
 
 ;; Flycheck (on the fly syntax checking)
@@ -148,5 +150,7 @@
                                (interactive)
                                (setq-local compilation-read-command nil)
                                (call-interactively 'compile)))
+
+(use-package eldoc)
 
 (provide 'setup-general)

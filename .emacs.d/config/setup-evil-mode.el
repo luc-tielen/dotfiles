@@ -12,7 +12,10 @@
   (evil-leader/set-key-for-mode 'haskell-mode "i" 'haskell-process-load-file)
   (evil-leader/set-key-for-mode 'haskell-mode "b" 'haskell-compile)
   (evil-leader/set-key-for-mode 'haskell-mode "t" 'haskell-mode-jump-to-def-or-tag)
-  (evil-leader/set-key-for-mode 'haskell-mode "h" 'haskell-hoogle))
+  (evil-leader/set-key-for-mode 'haskell-mode "h" 'haskell-hoogle)
+  (evil-leader/set-key-for-mode 'rust-mode "b" 'cargo-process-build)
+  (evil-leader/set-key-for-mode 'rust-mode "t" 'cargo-process-test)
+  (evil-leader/set-key-for-mode 'rust-mode "r" 'cargo-process-run))
 
 ;; Other key bindings
 
