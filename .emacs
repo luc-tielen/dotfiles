@@ -25,6 +25,9 @@
 (require 'setup-lua)
 (require 'setup-python)
 (require 'setup-haskell)
+(require 'setup-rust)
+(require 'setup-elixir)
+(require 'setup-julia)
 
 
 ;; TODO flymake, magit, ... (plugins)
@@ -42,6 +45,10 @@
  '(haskell-mode-hook
    (quote
     (flyspell-prog-mode haskell-indentation-mode interactive-haskell-mode)))
+ '(haskell-process-auto-import-loaded-modules t)
+ '(haskell-process-log t)
+ '(haskell-process-suggest-remove-import-lines t)
+ '(haskell-process-type (quote stack-ghci))
  '(haskell-tags-on-save t)
  '(package-selected-packages
    (quote

@@ -8,8 +8,9 @@
 ;; GUI related settings
 (load-theme 'sanityinc-tomorrow-night t)
 (setq inhibit-startup-message t)  ;; disables startup screen
-(set-face-attribute 'default t :font "Inconsolata 13")
-(set-frame-font "Inconsolata 13" nil t)
+;; Uncomment following 2 lines if emacs font looks weird
+;;(set-face-attribute 'default t :font "Inconsolata 13")
+;;(set-frame-font "Inconsolata 13" nil t)
 
 ;; GC related settings
 (setq gc-cons-threshold 100000000)
@@ -22,9 +23,10 @@
 (toggle-scroll-bar -1)
 (tool-bar-mode -1)
 
-;; Disable autosave and backup
+;; Disable autosave and backup files
 (setq auto-save-default nil)
 (setq make-backup-files nil)
+(setq create-lockfiles nil)
 
 (setq-default indent-tabs-mode nil)  ;; spaces instead of tabs
 (setq-default tab-width 4)
@@ -43,7 +45,12 @@
       kill-ring-max 5000
       kill-whole-line t
       require-final-newline t       ;; Add newline to end of file
-      tab-width 4)                  ;; Default to 4 visible spaces to display tab
+      tab-width 4                   ;; Default to 4 visible spaces to display tab
+      x-select-enable-clipboard t
+      x-select-enable-primary t
+      save-interprogram-paste-before-kill t
+      apropos-do-all t
+      mouse-yank-at-point t)                  
 
 ;; Whitespace settings
 (setq-default indent-tabs-mode nil)  ;; spaces, not tabs!
@@ -106,9 +113,10 @@
 (use-package company
   :init
   (global-company-mode 1)
+  (setq company-tooltip-align-annotations t)
   (delete 'company-semantic company-backends))  ;; semantic has precedence over clang -> delete it
 
-;; Flycheck
+;; Flycheck (on the fly syntax checking)
 (use-package flycheck
   :init
   (add-hook 'after-init-hook #'global-flycheck-mode))
