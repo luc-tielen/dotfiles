@@ -28,6 +28,7 @@
 (require 'setup-rust)
 (require 'setup-elixir)
 (require 'setup-julia)
+(require 'setup-docker)
 
 
 ;; TODO flymake, magit, ... (plugins)
