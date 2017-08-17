@@ -27,6 +27,7 @@
 (require 'setup-haskell)
 (require 'setup-rust)
 (require 'setup-elixir)
+(require 'setup-elm)
 (require 'setup-julia)
 (require 'setup-docker)
 

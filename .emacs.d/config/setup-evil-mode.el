@@ -15,7 +15,12 @@
   (evil-leader/set-key-for-mode 'haskell-mode "h" 'haskell-hoogle)
   (evil-leader/set-key-for-mode 'rust-mode "b" 'cargo-process-build)
   (evil-leader/set-key-for-mode 'rust-mode "t" 'cargo-process-test)
-  (evil-leader/set-key-for-mode 'rust-mode "r" 'cargo-process-run))
+  (evil-leader/set-key-for-mode 'rust-mode "r" 'cargo-process-run)
+  (evil-leader/set-key-for-mode 'elm-mode "b" 'elm-compile-main)
+  (evil-leader/set-key-for-mode 'elm-mode "t" 'elm-test-project)
+  (evil-leader/set-key-for-mode 'elm-mode "d" 'elm-documentation-lookup)
+  (evil-leader/set-key-for-mode 'elm-mode "r" 'run-elm-interactive)
+  (evil-leader/set-key-for-mode 'elm-mode "g" 'elm-mode-goto-tag-at-point))
 
 ;; Other key bindings
 
