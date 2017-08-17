@@ -7,7 +7,7 @@
   (setq elm-format-on-save t
         elm-tags-on-save t))
 
-(use-package elm-flycheck
+(use-package flycheck-elm
   :init
   (add-hook 'flycheck-mode-hook #'flycheck-elm-setup))
 
