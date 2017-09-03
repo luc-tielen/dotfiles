@@ -84,6 +84,10 @@
   :init
   (add-hook 'prog-mode-hook #'rainbow-delimiters-mode))
 
+;; Auto complete parentheses, brackets, ...
+(electric-pair-mode 1)
+(setq electric-pair-preserve-balance nil)
+
 ;; Better highlighting of certain actions
 (use-package volatile-highlights
   :init
