@@ -6,11 +6,36 @@
 [[ $- != *i* ]] && return
 
 export EDITOR=emacs
+export GIT_EDITOR=vim
 export BROWSER=chromium
 export PATH="${PATH}:/home/luc/.local/bin/"
      
 # Prompt:
-PS1='[\u@\h \W]\$ '
+function git_prompt_info() {
+    ref=$(git symbolic-ref HEAD 2> /dev/null) || return
+    echo "$ZSH_THEME_GIT_PROMPT_PREFIX${ref#refs/heads/}$ZSH_THEME_GIT_PROMPT_SUFFIX"
+}
+
+function parse_git_branch() {
+    (command git symbolic-ref -q HEAD || command git name-rev --name-only --no-undefined --always HEAD) 2>/dev/null
+}
+
+function parse_git_dirty() {
+    if command git diff-index --quiet HEAD 2>/dev/null; then
+        echo "$ZSH_THEME_GIT_PROMPT_CLEAN"
+    else
+        echo "$ZSH_THEME_GIT_PROMPT_DIRTY"
+    fi
+}
+
+setopt prompt_subst
+ZSH_THEME_GIT_PROMPT_CLEAN="%{%F{green}%}✔ %{$reset_color%}"
+ZSH_THEME_GIT_PROMPT_DIRTY="%{%F{red}%}✗ %{$reset_color%}"
+#ZSH_THEME_GIT_PROMPT_CLEAN="%{$fg_bold[green]%}✔ %{$reset_color%}"
+#ZSH_THEME_GIT_PROMPT_DIRTY="%{$fg_bold[red]%}✗ %{$reset_color%}"
+PROMPT='%{%F{white}%}[ %{%F{blue}%}%n@%m %{%F{white}%}%~%{%F{red}%} $(git_prompt_info) $(parse_git_dirty)%{%F{white}%}] %{%F{reset}%}$ '
+
+#PS1='[\u@\h \W]\$ '
 
 # Aliases:
 alias ls='ls --color=auto --human-readable --group-directories-first'
@@ -43,10 +68,9 @@ export LSCOLORS=Gxfxbxdxcxegedabagacad
 # Zsh options:
 
 # Tab completion + load theme
-autoload -U compinit promptinit
+autoload -U compinit promptinit colors
 compinit
 promptinit
-prompt redhat
 
 # Alias autocompletion
 setopt completealiases
@@ -60,6 +84,8 @@ setopt noflowcontrol
 setopt interactivecomments
 
 # Case-insensitive (uppercase from lowercase) completion
+zstyle ':completion:*' expand 'yes'
+zstyle ':completion:*' squeeze-slashes 'yes'
 zstyle ':completion:*' matcher-list 'm:{a-z}={A-Z}'
 
 # History:
@@ -99,6 +125,7 @@ key[PageDown]=${terminfo[knp]}
 [[ -n "${key[Right]}"    ]]  && bindkey  "${key[Right]}"    forward-char
 [[ -n "${key[PageUp]}"   ]]  && bindkey  "${key[PageUp]}"   beginning-of-buffer-or-history
 [[ -n "${key[PageDown]}" ]]  && bindkey  "${key[PageDown]}" end-of-buffer-or-history
+bindkey '^Y' yank
 
 # Check if terminal is in application mode:
 if (( ${+terminfo[smkx]} )) && (( ${+terminfo[rmkx]} )); then
