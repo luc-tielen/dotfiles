@@ -30,6 +30,7 @@
 (require 'setup-elm)
 (require 'setup-julia)
 (require 'setup-docker)
+(require 'setup-yaml)
 
 
 ;; TODO flymake, magit, ... (plugins)
