@@ -113,6 +113,9 @@
   :init
   (setq iedit-toggle-key-default nil))
 
+;; Just reload tags file when it's updated without asking.
+(setq tags-revert-without-query 1)
+
 ;; Company mode
 (use-package company
   :init
