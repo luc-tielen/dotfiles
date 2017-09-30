@@ -34,6 +34,7 @@
   :config
   (global-evil-leader-mode)
   (evil-leader/set-leader ",")
+  (evil-leader/set-key "=" (kbd "gg v G ="))  ;; format whole buffer
   (evil-leader/set-key-for-mode 'haskell-mode "i" 'haskell-process-load-file)
   (evil-leader/set-key-for-mode 'haskell-mode "b" 'haskell-compile)
   (evil-leader/set-key-for-mode 'haskell-mode "t" 'haskell-mode-jump-to-def-or-tag)
