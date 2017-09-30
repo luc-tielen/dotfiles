@@ -2,7 +2,32 @@
 ;; Enable evil mode (vim bindings)
 (use-package evil
   :config
-  (evil-mode 1))
+  (evil-mode 1)
+  (setq evil-auto-indent 2             ;; Always indent 2 spaces
+        evil-default-state 'normal     ;; Always start in normal mode
+        evil-mode-line-format 'before  ;; Put Evil mode at beginning of modeline
+        evil-cross-lines t             ;; Going down on a wrapped line goes to next part of same line
+        evil-esc-delay 0)              ;; Don't wait for any other keys after escape is pressed
+  ;; Make _ part of word when using b, e in evil mode
+  (modify-syntax-entry (string-to-char "_") "w" (standard-syntax-table))
+  (modify-syntax-entry (string-to-char "_") "w" text-mode-syntax-table)
+  (modify-syntax-entry (string-to-char "_") "w" lisp-mode-syntax-table)
+  (modify-syntax-entry (string-to-char "_") "w" emacs-lisp-mode-syntax-table)
+  ;; Make ; do same as : outside of insert mode
+  (define-key evil-normal-state-map (kbd ";") 'evil-ex)
+  (define-key evil-visual-state-map (kbd ";") 'evil-ex)
+  (define-key evil-motion-state-map (kbd ";") 'evil-ex)
+  (define-key evil-normal-state-map (kbd "gy") (kbd "gg v G y")))  ;; Yank whole buffer
+
+;; Searching through visual blocks (using * (forward search) and # (backward-search))
+(use-package evil-visualstar
+  :config
+  (global-evil-visualstar-mode 1))
+
+(use-package key-chord
+  :config
+  (setq key-chord-two-keys-delay 0.075)  ;; Time between keys for key combinations
+  (key-chord-mode 1))
 
 ;; Key bindings based on leader key
 (use-package evil-leader
@@ -20,7 +45,9 @@
   (evil-leader/set-key-for-mode 'elm-mode "t" 'elm-test-project)
   (evil-leader/set-key-for-mode 'elm-mode "d" 'elm-documentation-lookup)
   (evil-leader/set-key-for-mode 'elm-mode "r" 'run-elm-interactive)
-  (evil-leader/set-key-for-mode 'elm-mode "g" 'elm-mode-goto-tag-at-point))
+  (evil-leader/set-key-for-mode 'elm-mode "g" 'elm-mode-goto-tag-at-point)
+  (evil-leader/set-key-for-mode 'elixir-mode "ht" 'alchemist-help-search-at-point)
+  (evil-leader/set-key-for-mode 'elixir-mode "g" 'alchemist-goto-definition-at-point))
 
 ;; Other key bindings
 
