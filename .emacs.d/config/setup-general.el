@@ -6,8 +6,8 @@
 (set-language-environment "UTF-8")
 
 ;; GUI related settings
-(load-theme 'noctilux t)
-;;(load-theme 'sanityinc-tomorrow-eighties t)
+;;(load-theme 'noctilux t)
+(load-theme 'sanityinc-tomorrow-eighties t)
 ;;(load-theme 'sanityinc-tomorrow-night t)
 ;;(load-theme 'atom-dark t)
 (setq inhibit-startup-message t)  ;; disables startup screen
