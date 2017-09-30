@@ -6,7 +6,16 @@
 (set-language-environment "UTF-8")
 
 ;; GUI related settings
-(load-theme 'sanityinc-tomorrow-night t)
+(load-theme 'noctilux t)
+;;(load-theme 'sanityinc-tomorrow-eighties t)
+;;(load-theme 'sanityinc-tomorrow-night t)
+;;(load-theme 'atom-dark t)
+(setq inhibit-startup-message t)  ;; disables startup screen
+;; Uncomment following 2 lines if emacs font looks weird
+;;(set-face-attribute 'default t :font "Inconsolata 13")
+;;(set-frame-font "Inconsolata 13" nil t)
+(set-frame-font "Fira Code 13")
+
 (setq inhibit-startup-message t)  ;; disables startup screen
 ;; Uncomment following 2 lines if emacs font looks weird
 ;;(set-face-attribute 'default t :font "Inconsolata 13")
@@ -24,9 +33,10 @@
 (tool-bar-mode -1)
 
 ;; Disable autosave and backup files
-(setq auto-save-default nil)
-(setq make-backup-files nil)
-(setq create-lockfiles nil)
+(setq auto-save-default nil
+      backup-inhibited t
+      make-backup-files nil
+      create-lockfiles nil)
 
 (setq-default indent-tabs-mode nil)  ;; spaces instead of tabs
 (setq-default tab-width 4)
@@ -147,8 +157,13 @@
 (use-package smooth-scrolling
   :config
   (smooth-scrolling-mode 1)
-  (setq smooth-scroll-margin 5)
-  (setq scroll-step 1 scroll-conservatively 10000)
+  (setq scroll-margin 5
+        smooth-scroll-margin 5
+        scroll-conservatively 10000
+        scroll-up-aggressively 0.01
+        scroll-down-aggressively 0.01)
+  (setq-default scroll-up-aggressively 0.01
+                scroll-down-aggressively 0.01)
   (setq mouse-wheel-scroll-amount '(1 ((shift) . 1)))
   (setq mouse-wheel-progressive-speed nil)
   (setq mouse-wheel-follow-mouse 't))
