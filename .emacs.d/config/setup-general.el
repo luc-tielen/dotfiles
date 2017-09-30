@@ -38,6 +38,14 @@
 
 ;; Line numbers
 (global-linum-mode 1)
+;; use customized linum-format: add a addition space after the line number
+(defun linum-format-func (line)
+  (let ((w (length (number-to-string (count-lines (point-min) (point-max))))))
+     (propertize (format (format "%%%dd " w) line) 'face 'linum)))
+(setq linum-format 'linum-format-func)
+;; Delay updates to give emacs a chance for other changes
+(setq linum-delay t
+      redisplay-dont-pause t)
 
 ;; Basic editing settings
 (setq global-mark-ring-max 5000
@@ -50,7 +58,7 @@
       x-select-enable-primary t
       save-interprogram-paste-before-kill t
       apropos-do-all t
-      mouse-yank-at-point t)                  
+      mouse-yank-at-point t)
 
 ;; Whitespace settings
 (setq-default indent-tabs-mode nil)  ;; spaces, not tabs!
@@ -72,12 +80,14 @@
                                           newline-mark))
                             (whitespace-mode 1)))
 
-;; Trim whitespace after edited lines
-(use-package ws-butler
-  :init
-  (add-hook 'prog-mode-hook 'ws-butler-mode)
-  (add-hook 'text-mode 'ws-butler-mode)
-  (add-hook 'fundamental-mode 'ws-butler-mode))
+;; Remember cursor position of files when reopening them
+(use-package saveplace
+  :config
+  (setq save-place-file "~/.emacs.d/saveplace")
+  (setq-default save-place t))
+
+;; Remove trailing whitespace before saving
+(add-hook 'before-save-hook 'delete-trailing-whitespace)
 
 ;; Rainbow parentheses
 (use-package rainbow-delimiters
@@ -120,7 +130,10 @@
 (use-package company
   :init
   (global-company-mode 1)
-  (setq company-tooltip-align-annotations t)
+  (setq company-tooltip-align-annotations t
+        company-tooltip-limit 15          ;; Bigger tooltip window
+        company-echo-delay 0              ;; Remove annoying blinking
+        company-selection-wrap-around t)  ;; Continue from top when reaching bottom
   ;; (setq company-idle-delay 1000)
   ;; (setq company-minimum-prefix-length 1)
   (delete 'company-semantic company-backends))  ;; semantic has precedence over clang -> delete it
@@ -132,13 +145,13 @@
 
 ;; Better scrolling
 (use-package smooth-scrolling
-	     :config
-	     (smooth-scrolling-mode 1)
-	     (setq smooth-scroll-margin 5)
-	     (setq scroll-step 1 scroll-conservatively 10000)
-         (setq mouse-wheel-scroll-amount '(1 ((shift) . 1)))
-         (setq mouse-wheel-progressive-speed nil)
-         (setq mouse-wheel-follow-mouse 't))
+  :config
+  (smooth-scrolling-mode 1)
+  (setq smooth-scroll-margin 5)
+  (setq scroll-step 1 scroll-conservatively 10000)
+  (setq mouse-wheel-scroll-amount '(1 ((shift) . 1)))
+  (setq mouse-wheel-progressive-speed nil)
+  (setq mouse-wheel-follow-mouse 't))
 
 ;; Whitespace mode (shows all whitespace chars)
 (global-set-key (kbd "C-c w") 'whitespace-mode)
@@ -146,8 +159,11 @@
 ;; Package: projectile
 (use-package projectile
   :init
-  (projectile-global-mode)
-  (setq projectile-enable-caching t))
+  (projectile-mode t)
+  (setq projectile-enable-caching t)
+  (setq projectile-globally-ignored-directories
+        (append '("node_modules" ".svn" ".stack-work") projectile-globally-ignored-directories))
+  (setq projectile-sort-order 'recently-active))
 
 ;; Move around windows with shift + arrow keys
 (windmove-default-keybindings)
