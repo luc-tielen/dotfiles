@@ -126,6 +126,8 @@ key[PageDown]=${terminfo[knp]}
 [[ -n "${key[PageUp]}"   ]]  && bindkey  "${key[PageUp]}"   beginning-of-buffer-or-history
 [[ -n "${key[PageDown]}" ]]  && bindkey  "${key[PageDown]}" end-of-buffer-or-history
 bindkey '^Y' yank
+bindkey '^[[1;5C' forward-word
+bindkey '^[[1;5D' backward-word
 
 # Check if terminal is in application mode:
 if (( ${+terminfo[smkx]} )) && (( ${+terminfo[rmkx]} )); then
