@@ -60,6 +60,7 @@ alias tree='tree -C'
 alias shutdown='sudo shutdown -h 0'
 alias yt='youtube-viewer'
 alias tv='sudo systemctl start teamviewerd && /opt/teamviewer8/tv_bin/TeamViewer'
+alias xssh='ssh -YC -c blowfish-cbc,arcfour'
 
 # Better ls colors in terminal
 export CLICOLOR=TRUE
