@@ -148,6 +148,9 @@
   ;; (setq company-minimum-prefix-length 1)
   (delete 'company-semantic company-backends))  ;; semantic has precedence over clang -> delete it
 
+;; Disable spellcheck
+(flyspell-mode 0)
+
 ;; Flycheck (on the fly syntax checking)
 (use-package flycheck
   :init
