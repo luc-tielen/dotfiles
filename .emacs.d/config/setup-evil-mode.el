@@ -36,19 +36,23 @@
   (evil-leader/set-leader ",")
   (evil-leader/set-key "=" (kbd "gg v G ="))  ;; format whole buffer
   (evil-leader/set-key-for-mode 'haskell-mode "i" 'haskell-process-load-file)
-  (evil-leader/set-key-for-mode 'haskell-mode "b" 'haskell-compile)
+  (evil-leader/set-key-for-mode 'haskell-mode "c" 'haskell-compile)
   (evil-leader/set-key-for-mode 'haskell-mode "t" 'haskell-mode-jump-to-def-or-tag)
   (evil-leader/set-key-for-mode 'haskell-mode "h" 'haskell-hoogle)
-  (evil-leader/set-key-for-mode 'rust-mode "b" 'cargo-process-build)
+  (evil-leader/set-key-for-mode 'rust-mode "c" 'cargo-process-build)
   (evil-leader/set-key-for-mode 'rust-mode "t" 'cargo-process-test)
   (evil-leader/set-key-for-mode 'rust-mode "r" 'cargo-process-run)
-  (evil-leader/set-key-for-mode 'elm-mode "b" 'elm-compile-main)
+  (evil-leader/set-key-for-mode 'elm-mode "c" 'elm-compile-main)
   (evil-leader/set-key-for-mode 'elm-mode "t" 'elm-test-project)
   (evil-leader/set-key-for-mode 'elm-mode "d" 'elm-documentation-lookup)
   (evil-leader/set-key-for-mode 'elm-mode "r" 'run-elm-interactive)
   (evil-leader/set-key-for-mode 'elm-mode "g" 'elm-mode-goto-tag-at-point)
-  (evil-leader/set-key-for-mode 'elixir-mode "ht" 'alchemist-help-search-at-point)
-  (evil-leader/set-key-for-mode 'elixir-mode "g" 'alchemist-goto-definition-at-point))
+  (evil-leader/set-key-for-mode 'elixir-mode "t" 'alchemist-mix-test-stale)
+  (evil-leader/set-key-for-mode 'elixir-mode "c" 'alchemist-mix-compile)
+  (evil-leader/set-key-for-mode 'elixir-mode "h" 'alchemist-help-search-at-point)
+  (evil-leader/set-key-for-mode 'elixir-mode "gt" 'alchemist-goto-definition-at-point)
+  (evil-leader/set-key-for-mode 'elixir-mode "gb" 'alchemist-goto-jump-back)
+  (evil-leader/set-key-for-mode 'erlang-mode "gb" 'alchemist-goto-jump-back))
 
 ;; Other key bindings
 
