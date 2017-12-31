@@ -40,3 +40,6 @@ Dropbox/
 .viminfo
 .vim/
 .gtkrc-2.0
+.config/
+.local/
+result
