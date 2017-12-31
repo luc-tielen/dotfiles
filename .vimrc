@@ -95,6 +95,7 @@ Plugin 'scrooloose/nerdcommenter'           " Easily (un)comment text
 Plugin 'Valloric/YouCompleteMe'             " Autocompletion plugin
 Plugin 'scrooloose/syntastic'               " Syntax checking
 Plugin 'Sirver/ultisnips'                   " Snippets support (requires python)
+Plugin 'LnL7/vim-nix'                       " Nix support
 Plugin 'vim-erlang/vim-erlang-omnicomplete' " Erlang autocompletion
 Plugin 'elixir-lang/vim-elixir'             " Elixir support for vim
 Plugin 'mattreduce/vim-mix'                 " Mix support for vim
