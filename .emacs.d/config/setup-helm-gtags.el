@@ -25,7 +25,10 @@
       (define-key helm-gtags-mode-map (kbd "C-c <") 'helm-gtags-previous-history)
       (define-key helm-gtags-mode-map (kbd "C-c >") 'helm-gtags-next-history))))
 
-(require 'function-args)
-(setq-local imenu-create-index-function #'moo-jump-local)
-(fa-config-default)
+(use-package function-args
+  :init
+  (setq-local imenu-create-index-function #'moo-jump-local)
+  (fa-config-default))
+
 (provide 'setup-helm-gtags)
+
