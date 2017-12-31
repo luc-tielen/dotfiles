@@ -32,3 +32,10 @@ Dropbox/
 .gitconfig
 .pki/
 .fonts/
+.Xauthority
+.compose-cache/
+.esd_auth
+.dbus/
+.zsh-syntax-highlighting/
+.viminfo
+.vim/
