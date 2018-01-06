@@ -4,7 +4,7 @@ module Main where
 -- Imports:
 import XMonad
 import XMonad.Operations (kill)
-import XMonad.Actions.CycleWS (prevWS, nextWS)
+import XMonad.Actions.CycleWS (prevWS, shiftToPrev, nextWS, shiftToNext)
 import XMonad.Actions.Volume (lowerVolume, raiseVolume, toggleMute)
 import XMonad.Layout.ToggleLayouts (ToggleLayout(..))
 import XMonad.Layout.NoBorders (smartBorders)
@@ -30,8 +30,8 @@ myKeyBindings conf =
   , ("M-S-<Tab>", windows W.focusUp)              -- Move focus to prev window
   -- Some keybindings for quickly opening often used programs:
   , ("M-<Return>", spawn $ terminal conf)
-  , ("M-c", spawn "chromium")
   , ("M-e", spawn "emacs")
+  , ("<XF86HomePage>", spawn "chromium")
   -- Volume related keybindings:
   , ("<XF86AudioLowerVolume>", lowerVolume 1 >> return ())
   , ("<XF86AudioRaiseVolume>", raiseVolume 3 >> return ())
@@ -39,15 +39,23 @@ myKeyBindings conf =
   -- Screen brightness keybindings:
   , ("<XF86MonBrightnessUp>", spawn "xbacklight -inc 10")
   , ("<XF86MonBrightnessDown>", spawn "xbacklight -dec 10")
+  -- Keybindings for navigating across workspaces:
   -- TODO + switching workspaces, scrot, ...
   ]
   ++
-  [("M-" ++ show num, windows $ f wsId)
+  [("M-" ++ show num, windows $ W.greedyView wsId) 
     | (wsId, num) <- zip (workspaces conf) [1..9]
-    , f <- [W.greedyView, W.shift]
   ]
   ++
-  [ ("M-<KP_Left>", prevWS), ("M-<KP_Right>", nextWS) ]
+  [("M-S-" ++ show num, windows $ W.shift wsId) 
+    | (wsId, num) <- zip (workspaces conf) [1..9]
+  ]
+  ++
+  [ ("M-<Left>", prevWS)
+  , ("M-S-<Left>", shiftToPrev)
+  , ("M-<Right>", nextWS) 
+  , ("M-S-<Right>", shiftToNext)
+  ]
 
 myWorkSpaces :: [WorkspaceId]
 myWorkSpaces = ["WEB", "CODE", "CHAT", "OTHER"]
