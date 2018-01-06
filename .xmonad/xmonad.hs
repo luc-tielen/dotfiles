@@ -1,18 +1,20 @@
 
 module Main where
 
--- Imports
+-- Imports:
 import XMonad
-import qualified XMonad.StackSet as W
 import XMonad.Operations (kill)
 import XMonad.Actions.CycleWS (prevWS, nextWS)
+import XMonad.Actions.Volume (lowerVolume, raiseVolume, toggleMute)
 import XMonad.Layout.ToggleLayouts (ToggleLayout(..))
+import XMonad.Layout.NoBorders (smartBorders)
 import XMonad.Util.Run (spawnPipe)
 import XMonad.Util.EZConfig (mkKeymap)
 import XMonad.Hooks.DynamicLog (xmobarPP, xmobarColor)
 import XMonad.Hooks.DynamicLog (ppOutput, ppTitle, ppCurrent, ppSep, ppUrgent, ppLayout)
 import XMonad.Hooks.DynamicLog (dynamicLogWithPP, shorten, wrap)
 import XMonad.Hooks.ManageDocks (manageDocks, avoidStruts, docks)
+import qualified XMonad.StackSet as W
 import System.IO
 
 
@@ -30,7 +32,11 @@ myKeyBindings conf =
   , ("M-<Return>", spawn $ terminal conf)
   , ("M-c", spawn "chromium")
   , ("M-e", spawn "emacs")
-  -- TODO +- volume, mute, switching workspaces, scrot, ...
+  -- Volume related keybindings:
+  , ("<XF86AudioLowerVolume>", lowerVolume 1 >> return ())
+  , ("<XF86AudioRaiseVolume>", raiseVolume 3 >> return ())
+  , ("<XF86AudioMute>", toggleMute >> return ())
+  -- TODO + switching workspaces, scrot, ...
   ]
   ++
   [("M-" ++ show num, windows $ f wsId)
@@ -54,8 +60,8 @@ main = do
     , terminal = "xterm"  -- TODO urxvt, cleanup config of urxvt!
     , keys = \conf -> mkKeymap conf $ myKeyBindings conf
     , workspaces = myWorkSpaces
-    , manageHook = manageDocks <+> manageHook defaultConfig
-    , layoutHook = avoidStruts myLayouts
+    , manageHook = manageDocks <+> manageHook def
+    , layoutHook = avoidStruts $ smartBorders $ myLayouts
     -- Set up statusbar (xmobar)
     , logHook = dynamicLogWithPP xmobarPP
         { ppOutput  = hPutStrLn xmproc
