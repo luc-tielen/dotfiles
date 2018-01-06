@@ -11,7 +11,8 @@ import XMonad.Layout.NoBorders (smartBorders)
 import XMonad.Util.Run (spawnPipe)
 import XMonad.Util.EZConfig (mkKeymap)
 import XMonad.Hooks.DynamicLog (xmobarPP, xmobarColor)
-import XMonad.Hooks.DynamicLog (ppOutput, ppTitle, ppCurrent, ppSep, ppUrgent, ppLayout)
+import XMonad.Hooks.DynamicLog (ppOutput, ppTitle, ppCurrent, ppUrgent)
+import XMonad.Hooks.DynamicLog (ppHidden, ppHiddenNoWindows, ppSep, ppLayout)
 import XMonad.Hooks.DynamicLog (dynamicLogWithPP, shorten, wrap)
 import XMonad.Hooks.ManageDocks (manageDocks, avoidStruts, docks)
 import qualified XMonad.StackSet as W
@@ -75,11 +76,13 @@ main = do
     , layoutHook = avoidStruts $ smartBorders $ myLayouts
     -- Set up statusbar (xmobar)
     , logHook = dynamicLogWithPP xmobarPP
-        { ppOutput  = hPutStrLn xmproc
-        , ppTitle   = xmobarColor "green" "" . shorten 100
-        , ppCurrent = xmobarColor "#c0c0c0" "" . wrap "" ""
-        , ppSep     = xmobarColor "#c0c0c0" "" " | "
-        , ppUrgent  = xmobarColor "#ff69b4" ""
-        , ppLayout = const ""  -- to disable the layout info on xmobar
+        { ppOutput           = hPutStrLn xmproc
+        , ppTitle            = xmobarColor "green" "" . shorten 50
+        , ppCurrent          = xmobarColor "#cccc00" "" . wrap "" ""
+        , ppHidden           = xmobarColor "white" "" . wrap "" ""
+        , ppHiddenNoWindows  = xmobarColor "white" "" . wrap "" ""
+        , ppUrgent           = xmobarColor "red" ""
+        , ppSep              = xmobarColor "white" "" " | "
+        , ppLayout           = const ""  -- to disable the layout info on xmobar
         }
     }
