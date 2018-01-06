@@ -36,6 +36,9 @@ myKeyBindings conf =
   , ("<XF86AudioLowerVolume>", lowerVolume 1 >> return ())
   , ("<XF86AudioRaiseVolume>", raiseVolume 3 >> return ())
   , ("<XF86AudioMute>", toggleMute >> return ())
+  -- Screen brightness keybindings:
+  , ("<XF86MonBrightnessUp>", spawn "xbacklight -inc 10")
+  , ("<XF86MonBrightnessDown>", spawn "xbacklight -dec 10")
   -- TODO + switching workspaces, scrot, ...
   ]
   ++
