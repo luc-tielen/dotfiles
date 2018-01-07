@@ -12,3 +12,5 @@ templates:
     author-email: luc.tielen@gmail.com
     copyright: Luc Tielen, 2017
     github-username: luc-tielen
+nix:
+    enable: true
