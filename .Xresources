@@ -5,10 +5,10 @@ xterm*Background:	black
 xterm*Foreground:	green
 xterm*cursorColor:	LightBlue
 xterm*pointerColor:	blue
-xterm*faceName:	Inconsolata-g:pixelsize=16
+xterm*faceName:	xft:Fira Code:pixelsize=16
 
 !xft:Dejavu Sans Mono Book:pixelsize=16
-URxvt.font:	xft:Inconsolata-g:pixelsize=16
+URxvt.font:	xft:Fira Code:pixelsize=16
 URxvt.scrollBar:	false
 URxvt.jumpScroll:	true
 ! Semi-transparent:

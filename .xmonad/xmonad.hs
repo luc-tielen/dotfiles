@@ -69,7 +69,7 @@ main = do
   xmproc <- spawnPipe "xmobar ~/.xmonad/xmobar.hs"
   xmonad $ docks def
     { modMask = mod4Mask  -- Windows key
-    , terminal = "xterm"  -- TODO urxvt, cleanup config of urxvt!
+    , terminal = "urxvt"  -- TODO urxvtc
     , keys = \conf -> mkKeymap conf $ myKeyBindings conf
     , workspaces = myWorkSpaces
     , manageHook = manageDocks <+> manageHook def
