@@ -8,7 +8,7 @@
 export EDITOR=emacs
 export GIT_EDITOR=vim
 export BROWSER=chromium
-export PATH="${PATH}:/home/luc/.local/bin/"
+export PATH="/home/luc/.local/bin/:${PATH}"
      
 # Prompt:
 function git_prompt_info() {
@@ -56,6 +56,7 @@ alias tree='tree -C'
 alias shutdown='sudo shutdown -h 0'
 alias yt='youtube-viewer'
 alias xssh='ssh -YC -c blowfish-cbc,arcfour'
+
 
 # Better ls colors in terminal
 export CLICOLOR=TRUE
