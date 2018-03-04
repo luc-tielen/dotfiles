@@ -6,13 +6,11 @@ if (!isdirectory(expand("$HOME/.config/nvim/repos/github.com/Shougo/dein.vim")))
 endif
 
 " TODO lazy loading of plugins to improve startup time
-" TODO git statusline (see vim fugitive)
-" TODO g:committia_open_only_vim_starting=1
 set runtimepath+=~/.config/nvim/repos/github.com/Shougo/dein.vim/
 call dein#begin(expand('~/.config/nvim'))
 call dein#add('Shougo/dein.vim')
 call dein#add('haya14busa/dein-command.vim')
-call dein#add('flazz/vim-colorschemes')
+"call dein#add('flazz/vim-colorschemes')
 call dein#add('junegunn/vim-easy-align', {'on_map': {'n': ['ga'], 'v': ['ga']}})
 call dein#add('majutsushi/tagbar', {'on_cmd': 'TagBarToggle'})
 " syntax
@@ -29,13 +27,11 @@ call dein#add('rhysd/vim-grammarous', {'on_cmd': 'GrammarousCheck'})
 call dein#add('tmhedberg/SimpylFold', {'on_ft': 'python'})
 "call dein#add('tmux-plugins/vim-tmux')
 "call dein#add('christoomey/vim-tmux-navigator')
-call dein#add('itmammoth/doorboy.vim')
 call dein#add('valloric/MatchTagAlways', {'on_ft': 'html'})
 call dein#add('tpope/vim-fugitive', {'on_cmd': ['GDiff', 'GBlame', 'GStatus', 'GGrep']})
 call dein#add('rhysd/committia.vim')
 call dein#add('airblade/vim-gitgutter')
 call dein#add('scrooloose/nerdtree', {'on_cmd': 'NERDTreeToggle'})
-call dein#add('eugen0329/vim-esearch')
 call dein#add('AndrewRadev/splitjoin.vim', {'on_map': {'n': ['gS', 'gJ']}})
 call dein#add('neomake/neomake', {'on_cmd': 'NeoMake'})
 call dein#add('scrooloose/nerdcommenter')
@@ -45,12 +41,9 @@ call dein#add('Shougo/deoplete.nvim')
 call dein#add('Shougo/deol.nvim')
 call dein#add('Shougo/denite.nvim')
 
-call dein#add('tweekmonster/deoplete-clang2', {'on_ft': ['c', 'cpp']})
-call dein#add('Shougo/neoinclude.vim', {'on_ft': ['c', 'cpp']})
 call dein#add('Shougo/neco-vim', {'on_ft': 'vim'})
 call dein#add('davidhalter/jedi-vim', {'on_ft': 'python'})
 call dein#add('zchee/deoplete-jedi', {'on_ft': 'python'})
-call dein#add('Konfekt/FastFold')
 call dein#add('Shougo/neosnippet.vim')
 call dein#add('Shougo/neosnippet-snippets')
 call dein#add('Shougo/echodoc.vim')
@@ -176,6 +169,8 @@ let g:gitgutter_sign_modified = '│'
 let g:gitgutter_sign_removed = '|'
 let g:gitgutter_sign_removed_first_line = '|'
 let g:gitgutter_sign_modified_removed = '│'
+let g:committia_open_only_vim_starting=1
+
 " }}}
 
 " NERDTree ------------------------------------------------------------------{{{
@@ -198,16 +193,6 @@ let g:NERDTreeShowIgnoredStatus=0
 let g:NERDTreeDirArrowExpandable = ''
 let g:NERDTreeDirArrowCollapsible = ''
 let g:NERDTreeGitStatusNodeColorization = 1
-" }}}
-
-" esearch settings {{{
-let g:esearch#cmdline#help_prompt = 1
-let g:esearch#cmdline#dir_icon = '  '
-let g:esearch = {
-		\ 'adapter':    'ag',
-		\ 'backend':    'nvim',
-		\ 'use':        ['visual', 'hlsearch', 'last'],
-		\}
 " }}}
 
 "}}}
@@ -380,35 +365,18 @@ tmap <C-;> <C-\><C-n>:TmuxNavigatePrevious<cr>
 
 " vim-airline ---------------------------------------------------------------{{{
 
-"let g:webdevicons_enable_airline_statusline = 0
 if !exists('g:airline_symbols')
 	let g:airline_symbols = {}
 endif
 
-"let g:airline#extensions#mike#enabled = 1
 set hidden
+"let g:airline_theme='one'
 let g:airline_powerline_fonts = 1
 let g:airline_symbols.branch = ''
-"let g:airline_theme='one'
-let g:airline#extensions#branch#format = 0
+let g:airline#extensions#branch#enabled = 1
+let g:airline#extensions#hunks#enabled = 0
 let g:airline_detect_spelllang=0
 let g:airline_detect_spell=0
-let g:airline#extensions#hunks#enabled = 0
-let g:airline#extensions#wordcount#enabled = 0
-let g:airline#extensions#whitespace#enabled = 0
-let g:airline_section_y = ''
-let g:airline_mode_map = {
-			\ 'n'  : '',
-			\ 'i' : '',
-			\ 'R' : '',
-			\ 'v' : '',
-			\ 'V' : '',
-			\ 'c' : '',
-			\ 's' : '',
-			\ 'S' : '',
-			\ ''  : '',
-			\ 't' : '',
-			\}
 
 "}}}
 
@@ -445,8 +413,7 @@ let g:neomake_scss_enabled_makers = ['sass-lint']
 
 " Python --------------------------------------------------------------------{{{
 
-let g:python_host_prog = '/usr/local/bin/python2'
-let g:python3_host_prog = '/usr/local/bin/python3'
+let g:python_host_prog = '/usr/local/bin/python'
 let g:jedi#auto_vim_configuration = 0
 let g:jedi#documentation_command = "<leader>k"
 let g:jedi#completions_enabled = 0
