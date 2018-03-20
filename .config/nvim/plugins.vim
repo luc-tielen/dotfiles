@@ -47,7 +47,6 @@ call dein#add('AndrewRadev/splitjoin.vim', {'on_map': {'n': ['gS', 'gJ']}})
 
 " deoplete stuff
 call dein#add('Shougo/deoplete.nvim')
-call dein#add('Shougo/deol.nvim')
 call dein#add('Shougo/neco-vim', {'on_ft': 'vim'})
 call dein#add('davidhalter/jedi-vim', {'on_ft': 'python'})
 call dein#add('zchee/deoplete-jedi', {'on_ft': 'python'})

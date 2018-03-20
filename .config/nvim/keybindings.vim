@@ -17,18 +17,24 @@ noremap J 5j
 noremap K 5k
 noremap L g_
 
+" Ctrl + HJKL for navigating across buffers/windows
+noremap <C-h> <C-w><left>
+noremap <C-j> <C-w><down>
+noremap <C-k> <C-w><up>
+noremap <C-l> <C-w><right>
+
 " Navigating between vim buffers and tmux panels
-let g:tmux_navigator_no_mappings = 1
-nnoremap <silent> <C-j> :TmuxNavigateDown<cr>
-nnoremap <silent> <C-k> :TmuxNavigateUp<cr>
-nnoremap <silent> <C-l> :TmuxNavigateRight<cr>
-nnoremap <silent> <C-h> :TmuxNavigateLeft<CR>
-nnoremap <silent> <C-;> :TmuxNavigatePrevious<cr>
-tmap <C-j> <C-\><C-n>:TmuxNavigateDown<cr>
-tmap <C-k> <C-\><C-n>:TmuxNavigateUp<cr>
-tmap <C-l> <C-\><C-n>:TmuxNavigateRight<cr>
-tmap <C-h> <C-\><C-n>:TmuxNavigateLeft<CR>
-tmap <C-;> <C-\><C-n>:TmuxNavigatePrevious<cr>
+" let g:tmux_navigator_no_mappings = 1
+" nnoremap <silent> <C-j> :TmuxNavigateDown<cr>
+" nnoremap <silent> <C-k> :TmuxNavigateUp<cr>
+" nnoremap <silent> <C-l> :TmuxNavigateRight<cr>
+" nnoremap <silent> <C-h> :TmuxNavigateLeft<CR>
+" nnoremap <silent> <C-;> :TmuxNavigatePrevious<cr>
+" tmap <C-j> <C-\><C-n>:TmuxNavigateDown<cr>
+" tmap <C-k> <C-\><C-n>:TmuxNavigateUp<cr>
+" tmap <C-l> <C-\><C-n>:TmuxNavigateRight<cr>
+" tmap <C-h> <C-\><C-n>:TmuxNavigateLeft<CR>
+" tmap <C-;> <C-\><C-n>:TmuxNavigatePrevious<cr>
 
 " Make ; same as : (no shift needed)
 nnoremap ; :
@@ -85,7 +91,6 @@ nnoremap <silent><c-p> :SK<CR>
 
 " ,f to format code, requires formatters: read the docs
 noremap <silent> <leader>f :Neoformat<CR>
-
 " Tagbar bindings
 nnoremap <F8> :TagbarToggle<CR>
 

@@ -65,6 +65,7 @@ set foldlevel=99                      " Start everything unfolded by default
 syntax on                         " Enable syntax coloring
 syntax sync minlines=256          " Highlight 256 lines at a time
 set synmaxcol=200                 " Highlight only first 200 characters of a line
+set updatetime=500
 
 " Indentation specific for certain files:
 autocmd FileType mkd set ts=4 sw=4 sts=4 noet " Makefile:   tab = 4 wide (no spaces)
