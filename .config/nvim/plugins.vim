@@ -18,6 +18,9 @@ call dein#add('vim-airline/vim-airline')
 call dein#add('flazz/vim-colorschemes')
 "call dein#add('tmux-plugins/vim-tmux')
 "call dein#add('christoomey/vim-tmux-navigator')
+" File explorer
+call dein#add('rbgrouleff/bclose.vim')
+call dein#add('francoiscabrol/ranger.vim')
 call dein#add('tpope/vim-fugitive')
 call dein#add('rhysd/committia.vim')
 call dein#add('airblade/vim-gitgutter')
@@ -26,7 +29,7 @@ call dein#add('lotabout/skim.vim', {'depends': 'skim'})
 call dein#add('majutsushi/tagbar', {'on_cmd': 'TagBarToggle'})
 call dein#add('scrooloose/nerdtree', {'on_cmd': 'NERDTreeToggle'})
 call dein#add('scrooloose/nerdcommenter')
-" syntax
+" Syntax
 call dein#add('othree/html5.vim', {'on_ft': 'html'})
 call dein#add('othree/yajs.vim', {'on_ft': 'js'})
 call dein#add('elzr/vim-json', {'on_ft': 'json'})
