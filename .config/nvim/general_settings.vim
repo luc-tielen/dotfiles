@@ -11,7 +11,7 @@ set timeoutlen=200      " Shorter timeout when typing commands in normal mode
 set title               " Change terminal title
 set hidden              " Hide buffers instead of closing them
                         " => buffer can be in the background without being written
-set shortmess=atI       " Dont short startup-message, shorten most info messages
+set shortmess=atIc      " Dont show startup-message, shorten most info messages
 set autoread            " Reload files when changed outside of vim
 set nobackup            " Don't create backup files
 set noswapfile          " Don't use a swap file
@@ -67,14 +67,18 @@ syntax sync minlines=256          " Highlight 256 lines at a time
 set synmaxcol=200                 " Highlight only first 200 characters of a line
 set updatetime=500
 
+set scrolloff=3                   " Start scrolling 3 lines before edge of viewport
+set shiftround                    " Always indent by multiple of shift width
+
+
 " Indentation specific for certain files:
 autocmd FileType mkd set ts=4 sw=4 sts=4 noet " Makefile:   tab = 4 wide (no spaces)
 autocmd FileType python set ts=4 sw=4 sts=4   " Python:     tab = 4 spaces
 autocmd FileType c set ts=4 sw=4 sts=4        " C:          tab = 4 spaces
 autocmd FileType cpp set ts=4 sw=4 sts=4      " C++:        tab = 4 spaces
 
-colorscheme Tomorrow-Night-Bright " Colorscheme to use
-set background=dark               " Dark background
+set background=dark                 " Dark background
+colorscheme Tomorrow-Night-Eighties " Colorscheme to use
 
 " Highlighting for 'special' file types:
 autocmd BufRead,BufNewFile *.wsdl set filetype=xml
