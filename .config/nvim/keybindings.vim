@@ -76,10 +76,6 @@ vnoremap <tab> %
 " Shortcuts for tags
 nnoremap <leader>t <C-]><CR>
 
-" Easier shortcut to copy / paste to vim from clipboard
-vnoremap <C-c> "+y<CR>
-nnoremap <C-v> "*p<CR>
-
 " Bindings for multiple cursors
 let g:multi_cursor_next_key='<C-n>'
 let g:multi_cursor_prev_key='<C-p>'
