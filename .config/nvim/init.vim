@@ -24,6 +24,7 @@ source ~/.config/nvim/rust.vim
 source ~/.config/nvim/haskell.vim
 source ~/.config/nvim/elixir.vim
 source ~/.config/nvim/elm.vim
+source ~/.config/nvim/terraform.vim
 
 
 

@@ -45,6 +45,7 @@ call dein#add('hail2u/vim-css3-syntax', {'on_ft': 'css'})
 call dein#add('ap/vim-css-color', {'on_ft': 'css'})
 call dein#add('tpope/vim-markdown', {'on_ft': 'markdown'})
 call dein#add('nelstrom/vim-markdown-folding', {'on_ft': 'markdown'})
+call dein#add('hashivim/vim-terraform', {'on_ft': 'terraform'})
 "call dein#add('valloric/MatchTagAlways', {'on_ft': 'html'})
 call dein#add('AndrewRadev/splitjoin.vim', {'on_map': {'n': ['gS', 'gJ']}})
 
