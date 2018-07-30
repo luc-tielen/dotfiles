@@ -22,6 +22,7 @@ source ~/.config/nvim/json.vim
 source ~/.config/nvim/python.vim
 source ~/.config/nvim/rust.vim
 source ~/.config/nvim/haskell.vim
+source ~/.config/nvim/purescript.vim
 source ~/.config/nvim/elixir.vim
 source ~/.config/nvim/elm.vim
 source ~/.config/nvim/terraform.vim
