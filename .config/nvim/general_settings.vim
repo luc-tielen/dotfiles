@@ -104,5 +104,4 @@ autocmd BufWritePre * %s/\s\+$//e
 set complete=.,w,b,u,t,k  " Looks for matches in all buffer/windows and tags
 
 " Changes working directory to that of currently used buffer (TODO fix)
-autocmd InsertEnter * let save_cwd = getcwd() | set autochdir
-autocmd InsertLeave * set noautochdir | execute 'cd' fnameescape(save_cwd)
+autocmd BufEnter * silent! lcd %:p:h
