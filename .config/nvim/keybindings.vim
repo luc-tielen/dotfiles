@@ -83,21 +83,21 @@ let g:multi_cursor_skip_key='<C-x>'
 let g:multi_cursor_quit_key='<Esc>'
 
 " Skim keybindings
-nnoremap <silent><c-p> :SK<CR>
+function FuzzyFindFiles()
+  let root_dir = system("git rev-parse --show-toplevel")
+  let sanitized_dir = split(root_dir, "\n")[0]
+  let cmd = "Files " . sanitized_dir
+  execute cmd
+endfunction
+
+nnoremap <silent><c-p> :call FuzzyFindFiles()<CR>
+nnoremap <silent><leader>b :Buffers<CR>
+nnoremap <silent><leader>g :Ag<CR>
 
 " ,f to format code, requires formatters: read the docs
 noremap <silent> <leader>f :Neoformat<CR>
 " Tagbar bindings
 nnoremap <F8> :TagbarToggle<CR>
-
-" SuperTab like snippets behavior.
-" TODO: ctrl space selects currently selected option
-imap <expr><TAB> neosnippet#expandable_or_jumpable() ?
-\ "\<Plug>(neosnippet_expand_or_jump)"
-\: pumvisible() ? "\<C-n>" : "\<TAB>"
-smap <expr><TAB> neosnippet#expandable_or_jumpable() ?
-\ "\<Plug>(neosnippet_expand_or_jump)"
-\: "\<TAB>"
 
 " Ranger.vim config
 let g:ranger_map_keys = 0
