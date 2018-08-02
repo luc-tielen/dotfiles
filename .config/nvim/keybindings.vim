@@ -83,16 +83,9 @@ let g:multi_cursor_skip_key='<C-x>'
 let g:multi_cursor_quit_key='<Esc>'
 
 " Skim keybindings
-function FuzzyFindFiles()
-  let root_dir = system("git rev-parse --show-toplevel")
-  let sanitized_dir = split(root_dir, "\n")[0]
-  let cmd = "Files " . sanitized_dir
-  execute cmd
-endfunction
-
 nnoremap <silent><c-p> :call FuzzyFindFiles()<CR>
 nnoremap <silent><leader>b :Buffers<CR>
-nnoremap <silent><leader>g :Ag<CR>
+nnoremap <silent><leader>g :GGrep<CR>
 
 " ,f to format code, requires formatters: read the docs
 noremap <silent> <leader>f :Neoformat<CR>
