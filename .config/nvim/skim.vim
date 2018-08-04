@@ -9,13 +9,21 @@ command! -bang -nargs=* GGrep
 
 " Helper functions for custom skim behaviour.
 function GetGitRootDir()
-  let root_dir = system("git rev-parse --show-toplevel")
-  return split(root_dir, "\n")[0]
+  let s:root_dir = system("git rev-parse --show-toplevel")
+  return split(s:root_dir, "\n")[0]
 endfunction
 
+" NOTE: looks both in committed and uncommitted files
 function FuzzyFindFiles()
-  let root_dir = GetGitRootDir()
-  let cmd = "Files " . root_dir
-  execute cmd
+  let s:root_dir = GetGitRootDir()
+  let s:options = '-c -o'
+  let s:gitignore = s:root_dir . '/.gitignore'
+
+  if filereadable(s:gitignore)
+    call fzf#vim#gitfiles(s:options . ' -X ' . s:gitignore)
+    return
+  endif
+
+  call fzf#vim#gitfiles(s:options)
 endfunction
 
