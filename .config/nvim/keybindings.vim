@@ -73,6 +73,10 @@ nnoremap <silent> <cr> :noh<cr><cr>
 nnoremap <tab> %
 vnoremap <tab> %
 
+" Easier autocompletion menu navigation
+inoremap <expr> <TAB> pumvisible() ? "\<C-N>" : "\<TAB>"
+inoremap <expr> <S-TAB> pumvisible() ? "\<C-P>" : "\<S-TAB>"
+
 " Shortcuts for tags
 nnoremap <leader>t <C-]><CR>
 
