@@ -51,7 +51,7 @@ augroup HaskellMaps
 augroup END
 
 function! ReloadGhciIfStarted()
-  if exists('g:intero_started')
+  if exists('g:intero_started') && g:intero_started == 1
     :InteroReload
   endif
 endfunction
