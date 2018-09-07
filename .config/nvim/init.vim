@@ -16,6 +16,7 @@ source ~/.config/nvim/nerd_plugins.vim
 source ~/.config/nvim/multiple_cursors.vim
 
 source ~/.config/nvim/html.vim
+source ~/.config/nvim/xml.vim
 source ~/.config/nvim/css.vim
 source ~/.config/nvim/javascript.vim
 source ~/.config/nvim/json.vim
