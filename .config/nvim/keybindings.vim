@@ -17,6 +17,20 @@ noremap J 5j
 noremap K 5k
 noremap L g_
 
+" Shift + arrow key = arrow key
+noremap <S-up> <up>
+noremap <S-down> <down>
+noremap <S-right> <right>
+noremap <S-left> <left>
+
+" Alt + J/K to move line(s) down/up
+nnoremap <A-down> :m .+1<CR>==
+nnoremap <A-up> :m .-2<CR>==
+inoremap <A-down> <Esc>:m .+1<CR>==gi
+inoremap <A-up> <Esc>:m .-2<CR>==gi
+vnoremap <A-down> :m '>+1<CR>gv=gv
+vnoremap <A-up> :m '<-2<CR>gv=gv
+
 " Ctrl + HJKL for navigating across buffers/windows
 noremap <C-h> <C-w><left>
 noremap <C-j> <C-w><down>
