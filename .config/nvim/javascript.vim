@@ -1,8 +1,16 @@
 
 " Javascript-specific config
 
-"let g:neoformat_javascript_prettier = g:standard_prettier_settings
-"let g:neoformat_enabled_javascript = ['prettier']
 "let g:neomake_javascript_enabled_makers = ['eslint']
 let g:jsx_ext_required = 0
 
+let g:prettier#autoformat = 0
+let g:prettier#config#trailing_comma = 'none'
+let g:prettier#config#parser = 'babylon'
+let g:prettier#config#parser = 'babylon'
+let g:prettier#config#arrow_parens = 'avoid'
+let g:prettier#config#jsx_bracket_same_line = 'false'
+let g:prettier#config#bracket_spacing = 'true'
+let g:prettier#config#single_quote = 'false'
+
+autocmd BufWritePre *.js,*.jsx,*.json PrettierAsync
