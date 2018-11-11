@@ -11,7 +11,7 @@ set timeoutlen=200      " Shorter timeout when typing commands in normal mode
 set title               " Change terminal title
 set hidden              " Hide buffers instead of closing them
                         " => buffer can be in the background without being written
-set shortmess=atIc      " Dont show startup-message, shorten most info messages
+set shortmess=aotIc     " Dont show startup-message, shorten most info messages
 set autoread            " Reload files when changed outside of vim
 set nobackup            " Don't create backup files
 set noswapfile          " Don't use a swap file
@@ -103,5 +103,5 @@ autocmd BufWritePre * %s/\s\+$//e
 
 set complete=.,w,b,u,t,k  " Looks for matches in all buffer/windows and tags
 
-" Changes working directory to that of currently used buffer (TODO fix)
+" Changes working directory to that of currently used buffer
 autocmd BufEnter * silent! lcd %:p:h
