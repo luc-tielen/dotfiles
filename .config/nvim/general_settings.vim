@@ -78,9 +78,17 @@ autocmd FileType c set ts=4 sw=4 sts=4        " C:          tab = 4 spaces
 autocmd FileType cpp set ts=4 sw=4 sts=4      " C++:        tab = 4 spaces
 autocmd FileType elm set ts=4 sw=4 sts=4      " Elm:        tab = 4 spaces
 
-set background=dark                 " Dark background
 "colorscheme Tomorrow-Night-Eighties " Colorscheme to use
-colorscheme OceanicNext " Colorscheme to use
+"colorscheme OceanicNext " Colorscheme to use
+set termguicolors
+let ayucolor="dark"
+colorscheme ayu
+set background=dark                 " Dark background
+
+" Highlighting of current line number
+set cursorline
+hi clear CursorLine
+hi CursorLineNr guifg=#DDDD00
 
 " Highlighting for 'special' file types:
 autocmd BufRead,BufNewFile *.wsdl set filetype=xml
