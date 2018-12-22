@@ -12,6 +12,7 @@ set runtimepath+=~/.config/nvim/repos/github.com/Shougo/dein.vim/
 call dein#begin(expand('~/.config/nvim'))
 call dein#add('Shougo/dein.vim')
 call dein#add('haya14busa/dein-command.vim')
+call dein#add('luc-tielen/ayu-vim')
 call dein#add('neomake/neomake')
 call dein#add('sbdchd/neoformat', {'on_cmd': 'Neoformat'})
 call dein#add('vim-airline/vim-airline')
@@ -31,7 +32,9 @@ call dein#add('scrooloose/nerdtree', {'on_cmd': 'NERDTreeToggle'})
 "call dein#add('scrooloose/nerdcommenter')
 " Syntax
 call dein#add('othree/html5.vim', {'on_ft': 'html'})
-call dein#add('othree/yajs.vim', {'on_ft': 'javascript'})
+"call dein#add('othree/yajs.vim', {'on_ft': 'javascript'})
+call dein#add('pangloss/vim-javascript', {'on_ft': 'javascript'})
+"/
 call dein#add('mxw/vim-jsx', {'on_ft': 'javascript'})
 call dein#add('prettier/vim-prettier', {'on_ft': 'javascript', 'build': 'yarn install'})
 call dein#add('elzr/vim-json', {'on_ft': 'json'})
