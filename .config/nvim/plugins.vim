@@ -48,7 +48,7 @@ call dein#add('prettier/vim-prettier', {'on_ft': 'javascript', 'build': 'yarn in
 call dein#add('elzr/vim-json', {'on_ft': 'json'})
 call dein#add('kchmck/vim-coffee-script', {'on_ft': 'coffee'})
 call dein#add('hail2u/vim-css3-syntax', {'on_ft': 'css'})
-call dein#add('ap/vim-css-color', {'on_ft': 'css'})
+call dein#add('ap/vim-css-color', {'on_ft': ['css', 'scss']})
 call dein#add('tpope/vim-markdown', {'on_ft': 'markdown'})
 call dein#add('nelstrom/vim-markdown-folding', {'on_ft': 'markdown'})
 call dein#add('jxnblk/vim-mdx-js', {'on_ft': 'mdx'})
