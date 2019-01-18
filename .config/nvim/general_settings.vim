@@ -77,6 +77,8 @@ autocmd FileType python set ts=4 sw=4 sts=4   " Python:     tab = 4 spaces
 autocmd FileType c set ts=4 sw=4 sts=4        " C:          tab = 4 spaces
 autocmd FileType cpp set ts=4 sw=4 sts=4      " C++:        tab = 4 spaces
 autocmd FileType elm set ts=4 sw=4 sts=4      " Elm:        tab = 4 spaces
+autocmd FileType css set ts=4 sw=4 sts=4      " CSS:        tab = 4 spaces
+autocmd FileType scss set ts=4 sw=4 sts=4     " SASS:       tab = 4 spaces
 
 "colorscheme Tomorrow-Night-Eighties " Colorscheme to use
 "colorscheme OceanicNext " Colorscheme to use
