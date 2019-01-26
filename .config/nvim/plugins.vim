@@ -65,6 +65,7 @@ call dein#add('rust-lang/rust.vim', {'on_ft': 'rust'})
 call dein#add('racer-rust/vim-racer', {'on_ft': 'rust'})
 call dein#add('hashivim/vim-terraform', {'on_ft': 'terraform'})
 call dein#add('martinda/Jenkinsfile-vim-syntax', {'on_ft': 'Jenkinsfile'})
+call dein#add('LnL7/vim-nix', {'on_ft': 'nix'})
 " Focused editing:
 call dein#add('junegunn/goyo.vim', {'on_cmd': 'Goyo'})
 call dein#add('junegunn/limelight.vim', {'on_cmd': 'LimeLight'})
