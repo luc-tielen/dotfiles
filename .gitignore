@@ -21,7 +21,8 @@
 .mix
 .hex
 .elm
-.ghc/
+.ghc/*
+!.ghc/ghci.conf
 .stack/
 .hoogle
 .rustup/
