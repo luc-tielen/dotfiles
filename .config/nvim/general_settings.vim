@@ -2,7 +2,8 @@
 " Contains general settings for neovim
 
 set nocompatible        " Use vim, not vi
-let mapleader = ','     " leader is ,
+nnoremap <space> <nop>
+let mapleader = ' '     " leader is ,
 set encoding=utf-8      " UTF-8 encoding in all files
 set history=1000        " Remember last 1000 commands
 set undolevels=1000     " Able to undo 1000 commands

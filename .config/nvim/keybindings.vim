@@ -50,10 +50,6 @@ noremap <C-l> <C-w><right>
 " tmap <C-h> <C-\><C-n>:TmuxNavigateLeft<CR>
 " tmap <C-;> <C-\><C-n>:TmuxNavigatePrevious<cr>
 
-" Make ; same as : (no shift needed)
-nnoremap ; :
-vnoremap ; :
-
 " No need for ex mode
 nnoremap Q <nop>
 
@@ -75,10 +71,6 @@ inoremap jj <ESC>
 " Better regexes:
 nnoremap / /\v
 vnoremap / /\v
-
-" Space to toggle folds.
-nnoremap <Space> za
-vnoremap <Space> za
 
 " Disable highlight after search with enter
 nnoremap <silent> <cr> :noh<cr><cr>
