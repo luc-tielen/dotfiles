@@ -52,6 +52,7 @@ set expandtab                         " Change tabs to spaces
 set smarttab                          " Tabs at start of line use shiftwidth
 set wrap linebreak nolist             " Wrap around lines, only split on word-boundaries
 set formatoptions+=t                  " Formatting options: auto-wrap text using textwidth
+autocmd FileType * setlocal formatoptions-=cro  " Don't add comments on next line automatically
 set inccommand=nosplit                " Show substitution on the fly, in same window
 set virtualedit=                      " Only allow cursor where characters are
 
