@@ -71,6 +71,9 @@ set updatetime=500
 set scrolloff=3                   " Start scrolling 3 lines before edge of viewport
 set shiftround                    " Always indent by multiple of shift width
 
+" File type recognition:
+au BufNewFile,BufRead *.jison set filetype=yacc
+au BufNewFile,BufRead *.dl set filetype=prolog
 
 " Indentation specific for certain files:
 autocmd FileType mkd set ts=4 sw=4 sts=4 noet " Makefile:   tab = 4 wide (no spaces)

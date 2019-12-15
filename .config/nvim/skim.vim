@@ -8,7 +8,7 @@ command! -bang -nargs=* GGrep
   \ call fzf#vim#grep('git grep --line-number ' . shellescape(<q-args>), 0, {'dir': GetGitRootDir()})
 
 " Helper functions for custom skim behaviour.
-function GetGitRootDir()
+function! GetGitRootDir()
   let s:root_dir = system("git rev-parse --show-toplevel")
   return split(s:root_dir, "\n")[0]
 endfunction
