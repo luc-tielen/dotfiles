@@ -1,0 +1,8 @@
+/.bin
+/.bundle
+/vendor/bundle
+/tags
+.DS_Store
+/**/todo-luc.md
+.*@neomake*
+.pt.json
