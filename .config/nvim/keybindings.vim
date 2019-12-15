@@ -86,6 +86,10 @@ inoremap <expr> <S-TAB> pumvisible() ? "\<C-P>" : "\<S-TAB>"
 " Shortcuts for tags
 nnoremap <leader>t <C-]><CR>
 
+" Bindings for nerdcommenter
+nnoremap <leader>/ :call NERDComment('n', 'Invert')<cr>
+vnoremap <leader>/ :call NERDComment('n', 'Invert')<cr>
+
 " Bindings for multiple cursors
 let g:multi_cursor_next_key='<C-n>'
 let g:multi_cursor_prev_key='<C-p>'
