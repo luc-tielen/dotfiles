@@ -2,7 +2,7 @@
 " Skim related config
 
 let g:skim_layout = {'down': '20%'}
-autocmd! FileType skim tnoremap <buffer> <esc> <esc>:q
+autocmd! FileType skim tnoremap <buffer> <esc> <C-c>
 
 command! -bang -nargs=* GGrep
   \ call fzf#vim#grep('git grep --line-number ' . shellescape(<q-args>), 0, {'dir': GetGitRootDir()})
