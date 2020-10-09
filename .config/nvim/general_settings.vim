@@ -96,6 +96,7 @@ set background=dark                 " Dark background
 set cursorline
 hi clear CursorLine
 hi CursorLineNr guifg=#DDDD00
+hi LineNr guifg=#888888
 
 " Highlighting for 'special' file types:
 autocmd BufRead,BufNewFile *.wsdl set filetype=xml
