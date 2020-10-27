@@ -12,7 +12,7 @@ set timeoutlen=200      " Shorter timeout when typing commands in normal mode
 set title               " Change terminal title
 set hidden              " Hide buffers instead of closing them
                         " => buffer can be in the background without being written
-set shortmess=aotIc     " Dont show startup-message, shorten most info messages
+set shortmess=aotIcF    " Dont show startup-message, shorten most info messages
 set autoread            " Reload files when changed outside of vim
 set nobackup            " Don't create backup files
 set noswapfile          " Don't use a swap file
