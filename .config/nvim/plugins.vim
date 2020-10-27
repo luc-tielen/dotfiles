@@ -16,6 +16,7 @@ call dein#add('haya14busa/dein-command.vim')
 " Theme
 call dein#add('luc-tielen/ayu-vim')
 call dein#add('vim-airline/vim-airline')
+call dein#add('vim-airline/vim-airline-themes')
 call dein#add('flazz/vim-colorschemes')
 " Neo* plugins
 call dein#add('neomake/neomake')
