@@ -41,6 +41,8 @@ call dein#add('AndrewRadev/splitjoin.vim', {'on_map': {'n': ['gS', 'gJ']}})
 call dein#add('MartinLafreniere/vim-PairTools')
 call dein#add('scrooloose/nerdcommenter')
 "call dein#add('terryma/vim-multiple-cursors')
+" Language server
+call dein#add('neoclide/coc.nvim', { 'merged': 0, 'rev': 'release' })
 " Linting
 call dein#add('w0rp/ale', {'on_ft': ['javascript', 'typescript']})
 " Syntax
