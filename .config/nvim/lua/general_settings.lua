@@ -107,6 +107,7 @@ vim.cmd [[autocmd BufReadPost * if line("'\"") > 0 && line ("'\"") <= line("$") 
 
 -- Eclair file detection
 vim.cmd [[au BufNewFile,BufRead *.eclair set filetype=eclair]]
+vim.cmd [[au BufNewFile,BufRead *.dl set filetype=souffle]]
 
 -- Colorscheme
 o.termguicolors = true
