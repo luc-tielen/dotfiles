@@ -1,41 +1,52 @@
-vim.cmd 'packadd paq-nvim'
-local paq = require'paq-nvim'.paq
-paq {'savq/paq-nvim', opt=true}
+vim.cmd 'packadd packer.nvim'
 
--- Fuzzy finder:
-paq 'nvim-lua/plenary.nvim'
-paq 'nvim-lua/popup.nvim'
-paq 'nvim-telescope/telescope.nvim'
--- Statusline:
-paq 'glepnir/galaxyline.nvim'
--- Colorscheme:
-paq 'ayu-theme/ayu-vim'
--- Syntax highlighting:
-paq 'sheerun/vim-polyglot'
-paq 'norcalli/nvim-colorizer.lua'
-paq {'nvim-treesitter/nvim-treesitter', run = ':TSUpdate'}
--- LSP:
-paq 'neovim/nvim-lspconfig'
-paq 'hrsh7th/nvim-compe'
--- TODO vsnip plugin?
--- Icons:
-paq 'kyazdani42/nvim-web-devicons'
--- Git-related plugins:
-paq 'tpope/vim-fugitive'
-paq 'lewis6991/gitsigns.nvim'
-paq 'rhysd/committia.vim'
-paq 'rhysd/git-messenger.vim'
--- Focused editing:
-paq 'junegunn/goyo.vim'
-paq 'junegunn/limelight.vim'
--- Text manipulation:
-paq 'tpope/vim-surround'
-paq 'scrooloose/nerdcommenter'
--- Auto-formatting:
-paq {'prettier/vim-prettier', run = 'yarn install'}
--- Set current dir to project root:
-paq 'airblade/vim-rooter'
--- TODO plugin for better terminal integration?
+local packer = require('packer')
+packer.startup(function()
+  use 'wbthomason/packer.nvim'
+
+  -- Fuzzy finder:
+  use 'nvim-lua/plenary.nvim'
+  use 'nvim-lua/popup.nvim'
+  use 'nvim-telescope/telescope.nvim'
+  -- Statusline:
+  use 'glepnir/galaxyline.nvim'
+  -- Colorscheme:
+  use 'ayu-theme/ayu-vim'
+  --use 'shaunsingh/nord.nvim'
+  --use 'zefei/simple-dark'
+  --use 'rainglow/vim'
+  -- Syntax highlighting:
+  use 'sheerun/vim-polyglot'
+  use 'norcalli/nvim-colorizer.lua'
+  use {'nvim-treesitter/nvim-treesitter', run = ':TSUpdate'}
+  use {'nvim-treesitter/nvim-treesitter-textobjects', branch = '0.5-compat'}
+  use 'nvim-treesitter/playground'
+  use 'julienhenry/tree-sitter-souffle'
+  use 'lyxell/nvim-treesitter-souffle'
+  -- LSP:
+  use 'neovim/nvim-lspconfig'
+  use 'hrsh7th/nvim-compe'
+  use 'jose-elias-alvarez/null-ls.nvim'
+  -- TODO vsnip plugin?
+  -- Icons:
+  use 'kyazdani42/nvim-web-devicons'
+  -- Git-related plugins:
+  use 'tpope/vim-fugitive'
+  use 'lewis6991/gitsigns.nvim'
+  use 'rhysd/committia.vim'
+  use 'rhysd/git-messenger.vim'
+  -- Focused editing:
+  use {'junegunn/goyo.vim', opt = true, cmd = {"Goyo", "Goyo!"}}
+  use {'junegunn/limelight.vim', opt = true, cmd = {"Limelight"}}
+  -- Text manipulation:
+  use 'tpope/vim-surround'
+  use {'scrooloose/nerdcommenter', opt = true, cmd = {"NERDComment"}}
+  -- Auto-formatting:
+  --use {'prettier/vim-prettier', run = 'yarn install'}
+  -- Set current dir to project root:
+  use 'airblade/vim-rooter'
+  -- TODO plugin for better terminal integration?
+end)
 
 -- Plugin configurations:
 
@@ -82,8 +93,45 @@ require 'telescope'.setup {
 
 require'nvim-treesitter.configs'.setup {
   ensure_installed = 'maintained',
-  highlight = { enable = true },
-  indent = { enable = true },
+  highlight = { enable = true, disable = {'elixir'} },
+  indent = { enable = false },
+  playground = {
+    enable = true,
+    disable = {},
+    updatetime = 25, -- Debounced time for highlighting nodes in the playground from source code
+    persist_queries = false, -- Whether the query persists across vim sessions
+    keybindings = {
+      toggle_query_editor = 'o',
+      toggle_hl_groups = 'i',
+      toggle_injected_languages = 't',
+      toggle_anonymous_nodes = 'a',
+      toggle_language_display = 'I',
+      focus_language = 'f',
+      unfocus_language = 'F',
+      update = 'R',
+      goto_node = '<cr>',
+      show_help = '?',
+    },
+  },
+  textobjects = {
+    select = {
+      enable = true,
+      lookahead = true,
+      keymaps = {
+        ["af"] = "@function.outer",
+        ["if"] = "@function.inner",
+      },
+    }
+  }
 }
 -- TODO treesitter folds
 -- TODO highlight TODOs (needs newer nvim-treesitter?)
+
+
+local parser_config = require "nvim-treesitter.parsers".get_parser_configs()
+parser_config.souffle = {
+  install_info = {
+    url = "~/.local/share/nvim/site/pack/packer/start/tree-sitter-souffle",
+    files = {"src/parser.c"}
+  }
+}
