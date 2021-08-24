@@ -87,23 +87,36 @@ u.create_augroup('fmt', {
   {'FileType', '*', 'setlocal', 'formatoptions-=cro'}          -- Don't add comments on next line automatically
 })
 
+strip_trailing_whitespace = function()
+  local pos = vim.api.nvim_win_get_cursor(0)
+  vim.cmd '%s/\\s\\+$//e'
+  vim.api.nvim_win_set_cursor(0, pos)
+end
+
 u.create_augroup('opening', {
--- Center buffer around cursor when opening files:
-{'BufRead', '*', 'normal', 'zz'},
--- Deletes trailing whitespace before writing a buffer:
-{'BufWritePre', '*', '%s/\\s\\+$//e'},
--- Changes working directory to that of currently used buffer:
-{'BufEnter', '*', 'silent!', 'lcd', '%:p:h'},
+  -- Center buffer around cursor when opening files:
+  {'BufRead', '*', 'normal', 'zz'},
+  -- Deletes trailing whitespace before writing a buffer:
+  {'BufWritePre', '*', 'lua strip_trailing_whitespace()'},
+  -- Changes working directory to that of currently used buffer:
+  {'BufEnter', '*', 'silent!', 'lcd', '%:p:h'},
 })
 
 -- Remember cursor position between vim sessions
 vim.cmd [[autocmd BufReadPost * if line("'\"") > 0 && line ("'\"") <= line("$") | exe "normal! g'\"" | endif]]
 
+-- Eclair file detection
+vim.cmd [[au BufNewFile,BufRead *.eclair set filetype=eclair]]
+
 -- Colorscheme
 o.termguicolors = true
 vim.cmd 'let ayucolor="dark"'
 vim.cmd 'colorscheme ayu'
+--vim.cmd 'colorscheme simple-dark'
+--vim.cmd 'colorscheme stasis'
 o.background = 'dark'  -- Dark background
+--require('nord').set()
+
 -- Enable nvim-colorizer plugin
 require('colorizer').setup()
 
