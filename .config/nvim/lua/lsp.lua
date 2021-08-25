@@ -66,7 +66,7 @@ null_ls.config({
 
 -- Use a loop to conveniently both setup defined servers
 -- and map buffer local keybindings when the language server attaches:
-local servers = {'hls', 'tsserver', 'null-ls'}
+local servers = {'hls', 'tsserver', 'rust_analyzer', 'null-ls'}
 for _, lsp in ipairs(servers) do
   -- tsserver formatting needs to be disabled, for null-ls to do the formatting
     -- fix formatting race condition in hls
