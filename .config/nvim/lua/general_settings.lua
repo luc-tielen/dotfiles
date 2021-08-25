@@ -41,6 +41,7 @@ wo.numberwidth = 1
 o.showmatch = true       -- Highlight matching {}, {}, ...
 wo.cursorline = false    -- Don't show cursorline (for speed..)
 wo.cursorcolumn = false  -- Don't show cursor column (for speed..)
+wo.signcolumn = 'yes'    -- Always shown signcolumn
 wo.wrap = false          -- Don't wrap lines.
 
 o.lazyredraw = true  -- Only redraw new graphics (terminal only)
@@ -69,7 +70,8 @@ o.shiftround = true  -- Always indent by multiple of shift width
 
 -- File type recognition:
 u.au 'BufNewFile,BufRead *.jison set filetype=yacc'
-u.au 'BufNewFile,BufRead *.dl set filetype=prolog'
+vim.cmd [[au BufNewFile,BufRead *.eclair set filetype=eclair]]
+vim.cmd [[au BufNewFile,BufRead *.dl set filetype=souffle]]
 
 -- Indentation specific for certain files:
 u.create_augroup('fmt', {
@@ -105,10 +107,6 @@ u.create_augroup('opening', {
 -- Remember cursor position between vim sessions
 vim.cmd [[autocmd BufReadPost * if line("'\"") > 0 && line ("'\"") <= line("$") | exe "normal! g'\"" | endif]]
 
--- Eclair file detection
-vim.cmd [[au BufNewFile,BufRead *.eclair set filetype=eclair]]
-vim.cmd [[au BufNewFile,BufRead *.dl set filetype=souffle]]
-
 -- Colorscheme
 o.termguicolors = true
 vim.cmd 'let ayucolor="dark"'
@@ -126,6 +124,7 @@ wo.cursorline = true
 vim.cmd 'hi clear CursorLine'
 vim.cmd 'hi CursorLineNr guifg=#DDDD00'
 vim.cmd 'hi LineNr guifg=#888888'
+vim.cmd 'hi SignColumn guibg=#0F1419'
 
 -- Looks for matches in all buffer/windows and tags
 vim.cmd 'set complete=.,w,b,u,t,k'
