@@ -74,9 +74,9 @@ nnoremap('<cr>', ':noh<cr><cr>', {silent = true})
 nnoremap('<tab>', '%')
 vnoremap('<tab>', '%')
 
--- Bindings for nerdcommenter
-nnoremap('<leader>/', ":call NERDComment('n', 'Invert')<CR>")
-vnoremap('<leader>/', ":call NERDComment('n', 'Invert')<CR>")
+-- Bindings for comment plugin
+nnoremap('<leader>/', ":call v:lua.kommentary.go(1)<CR>")
+vnoremap('<leader>/', ":call v:lua.kommentary.go(1)<CR>")
 
 -- Easier autocompletion menu navigation
 
@@ -124,8 +124,8 @@ nnoremap('<leader>g', ':Telescope live_grep<cr>')
 nnoremap('<leader>*', '*#:Telescope grep_string<cr>')
 nnoremap('<leader>t', ':Telescope treesitter<cr>')
 nnoremap('<leader>a', ':Telescope lsp_code_actions<cr>')
+--nnoremap('<leader>h', ':Telescope hoogle<cr>')
 -- TODO telescope + git checkout (git_branches)
--- TODO telescope + hoogle
 
 -- compe bindings:
 inoremap('<C-Space>', 'compe#complete()', {silent = true, expr = true})
@@ -134,3 +134,7 @@ inoremap('<CR>', "compe#confirm('<CR>')", {silent = true, expr = true})
 -- git-messenger bindings:
 -- Note: do 'gm' again to go into popup, list all actions using '?'
 nnoremap('gm', ':GitMessenger<CR>')
+
+-- Execute current line / file (only for Lua)
+nnoremap('<leader>x', ':lua execute_current_line()<cr>')
+nnoremap('<leader>xf', ':lua execute_current_file()<cr>')

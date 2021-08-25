@@ -8,6 +8,7 @@ packer.startup(function()
   use 'nvim-lua/plenary.nvim'
   use 'nvim-lua/popup.nvim'
   use 'nvim-telescope/telescope.nvim'
+  --use 'luc-tielen/telescope_hoogle'
   -- Statusline:
   use 'glepnir/galaxyline.nvim'
   -- Colorscheme:
@@ -16,7 +17,7 @@ packer.startup(function()
   --use 'zefei/simple-dark'
   --use 'rainglow/vim'
   -- Syntax highlighting:
-  use 'sheerun/vim-polyglot'
+  --use 'sheerun/vim-polyglot'
   use 'norcalli/nvim-colorizer.lua'
   use {'nvim-treesitter/nvim-treesitter', run = ':TSUpdate'}
   use {'nvim-treesitter/nvim-treesitter-textobjects', branch = '0.5-compat'}
@@ -40,9 +41,8 @@ packer.startup(function()
   use {'junegunn/limelight.vim', opt = true, cmd = {"Limelight"}}
   -- Text manipulation:
   use 'tpope/vim-surround'
-  use {'scrooloose/nerdcommenter', opt = true, cmd = {"NERDComment"}}
+  use 'b3nj5m1n/kommentary'
   -- Auto-formatting:
-  --use {'prettier/vim-prettier', run = 'yarn install'}
   -- Set current dir to project root:
   use 'airblade/vim-rooter'
   -- TODO plugin for better terminal integration?
@@ -51,6 +51,7 @@ end)
 -- Plugin configurations:
 
 vim.g.rooter_silent_chdir = 1
+vim.g.kommentary_create_default_mappings = false
 
 require('compe').setup {
   min_length = 2,
@@ -74,9 +75,10 @@ require('gitsigns').setup {
   }
 }
 
+local telescope = require 'telescope'
 local telescope_actions = require('telescope.actions')
 local telescope_previewers = require('telescope.previewers')
-require 'telescope'.setup {
+telescope.setup {
   defaults = {
     mappings = {
       i = {
@@ -90,11 +92,14 @@ require 'telescope'.setup {
     qflist_previewer = telescope_previewers.vim_buffer_qflist.new,
   }
 }
+--telescope.load_extension('fzy_native')
+--telescope.load_extension('hoogle')
 
 require'nvim-treesitter.configs'.setup {
   ensure_installed = 'maintained',
-  highlight = { enable = true, disable = {'elixir'} },
+  highlight = { enable = true, disable = {'elixir', 'nix'} },  -- TODO: fix issues
   indent = { enable = false },
+  context_commentstring = { enable = true },
   playground = {
     enable = true,
     disable = {},
@@ -135,3 +140,10 @@ parser_config.souffle = {
     files = {"src/parser.c"}
   }
 }
+-- parser_config.eclair = {
+  -- install_info = {
+    -- url = "~/personal/tree-sitter-eclair",
+    -- files = {"src/parser.c"}
+  -- }
+-- }
+
