@@ -16,4 +16,6 @@ require 'purescript'
 require 'javascript'
 require 'xml'
 
+require 'globals'
+
 -- TODO fix clipboard on Linux
