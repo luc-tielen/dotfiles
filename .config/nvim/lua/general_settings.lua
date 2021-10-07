@@ -31,7 +31,7 @@ o.gdefault = true     -- Globally substitute by default
 o.splitbelow = true  -- Opens new vertical windows below
 o.splitright = true  -- Opens new horizontal windows right
 
---o.clipboard = 'unnamedplus'  -- Use system clipboard
+o.clipboard = 'unnamedplus'  -- Use system clipboard
 
 o.bs = 'indent,eol,start'  -- Normal backspace
 
