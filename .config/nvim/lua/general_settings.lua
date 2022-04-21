@@ -72,6 +72,7 @@ o.shiftround = true  -- Always indent by multiple of shift width
 u.au 'BufNewFile,BufRead *.jison set filetype=yacc'
 vim.cmd [[au BufNewFile,BufRead *.eclair set filetype=eclair]]
 vim.cmd [[au BufNewFile,BufRead *.dl set filetype=souffle]]
+vim.cmd [[au BufNewFile,BufRead *.gdb set filetype=gdb]]
 
 -- Indentation specific for certain files:
 u.create_augroup('fmt', {
@@ -109,12 +110,13 @@ vim.cmd [[autocmd BufReadPost * if line("'\"") > 0 && line ("'\"") <= line("$") 
 
 -- Colorscheme
 o.termguicolors = true
-vim.cmd 'let ayucolor="dark"'
-vim.cmd 'colorscheme ayu'
+--vim.cmd 'let ayucolor="dark"'
+--vim.cmd 'colorscheme ayu'
 --vim.cmd 'colorscheme simple-dark'
 --vim.cmd 'colorscheme stasis'
 o.background = 'dark'  -- Dark background
 --require('nord').set()
+vim.cmd 'colorscheme Base2Tone_EveningDark'
 
 -- Enable nvim-colorizer plugin
 require('colorizer').setup()
