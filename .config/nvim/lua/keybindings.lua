@@ -9,6 +9,8 @@ local function map(mode, opts)
   return do_map
 end
 
+local nremap = map('n', {noremap = false})
+local vremap = map('v', {noremap = false})
 local nnoremap = map('n', {noremap = true})
 local inoremap = map('i', {noremap = true})
 local vnoremap = map('v', {noremap = true})
@@ -75,8 +77,8 @@ nnoremap('<tab>', '%')
 vnoremap('<tab>', '%')
 
 -- Bindings for comment plugin
-nnoremap('<leader>/', ":call v:lua.kommentary.go(1)<CR>")
-vnoremap('<leader>/', ":call v:lua.kommentary.go(1)<CR>")
+nremap('<leader>/', "gcc")
+vremap('<leader>/', "gc")
 
 -- Easier autocompletion menu navigation
 
