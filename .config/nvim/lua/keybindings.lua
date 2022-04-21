@@ -119,13 +119,14 @@ inoremap('<S-Tab>', 'v:lua.s_tab_complete()', {expr = true})
 snoremap('<S-Tab>', 'v:lua.s_tab_complete()', {expr = true})
 
 -- Telescope bindings:
-nnoremap('<C-p>', ':Telescope git_files<cr>')
+nnoremap('<C-p>', ':Telescope find_files find_command=rg,--ignore,--hidden,--files<cr>')
 nnoremap('<leader>g', ':Telescope live_grep<cr>')
 nnoremap('<leader>*', '*#:Telescope grep_string<cr>')
+nnoremap('<leader>b', ':Telescope git_branches<cr>')
 nnoremap('<leader>t', ':Telescope treesitter<cr>')
 nnoremap('<leader>a', ':Telescope lsp_code_actions<cr>')
+nnoremap('<leader>d', ':Telescope diagnostics<cr>')
 --nnoremap('<leader>h', ':Telescope hoogle<cr>')
--- TODO telescope + git checkout (git_branches)
 
 -- compe bindings:
 inoremap('<C-Space>', 'compe#complete()', {silent = true, expr = true})
