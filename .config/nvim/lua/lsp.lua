@@ -55,27 +55,49 @@ local on_attach = function(lsp_opts)
 end
 
 local null_ls = require('null-ls')
-null_ls.config({
+null_ls.setup({
   sources = {
     --null_ls.builtins.formatting.stylua,
     null_ls.builtins.formatting.prettier,
     null_ls.builtins.formatting.mix,
     null_ls.builtins.formatting.rustfmt,
+    null_ls.builtins.formatting.clang_format,
   }
 })
 
 -- Use a loop to conveniently both setup defined servers
 -- and map buffer local keybindings when the language server attaches:
-local servers = {'hls', 'tsserver', 'rust_analyzer', 'null-ls'}
+local servers = {
+  'zls',
+  'rust_analyzer',
+  'clangd',
+  'tsserver',
+  'svelte',
+  'pylsp',
+  'hls',
+}
 for _, lsp in ipairs(servers) do
   -- tsserver formatting needs to be disabled, for null-ls to do the formatting
-    -- fix formatting race condition in hls
-  local lsp_opts = { disable_formatting = lsp == 'tsserver' or lsp == 'hls'}
+  -- fix formatting race condition in hls
+  local lsp_opts = { disable_formatting = lsp == 'tsserver' or lsp == 'clangd' or lsp == 'hls' }
   lspconfig[lsp].setup { on_attach = on_attach(lsp_opts) }
 end
 
-vim.cmd [[autocmd CursorHold <buffer> lua vim.lsp.diagnostic.show_line_diagnostics({focusable = false})]]
-vim.cmd [[autocmd CursorMoved <buffer> lua vim.lsp.diagnostic.show_line_diagnostics({focusable = false})]]
+local lsp_util = require("lspconfig.util")
+
+lspconfig.rnix.setup {
+  root_dir = lsp_util.root_pattern("flake.nix")
+}
+
+require'lspconfig'.kotlin_language_server.setup {
+  root_dir = lsp_util.root_pattern("build.gradle.kts")
+  --root_dir = lsp_util.root_pattern(".idea")
+}
+
+-- lspconfig.hls.setup {
+--   cmd = {'haskell-language-server', '--lsp'},
+--   on_attach = on_attach({disable_formatting = true})
+-- }
 
 -- Make error messages an easier to read color (same as in statusline):
 vim.cmd [[highlight link LspDiagnosticsFloatingError GalaxyDiagnosticError]]

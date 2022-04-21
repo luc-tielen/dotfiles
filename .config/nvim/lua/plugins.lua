@@ -12,12 +12,13 @@ packer.startup(function()
   -- Statusline:
   use 'glepnir/galaxyline.nvim'
   -- Colorscheme:
-  use 'ayu-theme/ayu-vim'
+  --use 'ayu-theme/ayu-vim'
+  use 'atelierbram/Base2Tone-vim'
   --use 'shaunsingh/nord.nvim'
   --use 'zefei/simple-dark'
   --use 'rainglow/vim'
   -- Syntax highlighting:
-  --use 'sheerun/vim-polyglot'
+  use 'sheerun/vim-polyglot'
   use 'norcalli/nvim-colorizer.lua'
   use {'nvim-treesitter/nvim-treesitter', run = ':TSUpdate'}
   use {'nvim-treesitter/nvim-treesitter-textobjects', branch = '0.5-compat'}
@@ -29,6 +30,8 @@ packer.startup(function()
   use 'hrsh7th/nvim-compe'
   use 'jose-elias-alvarez/null-ls.nvim'
   -- TODO vsnip plugin?
+  -- Commenting:
+  use 'numToStr/Comment.nvim'
   -- Icons:
   use 'kyazdani42/nvim-web-devicons'
   -- Git-related plugins:
@@ -52,6 +55,8 @@ end)
 
 vim.g.rooter_silent_chdir = 1
 vim.g.kommentary_create_default_mappings = false
+
+require('Comment').setup()
 
 require('compe').setup {
   min_length = 2,
@@ -97,7 +102,7 @@ telescope.setup {
 
 require'nvim-treesitter.configs'.setup {
   ensure_installed = 'maintained',
-  highlight = { enable = true, disable = {'elixir', 'nix'} },  -- TODO: fix issues
+  highlight = { enable = true, disable = {} },
   indent = { enable = false },
   context_commentstring = { enable = true },
   playground = {
