@@ -5,6 +5,30 @@ local vcs = require('galaxyline.provider_vcs')
 local utils = require 'utils'
 local colors = require('statusline_colors')
 
+local ERROR = 1
+local WARNING = 2
+
+local count_lsp_diagnostics = function(severity)
+  local count = 0
+
+  for _, diagnostic in ipairs(vim.diagnostic.get(0)) do
+    if diagnostic.severity == severity then
+      count = count + 1
+    end
+  end
+
+  return count
+end
+
+local count_lsp_warnings = function()
+  return count_lsp_diagnostics(WARNING)
+end
+
+local count_lsp_errors = function()
+  return count_lsp_diagnostics(ERROR)
+end
+
+
 local gls = gl.section
 local u = utils.u
 
@@ -104,7 +128,7 @@ gls.right = {
   {
     DiagnosticWarn = {
       provider = function()
-        local n = vim.lsp.diagnostic.get_count(0, 'Warning')
+        local n = count_lsp_warnings()
         if n == 0 then return '' end
         return string.format(' %s %d ', icons.lsp_warn, n)
       end,
@@ -114,7 +138,7 @@ gls.right = {
   {
     DiagnosticError = {
       provider = function()
-        local n = vim.lsp.diagnostic.get_count(0, 'Error')
+        local n = count_lsp_errors()
         if n == 0 then return '' end
         return string.format(' %s %d ', icons.lsp_error, n)
       end,
