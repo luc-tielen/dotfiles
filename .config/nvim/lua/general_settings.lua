@@ -20,7 +20,7 @@ o.backup = false        -- Don't create backup files
 o.swapfile = false      -- Don't use a swap file
 o.visualbell = false    -- No visual bell (flashing screen)
 o.errorbells = false    -- No audible bell (beeps)
-o.laststatus = 2        -- Always show statusbar
+o.laststatus = 3        -- Always show statusbar, globally
 
 o.hlsearch = true     -- Highlight during search
 o.ignorecase = true   -- Ignore case when searching
@@ -117,6 +117,7 @@ o.termguicolors = true
 o.background = 'dark'  -- Dark background
 --require('nord').set()
 vim.cmd 'colorscheme Base2Tone_EveningDark'
+vim.cmd "highlight WinSeparator guibg=None"  -- Better window separators combined with global statusline
 
 -- Enable nvim-colorizer plugin
 require('colorizer').setup()
