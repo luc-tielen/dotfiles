@@ -30,11 +30,10 @@ for _, key in ipairs({'<S-up>', '<S-down>', '<S-left>', '<S-right>'}) do
   inoremap(key, '<nop>')
 end
 
--- Shift + HJKL for quicker navigation
+-- Shift + H / L for quicker navigation (J already joins lines, K does nothing)
 noremap('H', '^')
---noremap('J', '5j')
---noremap('K', '5k')
 noremap('L', 'g_')
+noremap('K', '<nop>')
 
 -- Alt + J/K to move line(s) down/up
 nnoremap('<A-j>', ':m .+1<CR>==')
@@ -57,9 +56,12 @@ nnoremap('Q', '<nop>')
 -- terminal 'normal mode'
 tmap('<esc>', '<c-\\><c-n><esc><cr>')
 
--- Copy to OSX clipboard
-vnoremap('<C-c>', '"*y<CR>')
-vnoremap('y', '"*y<CR>')
+-- Copy to OSX clipboard (only enable on OSX)
+if vim.fn.has('macunix') == '1' then
+  vnoremap('<C-c>', '"*y<CR>')
+  vnoremap('y', '"*y<CR>')
+end
+
 noremap('Y', 'y$')
 
 -- Faster escape out of insert mode:
@@ -126,8 +128,8 @@ nnoremap('<leader>g', ':Telescope live_grep<cr>')
 nnoremap('<leader>*', '*#:Telescope grep_string<cr>')
 nnoremap('<leader>b', ':Telescope git_branches<cr>')
 nnoremap('<leader>t', ':Telescope treesitter<cr>')
-nnoremap('<leader>a', ':Telescope lsp_code_actions<cr>')
 nnoremap('<leader>d', ':Telescope diagnostics<cr>')
+nnoremap('<leader>a', ':lua vim.lsp.buf.code_action()<cr>')
 --nnoremap('<leader>h', ':Telescope hoogle<cr>')
 
 -- compe bindings:
