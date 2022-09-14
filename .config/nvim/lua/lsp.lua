@@ -1,11 +1,11 @@
 local lspconfig = require('lspconfig')
 
-lspconfig.hls.setup {
-  cmd = {'haskell-language-server-wrapper', '--lsp'},
-  settings = {
-    haskell = { formattingProvider = "fourmolu" },
-  },
-}
+-- lspconfig.hls.setup {
+--   cmd = {'haskell-language-server-wrapper', '--lsp'},
+--   settings = {
+--     haskell = { formattingProvider = "fourmolu" },
+--   },
+-- }
 
 vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(
   vim.lsp.diagnostic.on_publish_diagnostics, {
@@ -19,46 +19,60 @@ vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(
 )
 
 -- LSP bindings:
-local on_attach = function(lsp_opts)
-  return function(client, bufnr)
-    local function buf_set_keymap(...) vim.api.nvim_buf_set_keymap(bufnr, ...) end
-    local function buf_set_option(...) vim.api.nvim_buf_set_option(bufnr, ...) end
+local on_attach = function(client, bufnr)
+  local function buf_set_keymap(...) vim.api.nvim_buf_set_keymap(bufnr, ...) end
+  local function buf_set_option(...) vim.api.nvim_buf_set_option(bufnr, ...) end
 
-    -- LSP-powered autocompletion:
-    buf_set_option('omnifunc', 'v:lua.vim.lsp.omnifunc')
+  -- LSP-powered autocompletion:
+  buf_set_option('omnifunc', 'v:lua.vim.lsp.omnifunc')
 
-    -- Mappings.
-    local opts = { noremap = true, silent = true }
-    -- buf_set_keymap('n', 'K', '<Cmd>lua vim.lsp.buf.hover()<CR>', opts)
-    buf_set_keymap('n', 'gD', '<Cmd>lua vim.lsp.buf.declaration()<CR>', opts)
-    buf_set_keymap('n', 'gd', '<Cmd>lua vim.lsp.buf.definition()<CR>', opts)
-    buf_set_keymap('n', 'gi', '<cmd>lua vim.lsp.buf.implementation()<CR>', opts)
-    buf_set_keymap('n', '<leader>D', '<cmd>lua vim.lsp.buf.type_definition()<CR>', opts)
-    buf_set_keymap('n', '<leader>e', '<cmd>lua vim.diagnostic.open_float()<CR>', opts)
-    buf_set_keymap('n', '[d', '<cmd>lua vim.lsp.diagnostic.goto_prev()<CR>', opts)
-    buf_set_keymap('n', ']d', '<cmd>lua vim.lsp.diagnostic.goto_next()<CR>', opts)
-    buf_set_keymap('n', '<leader>q', '<cmd>lua vim.lsp.diagnostic.set_loclist()<CR>', opts)
-    -- TODO check capabilities?
-    buf_set_keymap('n', '<C-k>', '<cmd>lua vim.lsp.buf.signature_help()<CR>', opts)
-    buf_set_keymap('n', '<leader>rn', '<cmd>lua vim.lsp.buf.rename()<CR>', opts)
-    buf_set_keymap('n', 'gr', '<cmd>lua vim.lsp.buf.references()<CR>', opts)
-
-
-    if lsp_opts.disable_formatting then
-      client.resolved_capabilities.document_formatting = false
-    end
-    -- Set some keybinds conditional on server capabilities
-    if client.resolved_capabilities.document_formatting then
-      vim.cmd [[autocmd BufWritePre <buffer> lua vim.lsp.buf.formatting_sync()]]
-    end
-  end
+  -- Mappings.
+  local opts = { noremap = true, silent = true }
+  -- buf_set_keymap('n', 'K', '<Cmd>lua vim.lsp.buf.hover()<CR>', opts)
+  buf_set_keymap('n', 'gD', '<Cmd>lua vim.lsp.buf.declaration()<CR>', opts)
+  buf_set_keymap('n', 'gd', '<Cmd>lua vim.lsp.buf.definition()<CR>', opts)
+  buf_set_keymap('n', 'gi', '<cmd>lua vim.lsp.buf.implementation()<CR>', opts)
+  buf_set_keymap('n', '<leader>D', '<cmd>lua vim.lsp.buf.type_definition()<CR>', opts)
+  buf_set_keymap('n', '<leader>e', '<cmd>lua vim.diagnostic.open_float()<CR>', opts)
+  buf_set_keymap('n', '[d', '<cmd>lua vim.lsp.diagnostic.goto_prev()<CR>', opts)
+  buf_set_keymap('n', ']d', '<cmd>lua vim.lsp.diagnostic.goto_next()<CR>', opts)
+  buf_set_keymap('n', '<leader>q', '<cmd>lua vim.lsp.diagnostic.set_loclist()<CR>', opts)
+  -- TODO check capabilities?
+  -- buf_set_keymap('n', '<C-k>', '<cmd>lua vim.lsp.buf.signature_help()<CR>', opts) TODO find non-conflicting keymap
+  buf_set_keymap('n', '<leader>rn', '<cmd>lua vim.lsp.buf.rename()<CR>', opts)
+  buf_set_keymap('n', 'gr', '<cmd>lua vim.lsp.buf.references()<CR>', opts)
 end
 
+local lsp_format_augroup = vim.api.nvim_create_augroup("LspFormatting", {})
 local null_ls = require('null-ls')
 null_ls.setup({
+  -- TODO: investigate why this doesn't work
+  on_attach = function(client, bufnr)
+    if client.supports_method("textDocument/formatting") then
+      vim.api.nvim_clear_autocmds({ group = lsp_format_augroup, buffer = bufnr })
+      vim.api.nvim_create_autocmd("BufWritePre", {
+          group = lsp_format_augroup,
+          buffer = bufnr,
+          callback = function()
+            vim.lsp.buf.format({
+              bufnr = bufnr,
+              filter = function(clients)
+                return vim.tbl_filter(function(client)
+                  -- formatting needs to be disabled for some servers, for null-ls to do the formatting
+                  local name = client.name
+                  return name ~= 'tsserver' or name ~= 'clangd' or name ~= 'hls'
+                end, clients)
+              end
+            })
+          end
+        })
+    end
+  end,
   sources = {
     --null_ls.builtins.formatting.stylua,
-    null_ls.builtins.formatting.prettier,
+    null_ls.builtins.formatting.prettierd,
+    null_ls.builtins.diagnostics.eslint_d,
+    null_ls.builtins.code_actions.eslint_d,
     null_ls.builtins.formatting.mix,
     null_ls.builtins.formatting.rustfmt,
     null_ls.builtins.formatting.clang_format,
@@ -72,15 +86,14 @@ local servers = {
   'rust_analyzer',
   'clangd',
   'tsserver',
+  'stylelint_lsp',
   'svelte',
   'pylsp',
   'hls',
 }
 for _, lsp in ipairs(servers) do
-  -- tsserver formatting needs to be disabled, for null-ls to do the formatting
   -- fix formatting race condition in hls
-  local lsp_opts = { disable_formatting = lsp == 'tsserver' or lsp == 'clangd' or lsp == 'hls' }
-  lspconfig[lsp].setup { on_attach = on_attach(lsp_opts) }
+  lspconfig[lsp].setup { on_attach = on_attach }
 end
 
 local lsp_util = require("lspconfig.util")
@@ -94,10 +107,7 @@ require'lspconfig'.kotlin_language_server.setup {
   --root_dir = lsp_util.root_pattern(".idea")
 }
 
--- lspconfig.hls.setup {
---   cmd = {'haskell-language-server', '--lsp'},
---   on_attach = on_attach({disable_formatting = true})
--- }
+-- require 'lspconfig'.denols.setup { lint = true }
 
 -- Make error messages an easier to read color (same as in statusline):
 vim.cmd [[highlight link LspDiagnosticsFloatingError GalaxyDiagnosticError]]
