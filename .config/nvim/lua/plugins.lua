@@ -8,6 +8,7 @@ packer.startup(function()
   use 'nvim-lua/plenary.nvim'
   use 'nvim-lua/popup.nvim'
   use 'nvim-telescope/telescope.nvim'
+  use 'nvim-telescope/telescope-ui-select.nvim'
   --use 'luc-tielen/telescope_hoogle'
   -- Statusline:
   use 'glepnir/galaxyline.nvim'
@@ -97,12 +98,13 @@ telescope.setup {
     qflist_previewer = telescope_previewers.vim_buffer_qflist.new,
   }
 }
+telescope.load_extension('ui-select')
 --telescope.load_extension('fzy_native')
 --telescope.load_extension('hoogle')
 
 require'nvim-treesitter.configs'.setup {
-  ensure_installed = 'maintained',
-  highlight = { enable = true, disable = {} },
+  -- ensure_installed = 'maintained',
+  highlight = { enable = true, disable = {} },  -- TODO: fix issues
   indent = { enable = false },
   context_commentstring = { enable = true },
   playground = {
@@ -145,10 +147,10 @@ parser_config.souffle = {
     files = {"src/parser.c"}
   }
 }
--- parser_config.eclair = {
-  -- install_info = {
-    -- url = "~/personal/tree-sitter-eclair",
-    -- files = {"src/parser.c"}
-  -- }
--- }
+parser_config.eclair = {
+  install_info = {
+    url = "~/personal/tree-sitter-eclair",
+    files = {"src/parser.c"}
+  }
+}
 
