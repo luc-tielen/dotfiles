@@ -163,3 +163,6 @@ nnoremap('gm', ':GitMessenger<CR>')
 -- Execute current line / file (only for Lua)
 nnoremap('<leader>x', ':lua execute_current_line()<cr>')
 nnoremap('<leader>xf', ':lua execute_current_file()<cr>')
+
+-- Run tests using my client.sh / server.sh gist
+nnoremap('<leader>t', ':!client.sh<cr><cr>')

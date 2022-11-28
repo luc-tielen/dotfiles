@@ -58,6 +58,12 @@ null_ls.setup({
               bufnr = bufnr,
               filter = function(clients)
                 return vim.tbl_filter(function(client)
+                  if type(client) ~= "table" then
+                    -- Not a table, just allow it for now.
+                    -- Probably a bug in the corresponding LSP client?
+                    return true
+                  end
+
                   -- formatting needs to be disabled for some servers, for null-ls to do the formatting
                   local name = client.name
                   return name ~= 'tsserver' or name ~= 'clangd' or name ~= 'hls'
