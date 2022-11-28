@@ -36,12 +36,22 @@ noremap('L', 'g_')
 noremap('K', '<nop>')
 
 -- Alt + J/K to move line(s) down/up
-nnoremap('<A-j>', ':m .+1<CR>==')
-nnoremap('<A-k>', ':m .-2<CR>==')
-inoremap('<A-j>', '<Esc>:m .+1<CR>==gi')
-inoremap('<A-k>', '<Esc>:m .-2<CR>==gi')
-vnoremap('<A-j>', ':m \'>+1<CR>gv=gv')
-vnoremap('<A-k>', ':m \'<-2<CR>gv=gv')
+if vim.fn.has('macunix') == '1' then
+  -- OSX needs to be special..
+  nnoremap('�', ':m .+1<CR>==')
+  nnoremap('�', ':m .-2<CR>==')
+  inoremap('�', '<Esc>:m .+1<CR>==gi')
+  inoremap('�', '<Esc>:m .-2<CR>==gi')
+  vnoremap('�', ':m \'>+1<CR>gv=gv')
+  vnoremap('�', ':m \'<-2<CR>gv=gv')
+else
+  nnoremap('<A-j>', ':m .+1<CR>==')
+  nnoremap('<A-k>', ':m .-2<CR>==')
+  inoremap('<A-j>', '<Esc>:m .+1<CR>==gi')
+  inoremap('<A-k>', '<Esc>:m .-2<CR>==gi')
+  vnoremap('<A-j>', ':m \'>+1<CR>gv=gv')
+  vnoremap('<A-k>', ':m \'<-2<CR>gv=gv')
+end
 
 -- Ctrl + HJKL for navigating across buffers/windows
 noremap('<C-h>', '<C-w><left>')
