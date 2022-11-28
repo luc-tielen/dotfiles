@@ -88,6 +88,16 @@ nnoremap('<cr>', ':noh<cr><cr>', {silent = true})
 nnoremap('<tab>', '%')
 vnoremap('<tab>', '%')
 
+-- Center screen when jumping around
+nnoremap('n', 'nzz')
+vnoremap('n', 'nzz')
+nnoremap('N', 'Nzz')
+vnoremap('N', 'Nzz')
+nnoremap('<C-u>', '<C-u>zz')
+vnoremap('<C-u>', '<C-u>zz')
+nnoremap('<C-d>', '<C-d>zz')
+vnoremap('<C-d>', '<C-d>zz')
+
 -- Bindings for comment plugin
 nremap('<leader>/', "gcc")
 vremap('<leader>/', "gc")
