@@ -9,12 +9,11 @@ packer.startup(function()
   use 'nvim-lua/popup.nvim'
   use 'nvim-telescope/telescope.nvim'
   use 'nvim-telescope/telescope-ui-select.nvim'
-  --use 'luc-tielen/telescope_hoogle'
   -- Statusline:
   use 'glepnir/galaxyline.nvim'
   -- Colorscheme:
-  --use 'ayu-theme/ayu-vim'
   use 'atelierbram/Base2Tone-vim'
+  --use 'ayu-theme/ayu-vim'
   --use 'shaunsingh/nord.nvim'
   --use 'zefei/simple-dark'
   --use 'rainglow/vim'
@@ -22,7 +21,6 @@ packer.startup(function()
   use 'sheerun/vim-polyglot'
   use 'norcalli/nvim-colorizer.lua'
   use {'nvim-treesitter/nvim-treesitter', run = ':TSUpdate'}
-  use {'nvim-treesitter/nvim-treesitter-textobjects', branch = '0.5-compat'}
   use 'nvim-treesitter/playground'
   use 'julienhenry/tree-sitter-souffle'
   use 'lyxell/nvim-treesitter-souffle'
@@ -30,33 +28,25 @@ packer.startup(function()
   use 'neovim/nvim-lspconfig'
   use 'hrsh7th/nvim-compe'
   use 'jose-elias-alvarez/null-ls.nvim'
-  -- TODO vsnip plugin?
-  -- Commenting:
+  -- Text manipulation:
+  use 'tpope/vim-surround'
   use 'numToStr/Comment.nvim'
-  -- Icons:
-  use 'kyazdani42/nvim-web-devicons'
   -- Git-related plugins:
   use 'tpope/vim-fugitive'
   use 'lewis6991/gitsigns.nvim'
   use 'rhysd/committia.vim'
   use 'rhysd/git-messenger.vim'
+  -- Always set current dir to project root:
+  use "ahmedkhalf/project.nvim"
   -- Focused editing:
   use {'junegunn/goyo.vim', opt = true, cmd = {"Goyo", "Goyo!"}}
   use {'junegunn/limelight.vim', opt = true, cmd = {"Limelight"}}
-  -- Text manipulation:
-  use 'tpope/vim-surround'
-  use 'b3nj5m1n/kommentary'
-  -- Auto-formatting:
-  -- Set current dir to project root:
-  use 'airblade/vim-rooter'
-  -- TODO plugin for better terminal integration?
+  -- Icons:
+  use 'kyazdani42/nvim-web-devicons'
 end)
 
 -- Plugin configurations:
-
-vim.g.rooter_silent_chdir = 1
-vim.g.kommentary_create_default_mappings = false
-
+require("project_nvim").setup({})
 require('Comment').setup()
 
 require('compe').setup {
@@ -70,14 +60,14 @@ require('compe').setup {
   }
 }
 
-local gutter = '|'
+local gutter_symbol = '|'
 require('gitsigns').setup {
   signs = {
-    add          = {hl = 'GitGutterAdd'   , text = gutter},
-    change       = {hl = 'GitGutterChange', text = gutter},
-    delete       = {hl = 'GitGutterDelete', text = gutter},
-    topdelete    = {hl = 'GitGutterDelete', text = gutter},
-    changedelete = {hl = 'GitGutterChange', text = gutter},
+    add          = {hl = 'GitGutterAdd'   , text = gutter_symbol},
+    change       = {hl = 'GitGutterChange', text = gutter_symbol},
+    delete       = {hl = 'GitGutterDelete', text = gutter_symbol},
+    topdelete    = {hl = 'GitGutterDelete', text = gutter_symbol},
+    changedelete = {hl = 'GitGutterChange', text = gutter_symbol},
   }
 }
 
@@ -99,8 +89,8 @@ telescope.setup {
   }
 }
 telescope.load_extension('ui-select')
+require('telescope').load_extension('projects')
 --telescope.load_extension('fzy_native')
---telescope.load_extension('hoogle')
 
 require'nvim-treesitter.configs'.setup {
   -- ensure_installed = 'maintained',
@@ -124,33 +114,16 @@ require'nvim-treesitter.configs'.setup {
       goto_node = '<cr>',
       show_help = '?',
     },
-  },
-  textobjects = {
-    select = {
-      enable = true,
-      lookahead = true,
-      keymaps = {
-        ["af"] = "@function.outer",
-        ["if"] = "@function.inner",
-      },
-    }
   }
 }
 -- TODO treesitter folds
--- TODO highlight TODOs (needs newer nvim-treesitter?)
 
-
+ --   url = "~/.local/share/nvim/site/pack/packer/start/tree-sitter-souffle",
 local parser_config = require "nvim-treesitter.parsers".get_parser_configs()
 parser_config.souffle = {
   install_info = {
-    url = "~/.local/share/nvim/site/pack/packer/start/tree-sitter-souffle",
+    --  change this path to wherever you installed julienhenry/tree-sitter-souffle
+    url = "~/.config/nvim/pack/plugins/start/tree-sitter-souffle",
     files = {"src/parser.c"}
   }
 }
-parser_config.eclair = {
-  install_info = {
-    url = "~/personal/tree-sitter-eclair",
-    files = {"src/parser.c"}
-  }
-}
-

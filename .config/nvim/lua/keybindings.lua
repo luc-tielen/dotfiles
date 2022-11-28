@@ -144,10 +144,10 @@ snoremap('<S-Tab>', 'v:lua.s_tab_complete()', {expr = true})
 
 -- Telescope bindings:
 nnoremap('<C-p>', ':Telescope find_files find_command=rg,--ignore,--hidden,--files<cr>')
+nnoremap('<leader>p', ':Telescope projects<cr>')
 nnoremap('<leader>g', ':Telescope live_grep<cr>')
 nnoremap('<leader>*', '*#:Telescope grep_string<cr>')
 nnoremap('<leader>b', ':Telescope git_branches<cr>')
-nnoremap('<leader>t', ':Telescope treesitter<cr>')
 nnoremap('<leader>d', ':Telescope diagnostics<cr>')
 nnoremap('<leader>a', ':lua vim.lsp.buf.code_action()<cr>')
 --nnoremap('<leader>h', ':Telescope hoogle<cr>')
