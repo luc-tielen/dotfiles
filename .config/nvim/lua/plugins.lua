@@ -4,6 +4,9 @@ local packer = require('packer')
 packer.startup(function()
   use 'wbthomason/packer.nvim'
 
+  -- Faster loading
+  use 'lewis6991/impatient.nvim'
+
   -- Fuzzy finder:
   use 'nvim-lua/plenary.nvim'
   use 'nvim-lua/popup.nvim'

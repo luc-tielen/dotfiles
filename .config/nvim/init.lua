@@ -4,6 +4,10 @@ vim.o.rtp = lua_dir .. ',' .. vim.o.rtp
 
 vim.g.mapleader = ' ' -- leader is space
 
+if not pcall(function () require 'impatient' end) then
+  print('Impatient failed to load!')
+end
+
 require 'general_settings'
 require 'keybindings'
 require 'plugins'
