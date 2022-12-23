@@ -1,76 +1,125 @@
 local u = require 'utils'
 
+local opt = vim.opt
 local o = vim.o
-local wo = vim.wo
-local bo = vim.bo
 
 vim.cmd 'syntax on'
 vim.cmd 'filetype plugin indent on'
 vim.cmd 'syntax sync minlines=256'    -- Highlight 256 lines at a time
 
-o.compatible = false    -- Vim, not Vi!
-o.encoding = 'UTF-8'    -- Use utf8-encoding
-o.title = true          -- File name in terminal title
-o.hidden = true         -- Hide buffers instead of closing them
-o.history = 1000        -- Remember last 1000 commands
-o.timeoutlen = 200      -- Shorter timeout when typing commands in normal mode
-o.shortmess = 'aotIcF'  -- Don't show startup-message, shorten most info messages
+-- Vim, not Vi!
+opt.compatible = false
+-- Don't show the mode, already shown using plugin anyway.
+opt.showmode = false
+-- Use utf8-encoding
+opt.encoding = 'UTF-8'
+-- File name in terminal title
+opt.title = true
+-- Hide buffers instead of closing them
+opt.hidden = true
+-- Remember last 1000 commands
+opt.history = 1000
+-- Shorter timeout when typing commands in normal mode
+opt.timeoutlen = 200
+-- Don't show startup-message, shorten most info messages
+opt.shortmess:append('aotIcF')
 o.autoread = true       -- Reload files when changed outside of vim
-o.backup = false        -- Don't create backup files
-o.swapfile = false      -- Don't use a swap file
+-- Don't create backup files
+opt.backup = false
+-- Don't use a swap file
+opt.swapfile = false
 o.visualbell = false    -- No visual bell (flashing screen)
 o.errorbells = false    -- No audible bell (beeps)
-o.laststatus = 3        -- Always show statusbar, globally
+-- Always show statusbar, globally
+opt.laststatus = 3
 
-o.hlsearch = true     -- Highlight during search
-o.ignorecase = true   -- Ignore case when searching
-o.smartcase = true    -- Don't ignore case if search contains capital letters
-o.incsearch = true    -- Instantly show search results
+-- Highlight during search
+opt.hlsearch = true
+-- Ignore case when searching
+opt.ignorecase = true
+-- Don't ignore case if search contains capital letters
+opt.smartcase = true
+-- Instantly show search results
+opt.incsearch = true
 o.gdefault = true     -- Globally substitute by default
 
-o.splitbelow = true  -- Opens new vertical windows below
-o.splitright = true  -- Opens new horizontal windows right
+-- Opens new vertical windows below
+opt.splitbelow = true
+-- Opens new horizontal windows right
+opt.splitright = true
 
-o.clipboard = 'unnamedplus'  -- Use system clipboard
+-- Use system clipboard
+opt.clipboard = 'unnamedplus'
 
 o.bs = 'indent,eol,start'  -- Normal backspace
 
-wo.relativenumber = true
-wo.number = true
-wo.numberwidth = 1
-o.showmatch = true       -- Highlight matching {}, {}, ...
-wo.cursorline = false    -- Don't show cursorline (for speed..)
-wo.cursorcolumn = false  -- Don't show cursor column (for speed..)
-wo.signcolumn = 'yes'    -- Always shown signcolumn
-wo.wrap = false          -- Don't wrap lines.
+-- Persistent undo
+opt.undofile = true
+
+-- Better diffing
+opt.diffopt = { "internal", "filler", "closeoff", "hiddenoff", "algorithm:minimal" }
+
+-- Hybrid line numbers
+opt.relativenumber = true
+opt.number = true
+opt.numberwidth = 1
+-- Highlight matching {}, {}, ...
+opt.showmatch = true
+opt.cursorcolumn = false  -- Don't show cursor column (for speed..)
+-- Always shown signcolumn
+opt.signcolumn = "yes"
+-- Don't wrap lines.
+opt.wrap = false
 
 o.lazyredraw = true  -- Only redraw new graphics (terminal only)
 
 o.paste = false   -- Auto-format when pasting
-o.foldlevel = 99  -- Start everything unfolded by default
+
+opt.foldmethod = "marker"
+-- Start everything unfolded by default
+opt.foldlevel = 99
 
 -- Standard => tab = 2 spaces:
-o.autoindent = true -- Copy indent previous line to next line
-o.tabstop = 2       -- Tab = 2 chars long
-o.shiftwidth = 2    -- Number of spaces to use for autoindent
-o.softtabstop = 2   -- <BS> removes tabs (even if tab = spaces)
-o.expandtab = true  -- Change tabs to spaces
-bo.expandtab = true  -- Change tabs to spaces
+-- Copy indent previous line to next line
+opt.autoindent = true
+-- Tab = 2 chars long
+opt.tabstop = 2
+-- Number of spaces to use for autoindent
+opt.shiftwidth = 2
+-- <BS> removes tabs (even if tab = spaces)
+opt.softtabstop = 2
+-- Change tabs to spaces
+opt.expandtab = true
 
-o.inccommand = "nosplit"  -- Show substitution on the fly, in same window
+-- Show substitution on the fly, in same window
+opt.inccommand = "nosplit"
 o.virtualedit = ""        -- Only allow cursor where characters are
 o.wildmenu = true         -- Better command-line completion (when using ':')
 o.wildmode = "full"       -- Complete next match when tab is used (during ':')
 
-bo.synmaxcol = 200  -- Highlight only first 200 characters of a line
-o.updatetime = 500
-o.scrolloff = 8     --  Start scrolling 8 lines before edge of viewport
+-- Highlight only first 200 characters of a line
+opt.synmaxcol = 200
+-- Make updates happen faster
+opt.updatetime = 500
+-- Start scrolling 8 lines before edge of viewport
+opt.scrolloff = 8
 
 o.shiftround = true  -- Always indent by multiple of shift width
+
+opt.equalalways = false  -- Less changing of window sizes
+
+-- shada = shared data files
+-- ! = save and restore global vars
+-- '1000 = remember max 1000 marked files
+-- <50 = remember 50 lines per register
+-- s10 = files can be max 10kB
+opt.shada = { "!", "'1000", "<50", "s10", "h" }
 
 -- File type recognition:
 u.au 'BufNewFile,BufRead *.jison set filetype=yacc'
 vim.cmd [[au BufNewFile,BufRead *.eclair set filetype=eclair]]
+vim.cmd [[au BufNewFile,BufRead *.dbscheme set filetype=yaml]]
+vim.cmd [[au BufNewFile,BufRead *.ll set filetype=llvm]]
 vim.cmd [[au BufNewFile,BufRead *.dl set filetype=souffle]]
 vim.cmd [[au BufNewFile,BufRead *.gdb set filetype=gdb]]
 
@@ -123,7 +172,7 @@ vim.cmd "highlight WinSeparator guibg=None"  -- Better window separators combine
 require('colorizer').setup()
 
 -- Highlighting of current line number
-wo.cursorline = true
+opt.cursorline = true
 vim.cmd 'hi clear CursorLine'
 vim.cmd 'hi CursorLineNr guifg=#DDDD00'
 vim.cmd 'hi LineNr guifg=#888888'
@@ -133,9 +182,9 @@ vim.cmd 'hi SignColumn guibg=#0F1419'
 vim.cmd 'set complete=.,w,b,u,t,k'
 
 -- Show multiple completions, manually select an item.
-o.completeopt = 'menuone,noselect'
+opt.completeopt = {'menuone', 'noselect'}
 
 -- Enable mouse support:
 if vim.fn.has('mouse') == 1 then
-  o.mouse = 'a'
+  opt.mouse = 'a'
 end
