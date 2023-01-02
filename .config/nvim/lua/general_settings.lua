@@ -1,7 +1,6 @@
 local u = require 'utils'
 
 local opt = vim.opt
-local o = vim.o
 
 vim.cmd 'syntax on'
 vim.cmd 'filetype plugin indent on'
@@ -23,13 +22,15 @@ opt.history = 1000
 opt.timeoutlen = 200
 -- Don't show startup-message, shorten most info messages
 opt.shortmess:append('aotIcF')
-o.autoread = true       -- Reload files when changed outside of vim
+opt.autoread = true       -- Reload files when changed outside of vim
 -- Don't create backup files
 opt.backup = false
 -- Don't use a swap file
 opt.swapfile = false
-o.visualbell = false    -- No visual bell (flashing screen)
-o.errorbells = false    -- No audible bell (beeps)
+-- No visual bell (flashing screen)
+opt.visualbell = false
+-- No audible bell (beeps)
+opt.errorbells = false
 -- Always show statusbar, globally
 opt.laststatus = 3
 
@@ -41,7 +42,8 @@ opt.ignorecase = true
 opt.smartcase = true
 -- Instantly show search results
 opt.incsearch = true
-o.gdefault = true     -- Globally substitute by default
+-- Globally substitute by default
+opt.gdefault = true
 
 -- Opens new vertical windows below
 opt.splitbelow = true
@@ -51,7 +53,8 @@ opt.splitright = true
 -- Use system clipboard
 opt.clipboard = 'unnamedplus'
 
-o.bs = 'indent,eol,start'  -- Normal backspace
+-- Normal backspace
+opt.backspace = 'indent,eol,start'
 
 -- Persistent undo
 opt.undofile = true
@@ -65,15 +68,18 @@ opt.number = true
 opt.numberwidth = 1
 -- Highlight matching {}, {}, ...
 opt.showmatch = true
-opt.cursorcolumn = false  -- Don't show cursor column (for speed..)
+-- Don't show cursor column (for speed..)
+opt.cursorcolumn = false
 -- Always shown signcolumn
 opt.signcolumn = "yes"
 -- Don't wrap lines.
 opt.wrap = false
 
-o.lazyredraw = true  -- Only redraw new graphics (terminal only)
+-- Only redraw new graphics (terminal only)
+-- opt.lazyredraw = true
 
-o.paste = false   -- Auto-format when pasting
+-- Auto-format when pasting
+opt.paste = false
 
 opt.foldmethod = "marker"
 -- Start everything unfolded by default
@@ -93,9 +99,20 @@ opt.expandtab = true
 
 -- Show substitution on the fly, in same window
 opt.inccommand = "nosplit"
-o.virtualedit = ""        -- Only allow cursor where characters are
-o.wildmenu = true         -- Better command-line completion (when using ':')
-o.wildmode = "full"       -- Complete next match when tab is used (during ':')
+-- Only allow cursor where characters are
+opt.virtualedit = ""
+-- Better command-line completion (when using ':')
+opt.wildmenu = true
+-- Complete next match when tab is used (during ':')
+-- If multiple solutions are possible, it will only complete the common part.
+opt.wildmode = "longest:full"
+-- Only show matches in a popup menu
+opt.wildoptions = "pum"
+-- Ignore compiled files
+opt.wildignore = "Cargo.lock"
+opt.wildignore:append { "*.o", "*.a", "*.so", "*~" }
+-- Better looking floating window popup menu for completion on command line
+opt.pumblend = 17
 
 -- Highlight only first 200 characters of a line
 opt.synmaxcol = 200
@@ -104,9 +121,11 @@ opt.updatetime = 500
 -- Start scrolling 8 lines before edge of viewport
 opt.scrolloff = 8
 
-o.shiftround = true  -- Always indent by multiple of shift width
+-- Always indent by multiple of shift width
+opt.shiftround = true
 
-opt.equalalways = false  -- Less changing of window sizes
+-- Less changing of window sizes
+opt.equalalways = false
 
 -- shada = shared data files
 -- ! = save and restore global vars
@@ -136,8 +155,16 @@ u.create_augroup('fmt', {
 
   {'BufRead,BufNewFile', '*.md', 'setlocal', 'textwidth=80'},  -- max 80 chars for markdown files
   {'BufRead,BufNewFile', '*.wsdl', 'set', 'filetype=xml'},     -- Treat WSDL as XML
-  {'FileType', '*', 'setlocal', 'formatoptions-=cro'}          -- Don't add comments on next line automatically
 })
+opt.formatoptions = opt.formatoptions
+  + "q" -- Allow formatting comments w/ gq
+  + "j" -- Auto-remove comments if possible.
+  + "n" -- Auto-indent text in numbered lists.
+  - "a" -- Don't autoformat paragraphs
+  - "t" -- Don't auto wrap text (code)
+  - "c" -- Dont'add comments on next line automatically.
+  - "r" -- Don't continue comments when pressing enter.
+  - "o" -- O and o don't continue comments
 
 strip_trailing_whitespace = function()
   local pos = vim.api.nvim_win_get_cursor(0)
@@ -157,16 +184,14 @@ u.create_augroup('opening', {
 -- Remember cursor position between vim sessions
 vim.cmd [[autocmd BufReadPost * if line("'\"") > 0 && line ("'\"") <= line("$") | exe "normal! g'\"" | endif]]
 
+-- Better colors
+opt.termguicolors = true
+-- Dark background
+opt.background = 'dark'
 -- Colorscheme
-o.termguicolors = true
---vim.cmd 'let ayucolor="dark"'
---vim.cmd 'colorscheme ayu'
---vim.cmd 'colorscheme simple-dark'
---vim.cmd 'colorscheme stasis'
-o.background = 'dark'  -- Dark background
---require('nord').set()
 vim.cmd 'colorscheme Base2Tone_EveningDark'
-vim.cmd "highlight WinSeparator guibg=None"  -- Better window separators combined with global statusline
+-- Better window separators combined with global statusline
+vim.cmd "highlight WinSeparator guibg=None"
 
 -- Enable nvim-colorizer plugin
 require('colorizer').setup()
