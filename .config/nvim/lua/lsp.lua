@@ -105,12 +105,32 @@ local servers = {
   'stylelint_lsp',
   'svelte',
   'pylsp',
-  'hls',
+  -- 'hls',
 }
 for _, lsp in ipairs(servers) do
   -- fix formatting race condition in hls
   lspconfig[lsp].setup { on_attach = on_attach }
 end
+
+local hls_format_augroup = vim.api.nvim_create_augroup("LspFormattingHLS", {})
+lspconfig.hls.setup {
+  cmd = {'haskell-language-server-wrapper', '--lsp'},
+  settings = { haskell = { formattingProvider = "fourmolu" } },
+  on_attach = function(client, bufnr)
+    on_attach(client, bufnr)
+
+    if client.supports_method("textDocument/formatting") then
+      vim.api.nvim_clear_autocmds({ group = hls_format_augroup, buffer = bufnr })
+      vim.api.nvim_create_autocmd("BufWritePre", {
+        group = hls_format_augroup,
+        buffer = bufnr,
+        callback = function()
+          vim.lsp.buf.format({ bufnr = bufnr })
+        end
+      })
+    end
+  end
+}
 
 local lsp_util = require("lspconfig.util")
 
