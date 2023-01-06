@@ -1,22 +1,32 @@
 local lspconfig = require('lspconfig')
 
--- lspconfig.hls.setup {
---   cmd = {'haskell-language-server-wrapper', '--lsp'},
---   settings = {
---     haskell = { formattingProvider = "fourmolu" },
---   },
--- }
-
+-- Set some less noisy defaults for diagnostics
 vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(
   vim.lsp.diagnostic.on_publish_diagnostics, {
-    -- Enable underline, use default values
-    underline = true,
+    -- Enable underline, for errors only
+    underline = { severity_limit = "Error" },
     -- Disable virtual text (too distracting)
     virtual_text = false,
     -- Enable signs
-    signs = true
+    signs = true,
+    -- Show errors before warnings
+    severity_sort = true,
   }
 )
+
+-- Jump directly to the first available definition, even if there's multiple results.
+vim.lsp.handlers["textDocument/definition"] = function(_, result)
+  if not result or vim.tbl_isempty(result) then
+    print "[LSP] Could not find definition."
+    return
+  end
+
+  if vim.tbl_islist(result) then
+    vim.lsp.util.jump_to_location(result[1], "utf-8")
+  else
+    vim.lsp.util.jump_to_location(result, "utf-8")
+  end
+end
 
 -- LSP bindings:
 local on_attach = function(client, bufnr)
@@ -38,7 +48,7 @@ local on_attach = function(client, bufnr)
   buf_set_keymap('n', ']d', '<cmd>lua vim.lsp.diagnostic.goto_next()<CR>', opts)
   buf_set_keymap('n', '<leader>q', '<cmd>lua vim.lsp.diagnostic.set_loclist()<CR>', opts)
   -- TODO check capabilities?
-  -- buf_set_keymap('n', '<C-k>', '<cmd>lua vim.lsp.buf.signature_help()<CR>', opts) TODO find non-conflicting keymap
+  buf_set_keymap('n', 'K', '<cmd>lua vim.lsp.buf.signature_help()<CR>', opts)
   buf_set_keymap('n', '<leader>rn', '<cmd>lua vim.lsp.buf.rename()<CR>', opts)
   buf_set_keymap('n', 'gr', '<cmd>lua vim.lsp.buf.references()<CR>', opts)
 end
