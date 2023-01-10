@@ -49,7 +49,10 @@ packer.startup(function()
 end)
 
 -- Plugin configurations:
-require("project_nvim").setup({})
+require("project_nvim").setup({
+  detection_methods = { "pattern", "lsp" },
+  patterns = { ".git", "_darcs", ".hg", ".bzr" },
+})
 require('Comment').setup()
 
 require('compe').setup {

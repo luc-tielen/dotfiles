@@ -105,14 +105,12 @@ opt.virtualedit = ""
 opt.wildmenu = true
 -- Complete next match when tab is used (during ':')
 -- If multiple solutions are possible, it will only complete the common part.
-opt.wildmode = "longest:full"
+opt.wildmode = "full"
 -- Only show matches in a popup menu
 opt.wildoptions = "pum"
 -- Ignore compiled files
 opt.wildignore = "Cargo.lock"
 opt.wildignore:append { "*.o", "*.a", "*.so", "*~" }
--- Better looking floating window popup menu for completion on command line
-opt.pumblend = 17
 
 -- Highlight only first 200 characters of a line
 opt.synmaxcol = 200
