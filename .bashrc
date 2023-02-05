@@ -18,34 +18,23 @@ function current_path() {
   echo $(basename $CURRENT_PATH)
 }
 
-function nix_prompt() {
-  if [ ! -z "$IN_NIX_SHELL" ]; then
-    echo "\e[92mnix-shell\e[0m "
-  else
-    echo ""
-  fi
-}
-
-function update_shell_prompt() {
-  PROMPT="$(nix_prompt)$(current_path) $(git_prompt_info) $(parse_git_dirty) $ "
-  export PS1=$PROMPT
-}
-
-function restore_prompt_after_nix_shell() {
-  PROMPT_COMMAND=update_shell_prompt
-  if [ "$PS1" != "$PROMPT" ]; then
-    PS1=$PROMPT
-  fi
-}
-
-
 # Aliases
 
+alias v=nvim
+alias vi=nvim
 alias vim=nvim
-
+alias gg="git grep"
+alias S="pacman -Ss"
+alias I="sudo pacman -S"
+alias R="sudo pacman -Rns"
 
 # Startup commands
+PS1='$(basename $PWD) λ '
+export EDITOR=nvim
+export PATH="/home/luc/.local/bin:/home/luc/.ghcup/bin:/home/luc/.cargo/bin/:$PATH:/home/luc/code/llvm-project/build/bin"
+[ -f "/home/luc/.ghcup/env" ] && source "/home/luc/.ghcup/env" # ghcup-env
 
-PROMPT_COMMAND=restore_prompt_after_nix_shell
-update_shell_prompt
 
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
