@@ -133,3 +133,10 @@ parser_config.souffle = {
     files = {"src/parser.c"}
   }
 }
+
+parser_config.eclair = {
+  install_info = {
+    url = "~/code/tree-sitter-eclair",
+    files = {"src/parser.c"}
+  }
+}
