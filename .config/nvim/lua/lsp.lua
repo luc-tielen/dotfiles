@@ -1,4 +1,14 @@
 local lspconfig = require('lspconfig')
+local lsp_util = require("lspconfig.util")
+
+require('lspconfig.configs').eclair = {
+  default_config = {
+    cmd = { 'eclair', 'lsp' },
+    filetypes = { 'eclair' },
+    root_dir = lsp_util.find_git_ancestor,
+    single_file_support = true,
+  }
+}
 
 -- Set some less noisy defaults for diagnostics
 vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(
@@ -132,18 +142,7 @@ lspconfig.hls.setup {
   end
 }
 
-local lsp_util = require("lspconfig.util")
-
-lspconfig.rnix.setup {
-  root_dir = lsp_util.root_pattern("flake.nix")
-}
-
-require'lspconfig'.kotlin_language_server.setup {
-  root_dir = lsp_util.root_pattern("build.gradle.kts")
-  --root_dir = lsp_util.root_pattern(".idea")
-}
-
--- require 'lspconfig'.denols.setup { lint = true }
+lspconfig.eclair.setup { on_attach = on_attach }
 
 -- Make error messages an easier to read color (same as in statusline):
 vim.cmd [[highlight link LspDiagnosticsFloatingError GalaxyDiagnosticError]]
