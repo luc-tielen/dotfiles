@@ -47,4 +47,3 @@ return {
   merge = merge,
   u = u
 }
-

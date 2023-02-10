@@ -40,27 +40,29 @@ end
 
 -- LSP bindings:
 local on_attach = function(client, bufnr)
-  local function buf_set_keymap(...) vim.api.nvim_buf_set_keymap(bufnr, ...) end
-  local function buf_set_option(...) vim.api.nvim_buf_set_option(bufnr, ...) end
+  local nmap = function(keys, func, desc)
+    if desc then desc = 'LSP: ' .. desc end
+    vim.keymap.set('n', keys, func, { buffer = bufnr, desc = desc })
+  end
 
-  -- LSP-powered autocompletion:
-  buf_set_option('omnifunc', 'v:lua.vim.lsp.omnifunc')
+  nmap('<leader>rn', vim.lsp.buf.rename, '[R]e[n]ame')
+  nmap('<leader>ca', vim.lsp.buf.code_action, '[C]ode [A]ction')
 
-  -- Mappings.
-  local opts = { noremap = true, silent = true }
-  -- buf_set_keymap('n', 'K', '<Cmd>lua vim.lsp.buf.hover()<CR>', opts)
-  buf_set_keymap('n', 'gD', '<Cmd>lua vim.lsp.buf.declaration()<CR>', opts)
-  buf_set_keymap('n', 'gd', '<Cmd>lua vim.lsp.buf.definition()<CR>', opts)
-  buf_set_keymap('n', 'gi', '<cmd>lua vim.lsp.buf.implementation()<CR>', opts)
-  buf_set_keymap('n', '<leader>D', '<cmd>lua vim.lsp.buf.type_definition()<CR>', opts)
-  buf_set_keymap('n', '<leader>e', '<cmd>lua vim.diagnostic.open_float()<CR>', opts)
-  buf_set_keymap('n', '[d', '<cmd>lua vim.lsp.diagnostic.goto_prev()<CR>', opts)
-  buf_set_keymap('n', ']d', '<cmd>lua vim.lsp.diagnostic.goto_next()<CR>', opts)
-  buf_set_keymap('n', '<leader>q', '<cmd>lua vim.lsp.diagnostic.set_loclist()<CR>', opts)
-  -- TODO check capabilities?
-  buf_set_keymap('n', 'K', '<cmd>lua vim.lsp.buf.signature_help()<CR>', opts)
-  buf_set_keymap('n', '<leader>rn', '<cmd>lua vim.lsp.buf.rename()<CR>', opts)
-  buf_set_keymap('n', 'gr', '<cmd>lua vim.lsp.buf.references()<CR>', opts)
+  nmap('gd', vim.lsp.buf.definition, '[G]oto [D]efinition')
+  nmap('gD', vim.lsp.buf.declaration, '[G]oto [D]eclaration')
+  nmap('gr', require('telescope.builtin').lsp_references, '[G]oto [R]eferences')
+  nmap('gi', vim.lsp.buf.implementation, '[G]oto [I]mplementation')
+  nmap('<leader>D', vim.lsp.buf.type_definition, 'Type [D]efinition')
+  nmap('<leader>ds', require('telescope.builtin').lsp_document_symbols, '[D]ocument [S]ymbols')
+  nmap('<leader>ws', require('telescope.builtin').lsp_dynamic_workspace_symbols, '[W]orkspace [S]ymbols')
+
+  -- nmap('K', vim.lsp.buf.hover, 'Hover Documentation')
+  nmap('<C-k>', vim.lsp.buf.signature_help, 'Signature Documentation')
+
+  -- Create a command `:Format` local to the LSP buffer
+  vim.api.nvim_buf_create_user_command(bufnr, 'Format', function(_)
+    vim.lsp.buf.format()
+  end, { desc = 'Format current buffer with LSP' })
 end
 
 local lsp_format_augroup = vim.api.nvim_create_augroup("LspFormatting", {})
@@ -105,44 +107,145 @@ null_ls.setup({
   }
 })
 
--- Use a loop to conveniently both setup defined servers
--- and map buffer local keybindings when the language server attaches:
+-- Enable LSP servers
 local servers = {
-  'zls',
-  'rust_analyzer',
-  'clangd',
-  'tsserver',
-  'stylelint_lsp',
-  'svelte',
-  'pylsp',
-  -- 'hls',
+  sumneko_lua = { Lua = { workspace = { checkThirdParty = false }, telemetry = { enable = false } } },
+  clangd = {},
+  rust_analyzer = {},
+  hls = { haskell = { formattingProvider = "fourmolu" } },
+  tsserver = {},
+  eclair = {},
+  -- gopls = {},
 }
-for _, lsp in ipairs(servers) do
-  -- fix formatting race condition in hls
-  lspconfig[lsp].setup { on_attach = on_attach }
-end
 
-local hls_format_augroup = vim.api.nvim_create_augroup("LspFormattingHLS", {})
-lspconfig.hls.setup {
-  cmd = {'haskell-language-server-wrapper', '--lsp'},
-  settings = { haskell = { formattingProvider = "fourmolu" } },
-  on_attach = function(client, bufnr)
-    on_attach(client, bufnr)
+require('neodev').setup()
+require('mason').setup()
 
-    if client.supports_method("textDocument/formatting") then
-      vim.api.nvim_clear_autocmds({ group = hls_format_augroup, buffer = bufnr })
-      vim.api.nvim_create_autocmd("BufWritePre", {
-        group = hls_format_augroup,
-        buffer = bufnr,
-        callback = function()
-          vim.lsp.buf.format({ bufnr = bufnr })
-        end
-      })
-    end
+-- Ensure the servers above are installed
+local mason_lspconfig = require 'mason-lspconfig'
+
+mason_lspconfig.setup {
+  ensure_installed = vim.tbl_keys(servers),
+}
+
+-- nvim-cmp supports additional completion capabilities, so broadcast that to servers
+local capabilities = vim.lsp.protocol.make_client_capabilities()
+capabilities = require('cmp_nvim_lsp').default_capabilities(capabilities)
+
+mason_lspconfig.setup_handlers {
+  function(server_name)
+    require('lspconfig')[server_name].setup {
+      capabilities = capabilities,
+      on_attach = on_attach,
+      settings = servers[server_name],
+    }
   end
 }
 
-lspconfig.eclair.setup { on_attach = on_attach }
+-- nvim-cmp setup
+local cmp = require 'cmp'
+local compare = require('cmp').config.compare
+local luasnip = require 'luasnip'
+
+cmp.setup {
+  snippet = {
+    expand = function(args)
+      luasnip.lsp_expand(args.body)
+    end,
+  },
+  mapping = cmp.mapping.preset.insert {
+    ['<C-d>'] = cmp.mapping.scroll_docs(-4),
+    ['<C-f>'] = cmp.mapping.scroll_docs(4),
+    ['<C-Space>'] = cmp.mapping.complete(),
+    ['<CR>'] = cmp.mapping.confirm {
+      behavior = cmp.ConfirmBehavior.Replace,
+      select = true,
+    },
+    ['<Tab>'] = cmp.mapping(function(fallback)
+      if cmp.visible() then
+        cmp.select_next_item()
+      elseif luasnip.expand_or_jumpable() then
+        luasnip.expand_or_jump()
+      else
+        fallback()
+      end
+    end, { 'i', 's' }),
+    ['<S-Tab>'] = cmp.mapping(function(fallback)
+      if cmp.visible() then
+        cmp.select_prev_item()
+      elseif luasnip.jumpable(-1) then
+        luasnip.jump(-1)
+      else
+        fallback()
+      end
+    end, { 'i', 's' }),
+  },
+  -- TODO improve order...
+  sources = cmp.config.sources {
+    { name = 'nvim_lsp' },
+    { name = 'buffer', keyword_length = 4 },
+    { name = 'path' },
+    { name = 'luasnip' },
+  },
+  sorting = {
+    priority_weight = 1.0,
+    comparators = {
+      compare.locality,
+      compare.recently_used,
+      compare.score, -- based on :  score = score + ((#sources - (source_index - 1)) * sorting.priority_weight)
+      compare.offset,
+      compare.order
+    }
+  }
+}
+
+-- Treesitter setup:
+require'nvim-treesitter.configs'.setup {
+  ensure_installed = {
+    'lua', 'vim', 'help', 'c', 'cpp', 'go', 'python', 'rust',
+    'typescript', 'javascript'
+  },
+  highlight = { enable = true, disable = {} },
+  indent = { enable = false, disable = { 'python' } },
+  context_commentstring = { enable = true },
+  playground = {
+    enable = true,
+    disable = {},
+    updatetime = 25, -- Debounced time for highlighting nodes in the playground from source code
+    persist_queries = false, -- Whether the query persists across vim sessions
+    keybindings = {
+      toggle_query_editor = 'o',
+      toggle_hl_groups = 'i',
+      toggle_injected_languages = 't',
+      toggle_anonymous_nodes = 'a',
+      toggle_language_display = 'I',
+      focus_language = 'f',
+      unfocus_language = 'F',
+      update = 'R',
+      goto_node = '<cr>',
+      show_help = '?',
+    },
+  }
+}
+
+-- TODO treesitter folds
+
+--   url = "~/.local/share/nvim/site/pack/packer/start/tree-sitter-souffle",
+local parser_config = require "nvim-treesitter.parsers".get_parser_configs()
+parser_config.souffle = {
+  install_info = {
+    --  change this path to wherever you installed julienhenry/tree-sitter-souffle
+    url = "~/.config/nvim/pack/plugins/start/tree-sitter-souffle",
+    files = {"src/parser.c"}
+  }
+}
+
+parser_config.eclair = {
+  install_info = {
+    url = "~/code/tree-sitter-eclair",
+    files = {"src/parser.c"}
+  }
+}
 
 -- Make error messages an easier to read color (same as in statusline):
 vim.cmd [[highlight link LspDiagnosticsFloatingError GalaxyDiagnosticError]]
