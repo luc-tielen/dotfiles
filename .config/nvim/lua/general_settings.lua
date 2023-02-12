@@ -74,6 +74,8 @@ opt.cursorcolumn = false
 opt.signcolumn = "yes"
 -- Don't wrap lines.
 opt.wrap = false
+-- For the rare occassion wrap *is* turned on, visually indent the wrapped lines.
+opt.breakindent = true
 
 -- Only redraw new graphics (terminal only)
 -- opt.lazyredraw = true
@@ -154,6 +156,7 @@ u.create_augroup('fmt', {
   {'BufRead,BufNewFile', '*.md', 'setlocal', 'textwidth=80'},  -- max 80 chars for markdown files
   {'BufRead,BufNewFile', '*.wsdl', 'set', 'filetype=xml'},     -- Treat WSDL as XML
 })
+-- TODO fix formatoptions: reset after each new buffer
 opt.formatoptions = opt.formatoptions
   + "q" -- Allow formatting comments w/ gq
   + "j" -- Auto-remove comments if possible.
@@ -190,9 +193,6 @@ opt.background = 'dark'
 vim.cmd 'colorscheme Base2Tone_EveningDark'
 -- Better window separators combined with global statusline
 vim.cmd "highlight WinSeparator guibg=None"
-
--- Enable nvim-colorizer plugin
-require('colorizer').setup()
 
 -- Highlighting of current line number
 opt.cursorline = true

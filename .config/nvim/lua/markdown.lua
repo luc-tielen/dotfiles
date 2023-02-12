@@ -3,7 +3,8 @@ vim.g.vim_markdown_fenced_languages = {
   'cpp',
   'c++=cpp',
   'bash=sh',
-  'viml=vim'
+  'viml=vim',
+  'rust'
 }
 
 vim.g.vim_markdown_frontmatter = true

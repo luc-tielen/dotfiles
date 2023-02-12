@@ -1,7 +1,6 @@
 -- Haskell-specific config
 
 vim.cmd [[
-let g:haskell_classic_highlighting = 1
 let g:haskell_indent_guard = 2
 let g:haskell_indent_if = 2
 let g:haskell_indent_case = 2
