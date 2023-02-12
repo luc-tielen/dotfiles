@@ -1,0 +1,9 @@
+#!/bin/sh
+# This file is invoked from LightDM!
+feh --bg-fill ~/.config/xmonad/wallpaper.jpg
+redshift -P -O 3700
+xcompmgr &
+urxvtd &
+xset -b
+xset r rate 200 40
+light-locker &
