@@ -5,11 +5,11 @@ xterm*Background:	black
 xterm*Foreground:	green
 xterm*cursorColor:	White
 xterm*pointerColor:	blue
-xterm*faceName:	xft:Fira Code:pixelsize=18
+xterm*faceName:	xft:Fira Code:pixelsize=20
 
 !xft:Dejavu Sans Mono Book:pixelsize=18
 !URxvt.font:	xft:Fira Code:pixelsize=18
-URxvt.font: xft:Fira Code:pixelsize=18
+URxvt.font: xft:Fira Code:pixelsize=20
 URxvt.scrollBar:	false
 URxvt.jumpScroll:	true
 ! Semi-transparent:
