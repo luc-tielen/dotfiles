@@ -28,6 +28,8 @@ alias S="pacman -Ss"
 alias I="sudo pacman -S"
 alias R="sudo pacman -Rns"
 
+eval "$(direnv hook bash)"
+
 # Startup commands
 PS1='$(basename $PWD) λ '
 export EDITOR=nvim
