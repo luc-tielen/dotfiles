@@ -95,6 +95,9 @@ null_ls.setup({
           end
         })
     end
+
+    -- Fixes `gq`, among other things
+    vim.api.nvim_buf_set_option(bufnr, "formatexpr", "")
   end,
   sources = {
     --null_ls.builtins.formatting.stylua,
