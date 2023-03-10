@@ -178,8 +178,6 @@ u.create_augroup('opening', {
   {'BufRead', '*', 'normal', 'zz'},
   -- Deletes trailing whitespace before writing a buffer:
   {'BufWritePre', '*', 'lua strip_trailing_whitespace()'},
-  -- Changes working directory to that of currently used buffer:
-  {'BufEnter', '*', 'silent!', 'lcd', '%:p:h'},
 })
 
 -- Remember cursor position between vim sessions
