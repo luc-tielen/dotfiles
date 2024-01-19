@@ -185,10 +185,10 @@ cmp.setup {
   },
   -- TODO improve order...
   sources = cmp.config.sources {
-    { name = 'nvim_lsp' },
-    { name = 'buffer', keyword_length = 4 },
+    { name = 'nvim_lsp', keyword_length = 2, group_index = 1, max_item_count = 30 },
+    -- { name = 'buffer', keyword_length = 4 },  -- disabled, too spammy / got in the way
     { name = 'path' },
-    { name = 'luasnip' },
+    --{ name = 'luasnip' },
   },
   sorting = {
     priority_weight = 1.0,
@@ -199,8 +199,23 @@ cmp.setup {
       compare.offset,
       compare.order
     }
-  }
+  },
+  performance = {
+    throttle = 550,
+    fetching_timeout = 80,
+    debounce = 500,  -- wrong field?
+    trigger_debounce_time = 500,
+  },
+  matching = {
+    disallow_fuzzy_matching = true,
+    disallow_fullfuzzy_matching = true,
+    disallow_partial_fuzzy_matching = true,
+    disallow_partial_matching = true,
+    disallow_prefix_unmatching = false,
+  },
 }
+
+vim.diagnostic.config({ virtual_text = false })
 
 -- Treesitter setup:
 require'nvim-treesitter.configs'.setup {

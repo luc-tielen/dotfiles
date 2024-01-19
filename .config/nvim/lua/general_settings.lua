@@ -141,6 +141,7 @@ vim.cmd [[au BufNewFile,BufRead *.dbscheme set filetype=yaml]]
 vim.cmd [[au BufNewFile,BufRead *.ll set filetype=llvm]]
 vim.cmd [[au BufNewFile,BufRead *.dl set filetype=souffle]]
 vim.cmd [[au BufNewFile,BufRead *.gdb set filetype=gdb]]
+vim.cmd [[au BufNewFile,BufRead *.qjs set filetype=javascript]]
 
 -- Indentation specific for certain files:
 u.create_augroup('fmt', {
@@ -189,6 +190,7 @@ opt.termguicolors = true
 opt.background = 'dark'
 -- Colorscheme
 vim.cmd 'colorscheme Base2Tone_EveningDark'
+-- vim.cmd 'colorscheme sitruuna'
 -- Better window separators combined with global statusline
 vim.cmd "highlight WinSeparator guibg=None"
 

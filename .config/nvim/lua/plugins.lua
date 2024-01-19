@@ -13,6 +13,7 @@ require('packer').startup(function(use)
   use 'lewis6991/impatient.nvim'
   -- Colorscheme:
   use 'atelierbram/Base2Tone-vim'
+  -- use 'eemed/sitruuna.vim'
   -- Statusline:
   use 'glepnir/galaxyline.nvim'
   -- LSP:
