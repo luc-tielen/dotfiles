@@ -142,6 +142,7 @@ vim.cmd [[au BufNewFile,BufRead *.ll set filetype=llvm]]
 vim.cmd [[au BufNewFile,BufRead *.dl set filetype=souffle]]
 vim.cmd [[au BufNewFile,BufRead *.gdb set filetype=gdb]]
 vim.cmd [[au BufNewFile,BufRead *.qjs set filetype=javascript]]
+vim.cmd [[au BufNewFile,BufRead *.mdx set filetype=markdown]]
 
 -- Indentation specific for certain files:
 u.create_augroup('fmt', {
@@ -153,6 +154,7 @@ u.create_augroup('fmt', {
   {'FileType', 'elm', 'set', 'ts=4', 'sw=4', 'sts=4'},
   {'FileType', 'css', 'set', 'ts=4', 'sw=4', 'sts=4'},
   {'FileType', 'scss', 'set', 'ts=4', 'sw=4', 'sts=4'},
+  {'FileType', 'astro', 'set', 'ts=2', 'sw=2', 'sts=2'},
 
   {'BufRead,BufNewFile', '*.md', 'setlocal', 'textwidth=80'},  -- max 80 chars for markdown files
   {'BufRead,BufNewFile', '*.wsdl', 'set', 'filetype=xml'},     -- Treat WSDL as XML

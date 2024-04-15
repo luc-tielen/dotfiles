@@ -1,15 +1,6 @@
 local lspconfig = require('lspconfig')
 local lsp_util = require("lspconfig.util")
 
-require('lspconfig.configs').eclair = {
-  default_config = {
-    cmd = { 'eclair', 'lsp' },
-    filetypes = { 'eclair' },
-    root_dir = lsp_util.find_git_ancestor,
-    single_file_support = true,
-  }
-}
-
 -- Set some less noisy defaults for diagnostics
 vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(
   vim.lsp.diagnostic.on_publish_diagnostics, {
@@ -101,25 +92,55 @@ null_ls.setup({
   end,
   sources = {
     --null_ls.builtins.formatting.stylua,
-    null_ls.builtins.formatting.prettierd,
-    null_ls.builtins.diagnostics.eslint_d,
-    null_ls.builtins.code_actions.eslint_d,
+    null_ls.builtins.formatting.prettierd.with({
+      filetypes = {
+        "javascript", "javascriptreact", "typescript", "typescriptreact",
+        "css", "scss", "html",
+        "json", "yaml", "markdown", "graphql"
+      }
+    }),
+    --null_ls.builtins.diagnostics.eslint_d,
+    --null_ls.builtins.code_actions.eslint_d,
     null_ls.builtins.formatting.mix,
     null_ls.builtins.formatting.rustfmt,
-    null_ls.builtins.formatting.clang_format,
+    --null_ls.builtins.formatting.clang_format,
   }
 })
 
 -- Enable LSP servers
+-- TODO fix LSP servers
 local servers = {
-  sumneko_lua = { Lua = { workspace = { checkThirdParty = false }, telemetry = { enable = false } } },
-  clangd = {},
+  lua_ls = { Lua = { workspace = { checkThirdParty = false }, telemetry = { enable = false } } },
+  -- clangd = {},
   rust_analyzer = {},
-  hls = { haskell = { formattingProvider = "fourmolu" } },
+  -- TODO fix hls = { haskell = { formattingProvider = "fourmolu" } },
   tsserver = {},
-  eclair = {},
-  -- gopls = {},
+  -- TODO turn tailwindcss lsp only on for following filetypes:
+  -- tailwindcss = {
+  --   filetypes = { "astro", "html", "mdx", "css", "javascriptreact", "typescriptreact" }
+  -- },
 }
+
+-- require('lspconfig.configs').eclair = {
+--   default_config = {
+--     cmd = { 'eclair', 'lsp' },
+--     filetypes = { 'eclair' },
+--     root_dir = lsp_util.find_git_ancestor,
+--     single_file_support = true,
+--   }
+-- }
+-- Eclair LSP is "special" because it is not available via Mason yet.
+require('lspconfig.configs').eclair = {
+  default_config = {
+    cmd = { '/home/luc/personal/eclair-lsp-server/dist/index.js', '--stdio' },
+    filetypes = { 'eclair' },
+    root_dir = lsp_util.find_git_ancestor,
+    single_file_support = true,
+  }
+}
+
+require('lspconfig').eclair.setup {}
+
 
 require('neodev').setup()
 require('mason').setup()
@@ -146,6 +167,10 @@ mason_lspconfig.setup_handlers {
 }
 
 -- nvim-cmp setup
+require("tailwindcss-colorizer-cmp").setup({ color_square_width = 2 })
+require("cmp").config.formatting = {
+  format = require("tailwindcss-colorizer-cmp").formatter
+}
 local cmp = require 'cmp'
 local compare = require('cmp').config.compare
 local luasnip = require 'luasnip'
@@ -220,8 +245,8 @@ vim.diagnostic.config({ virtual_text = false })
 -- Treesitter setup:
 require'nvim-treesitter.configs'.setup {
   ensure_installed = {
-    'lua', 'vim', 'help', 'c', 'cpp', 'go', 'python', 'rust',
-    'typescript', 'javascript'
+    'lua', 'vim', 'help', 'comment', 'c', 'cpp', 'go', 'python', 'rust', 'llvm',
+    'typescript', 'tsx', 'javascript', 'astro', 'prisma', 'haskell', 'bash', 'terraform'
   },
   highlight = { enable = true, disable = {} },
   indent = { enable = false, disable = { 'python' } },
@@ -260,7 +285,7 @@ parser_config.souffle = {
 
 parser_config.eclair = {
   install_info = {
-    url = "~/code/tree-sitter-eclair",
+    url = "~/personal/tree-sitter-eclair",
     files = {"src/parser.c"}
   }
 }
@@ -268,3 +293,8 @@ parser_config.eclair = {
 -- Make error messages an easier to read color (same as in statusline):
 vim.cmd [[highlight link LspDiagnosticsFloatingError GalaxyDiagnosticError]]
 vim.cmd [[highlight link LspDiagnosticsSignError GalaxyDiagnosticError]]
+
+-- Show document highlights
+vim.cmd [[highlight link LspReferenceText Visual]]
+vim.cmd [[highlight link LspReferenceRead Visual]]
+vim.cmd [[highlight link LspReferenceWrite Visual]]

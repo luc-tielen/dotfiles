@@ -36,7 +36,8 @@ require('packer').startup(function(use)
       'hrsh7th/cmp-path',
       'hrsh7th/cmp-buffer',
       'L3MON4D3/LuaSnip',
-      'saadparwaiz1/cmp_luasnip'
+      'saadparwaiz1/cmp_luasnip',
+      'roobert/tailwindcss-colorizer-cmp.nvim'
     }
   }
   -- Treesitter:
@@ -98,7 +99,8 @@ end
 
 -- Project.nvim:
 require("project_nvim").setup({
-  detection_methods = { "pattern", "lsp" },
+  detection_methods = { "pattern" },
+  -- detection_methods = { "pattern", "lsp" },
   patterns = { ".git", "_darcs", ".hg", ".bzr" },
 })
 
