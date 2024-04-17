@@ -143,6 +143,7 @@ vim.cmd [[au BufNewFile,BufRead *.dl set filetype=souffle]]
 vim.cmd [[au BufNewFile,BufRead *.gdb set filetype=gdb]]
 vim.cmd [[au BufNewFile,BufRead *.qjs set filetype=javascript]]
 vim.cmd [[au BufNewFile,BufRead *.mdx set filetype=markdown]]
+vim.cmd [[au BufNewFile,BufRead *.qjs set filetype=javascript]]
 
 -- Indentation specific for certain files:
 u.create_augroup('fmt', {
@@ -191,9 +192,6 @@ vim.cmd [[autocmd BufReadPost * if line("'\"") > 0 && line ("'\"") <= line("$") 
 opt.termguicolors = true
 -- Dark background
 opt.background = 'dark'
--- Colorscheme
-vim.cmd 'colorscheme Base2Tone_EveningDark'
--- vim.cmd 'colorscheme sitruuna'
 -- Better window separators combined with global statusline
 vim.cmd "highlight WinSeparator guibg=None"
 
@@ -209,6 +207,35 @@ vim.cmd 'set complete=.,w,b,u,t,k'
 
 -- Show multiple completions, manually select an item.
 opt.completeopt = {'menuone', 'noselect'}
+
+-- Set some less noisy defaults for diagnostics
+vim.diagnostic.config({ virtual_text = false })
+vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(
+  vim.lsp.diagnostic.on_publish_diagnostics, {
+    -- Enable underline, for errors only
+    underline = { severity_limit = "Error" },
+    -- Disable virtual text (too distracting)
+    virtual_text = false,
+    -- Enable signs
+    signs = true,
+    -- Show errors before warnings
+    severity_sort = true,
+  }
+)
+
+-- Jump directly to the first available definition, even if there's multiple results.
+vim.lsp.handlers["textDocument/definition"] = function(_, result)
+  if not result or vim.tbl_isempty(result) then
+    print "[LSP] Could not find definition."
+    return
+  end
+
+  if vim.tbl_islist(result) then
+    vim.lsp.util.jump_to_location(result[1], "utf-8")
+  else
+    vim.lsp.util.jump_to_location(result, "utf-8")
+  end
+end
 
 -- Enable mouse support:
 if vim.fn.has('mouse') == 1 then

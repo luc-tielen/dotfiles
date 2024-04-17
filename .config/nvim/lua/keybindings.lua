@@ -84,20 +84,6 @@ local function check_back_space()
   return col == 0 or vim.fn.getline('.'):sub(col, col):match('%s')
 end
 
--- Telescope bindings:
-vim.keymap.set('n', '<C-p>', ':Telescope find_files find_command=rg,--ignore,--hidden,--files<cr>', {noremap = true})
-vim.keymap.set('n', '<leader>p', ':Telescope projects<cr>', {noremap = true})
-vim.keymap.set('n', '<leader>g', ':Telescope live_grep<cr>', {noremap = true})
-vim.keymap.set('n', '<leader>*', '*#:Telescope grep_string<cr>', {noremap = true})
-vim.keymap.set('n', '<leader>b', ':Telescope git_branches<cr>', {noremap = true})
-vim.keymap.set('n', '<leader>d', ':Telescope diagnostics<cr>', {noremap = true})
-vim.keymap.set('n', '<leader>a', ':lua vim.lsp.buf.code_action()<cr>', {noremap = true})
---vim.keymap.set('n', '<leader>h', ':Telescope hoogle<cr>', {noremap = true})
-
--- git-messenger bindings:
--- Note: do 'gm' again to go into popup, list all actions using '?'
-vim.keymap.set('n', 'gm', ':GitMessenger<CR>', {noremap = true})
-
 -- Execute current line / file (only for Lua)
 vim.keymap.set('n', '<leader>x', ':lua execute_current_line()<cr>', {noremap = true})
 vim.keymap.set('n', '<leader>xf', ':lua execute_current_file()<cr>', {noremap = true})
