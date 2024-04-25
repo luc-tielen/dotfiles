@@ -417,6 +417,16 @@ require("lazy").setup({
 		},
 	},
 	"rhysd/committia.vim",
+	-- Projects / auto-cd to project root dir
+	{
+		"ahmedkhalf/project.nvim",
+		config = function()
+			require("project_nvim").setup({
+				detection_methods = { "pattern" }, -- { "pattern", "lsp" },
+				patterns = { ".git", "_darcs", ".hg", ".bzr" },
+			})
+		end,
+	},
 	-- Text manipulation:
 	"tpope/vim-surround",
 	{
@@ -429,13 +439,6 @@ require("lazy").setup({
 	"tpope/vim-sleuth", -- Detect tabstop and shiftwidth automatically:
 	-- Icons:
 	{ "kyazdani42/nvim-web-devicons", lazy = true },
-	-- Highlight todo, notes, etc in comments:
-	{
-		"folke/todo-comments.nvim",
-		event = "VimEnter",
-		dependencies = { "nvim-lua/plenary.nvim" },
-		opts = { signs = false },
-	},
 	-- Lisp REPL, directly in neovim
 	{
 		"Olical/conjure",
