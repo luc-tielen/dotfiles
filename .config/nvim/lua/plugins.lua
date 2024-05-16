@@ -112,6 +112,7 @@ require("lazy").setup({
 				--   filetypes = { "astro", "html", "mdx", "css", "javascriptreact", "typescriptreact" }
 				-- },
 				pyright = {},
+				-- ruff_lsp = {},
 			}
 
 			-- require('lspconfig.configs').eclair = {
@@ -184,7 +185,9 @@ require("lazy").setup({
 				python = { "isort", "black" },
 				-- You can use a sub-list to tell conform to run *until* a formatter is found.
 				javascript = { { "prettierd", "prettier" } },
+				javascriptreact = { { "prettierd", "prettier" } },
 				typescript = { { "prettierd", "prettier" } },
+				typescriptreact = { { "prettierd", "prettier" } },
 			},
 		},
 	},
