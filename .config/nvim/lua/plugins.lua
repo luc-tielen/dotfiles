@@ -106,7 +106,9 @@ require("lazy").setup({
 				-- clangd = {},
 				rust_analyzer = {},
 				-- TODO fix hls = { haskell = { formattingProvider = "fourmolu" } },
-				tsserver = {},
+				tsserver = {
+					root_dir = require("lspconfig.util").root_pattern("package.json"),
+				},
 				-- TODO turn tailwindcss lsp only on for following filetypes:
 				-- tailwindcss = {
 				--   filetypes = { "astro", "html", "mdx", "css", "javascriptreact", "typescriptreact" }
