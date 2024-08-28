@@ -112,7 +112,6 @@ require("lazy").setup({
 				--   filetypes = { "astro", "html", "mdx", "css", "javascriptreact", "typescriptreact" }
 				-- },
 				pyright = {},
-				-- ruff_lsp = {},
 			}
 
 			-- require('lspconfig.configs').eclair = {
