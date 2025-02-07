@@ -156,6 +156,7 @@ u.create_augroup('fmt', {
 
   {'BufRead,BufNewFile', '*.md', 'setlocal', 'textwidth=80'},  -- max 80 chars for markdown files
   {'BufRead,BufNewFile', '*.wsdl', 'set', 'filetype=xml'},     -- Treat WSDL as XML
+  {'BufRead,BufNewFile', '*.tfvars', 'set', 'filetype=terraform'}, -- Also use terraform syntax for .tfvars
 })
 -- TODO fix formatoptions: reset after each new buffer
 opt.formatoptions = opt.formatoptions
