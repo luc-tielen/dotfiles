@@ -106,9 +106,9 @@ require("lazy").setup({
 				-- clangd = {},
 				rust_analyzer = {},
 				-- TODO fix hls = { haskell = { formattingProvider = "fourmolu" } },
-				tsserver = {
-					root_dir = require("lspconfig.util").root_pattern("package.json"),
-				},
+				-- tsserver = {
+				-- 	root_dir = require("lspconfig.util").root_pattern("package.json"),
+				-- },
 				-- TODO turn tailwindcss lsp only on for following filetypes:
 				-- tailwindcss = {
 				--   filetypes = { "astro", "html", "mdx", "css", "javascriptreact", "typescriptreact" }
@@ -412,13 +412,20 @@ require("lazy").setup({
 		"lewis6991/gitsigns.nvim",
 		opts = {
 			signs = {
-				add = { hl = "GitGutterAdd", text = "|" },
-				change = { hl = "GitGutterChange", text = "|" },
-				delete = { hl = "GitGutterDelete", text = "|" },
-				topdelete = { hl = "GitGutterDelete", text = "|" },
-				changedelete = { hl = "GitGutterChange", text = "|" },
+				add = { text = "|" },
+				change = { text = "|" },
+				delete = { text = "|" },
+				topdelete = { text = "|" },
+				changedelete = { text = "|" },
 			},
 		},
+		config = function()
+			vim.api.nvim_set_hl(0, "GitSignsAdd", { link = "GitGutterAdd" })
+			vim.api.nvim_set_hl(0, "GitSignsChange", { link = "GitGutterChange" })
+			vim.api.nvim_set_hl(0, "GitSignsChangedelete", { link = "GitGutterChange" })
+			vim.api.nvim_set_hl(0, "GitSignsTopdelete", { link = "GitGutterDelete" })
+			vim.api.nvim_set_hl(0, "GitSignsDelete", { link = "GitGutterDelete" })
+		end,
 	},
 	"rhysd/committia.vim",
 	-- Projects / auto-cd to project root dir
