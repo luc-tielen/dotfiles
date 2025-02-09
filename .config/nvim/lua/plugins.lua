@@ -224,6 +224,9 @@ require("lazy").setup({
 						select = true,
 					}),
 					["<Tab>"] = cmp.mapping(function(fallback)
+						-- if require("copilot.suggestion").is_visible() then
+						-- 	require("copilot.suggestion").accept()
+						-- elseif cmp.visible() then
 						if cmp.visible() then
 							cmp.select_next_item()
 						elseif luasnip.expand_or_jumpable() then
@@ -481,6 +484,38 @@ require("lazy").setup({
 		init = function()
 			-- Set configuration options here
 			vim.g["conjure#debug"] = true
+		end,
+	},
+	{
+		"zbirenbaum/copilot.lua",
+		cmd = "Copilot",
+		event = "InsertEnter",
+		config = function()
+			require("copilot").setup({
+				suggestion = {
+					auto_trigger = false, -- to avoid some issues while plugin is not loaded yet
+					keymap = {
+						accept = "<leader><Tab>",
+					},
+				},
+			})
+
+			-- toggle auto_trigger after 1s upon entering insert mode
+			vim.api.nvim_create_autocmd("InsertEnter", {
+				callback = function()
+					vim.defer_fn(function()
+						require("copilot.suggestion").toggle_auto_trigger()
+					end, 1000)
+				end,
+				once = true,
+			})
+
+			vim.api.nvim_set_keymap(
+				"n",
+				"<leader>c",
+				[[<cmd>Copilot toggle<CR><cmd>Copilot status<CR>]],
+				{ noremap = true, silent = true }
+			)
 		end,
 	},
 })
