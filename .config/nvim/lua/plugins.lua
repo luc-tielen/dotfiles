@@ -224,9 +224,6 @@ require("lazy").setup({
 						select = true,
 					}),
 					["<Tab>"] = cmp.mapping(function(fallback)
-						-- if require("copilot.suggestion").is_visible() then
-						-- 	require("copilot.suggestion").accept()
-						-- elseif cmp.visible() then
 						if cmp.visible() then
 							cmp.select_next_item()
 						elseif luasnip.expand_or_jumpable() then
@@ -238,14 +235,15 @@ require("lazy").setup({
 					["<S-Tab>"] = cmp.mapping(function(fallback)
 						if cmp.visible() then
 							cmp.select_prev_item()
-						elseif luasnip.jumpable(-1) then
-							luasnip.jump(-1)
+						-- elseif luasnip.jumpable(-1) then
+						-- 	luasnip.jump(-1)
 						else
 							fallback()
 						end
 					end, { "i", "s" }),
 				}),
 				sources = cmp.config.sources({
+					{ name = "copilot", group_index = 1 },
 					{ name = "nvim_lsp", keyword_length = 2, group_index = 1, max_item_count = 30 },
 					-- { name = 'buffer', keyword_length = 4 },  -- disabled, too spammy / got in the way
 					{ name = "path" },
@@ -487,28 +485,10 @@ require("lazy").setup({
 		end,
 	},
 	{
-		"zbirenbaum/copilot.lua",
-		cmd = "Copilot",
+		"zbirenbaum/copilot-cmp",
 		event = "InsertEnter",
 		config = function()
-			require("copilot").setup({
-				suggestion = {
-					auto_trigger = false, -- to avoid some issues while plugin is not loaded yet
-					keymap = {
-						accept = "<leader><Tab>",
-					},
-				},
-			})
-
-			-- toggle auto_trigger after 1s upon entering insert mode
-			vim.api.nvim_create_autocmd("InsertEnter", {
-				callback = function()
-					vim.defer_fn(function()
-						require("copilot.suggestion").toggle_auto_trigger()
-					end, 1000)
-				end,
-				once = true,
-			})
+			require("copilot_cmp").setup()
 
 			vim.api.nvim_set_keymap(
 				"n",
@@ -517,5 +497,15 @@ require("lazy").setup({
 				{ noremap = true, silent = true }
 			)
 		end,
+		dependencies = {
+			"zbirenbaum/copilot.lua",
+			cmd = "Copilot",
+			config = function()
+				require("copilot").setup({
+					suggestion = { enabled = false },
+					panel = { enabled = false },
+				})
+			end,
+		},
 	},
 })
