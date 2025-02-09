@@ -113,7 +113,7 @@ require("lazy").setup({
 				-- tailwindcss = {
 				--   filetypes = { "astro", "html", "mdx", "css", "javascriptreact", "typescriptreact" }
 				-- },
-				pyright = {},
+				-- pyright = {},
 			}
 
 			-- require('lspconfig.configs').eclair = {
