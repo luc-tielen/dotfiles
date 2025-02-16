@@ -485,10 +485,29 @@ require("lazy").setup({
 		end,
 	},
 	{
-		"zbirenbaum/copilot-cmp",
+		"zbirenbaum/copilot.lua",
+		cmd = "Copilot",
+		build = ":Copilot auth",
 		event = "InsertEnter",
 		config = function()
-			require("copilot_cmp").setup()
+			require("copilot").setup({
+				suggestion = {
+					auto_trigger = false, -- to avoid some issues while plugin is not loaded yet
+					keymap = {
+						accept = "<leader><Tab>",
+					},
+				},
+			})
+
+			-- toggle auto_trigger after 1s upon entering insert mode
+			vim.api.nvim_create_autocmd("InsertEnter", {
+				callback = function()
+					vim.defer_fn(function()
+						require("copilot.suggestion").toggle_auto_trigger()
+					end, 1000)
+				end,
+				once = true,
+			})
 
 			vim.api.nvim_set_keymap(
 				"n",
@@ -497,15 +516,5 @@ require("lazy").setup({
 				{ noremap = true, silent = true }
 			)
 		end,
-		dependencies = {
-			"zbirenbaum/copilot.lua",
-			cmd = "Copilot",
-			config = function()
-				require("copilot").setup({
-					suggestion = { enabled = false },
-					panel = { enabled = false },
-				})
-			end,
-		},
 	},
 })
