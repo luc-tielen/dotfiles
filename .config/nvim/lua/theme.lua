@@ -12,3 +12,6 @@ vim.cmd("highlight clear CursorLine")
 vim.cmd("highlight CursorLineNr guifg=#DDDD00")
 vim.cmd("highlight LineNr guifg=#888888")
 vim.cmd("highlight SignColumn guibg=#0F1419")
+
+-- Better color in autocomplete menu
+vim.cmd("highlight PmenuSel  ctermfg=0 ctermbg=11 guifg=NvimDarkGrey1 guibg=NvimLightYellow")
