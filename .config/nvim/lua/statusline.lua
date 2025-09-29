@@ -57,7 +57,7 @@ local sep = {
 -- Look up unicode values here: https://github.com/just3ws/nerd-font-cheatsheets
 local icons = {
 	locker = u("f023"),
-	unsaved = u("f693"),
+	unsaved = u("f444"),
 	lsp_warn = u("f071"),
 	lsp_error = u("f00d"),
 	git = u("e725"),
