@@ -109,6 +109,30 @@ require("lazy").setup({
 				-- tsserver = {
 				-- 	root_dir = require("lspconfig.util").root_pattern("package.json"),
 				-- },
+				ts_ls = {
+					root_dir = require("lspconfig.util").root_pattern("tsconfig.json", "package.json", ".git"),
+					init_options = {
+						preferences = {
+							importModuleSpecifierPreference = "non-relative",
+							importModuleSpecifierEnding = "auto",
+						},
+					},
+					settings = {
+						typescript = {
+							preferences = {
+								importModuleSpecifierPreference = "non-relative",
+								importModuleSpecifierEnding = "auto",
+							},
+						},
+						javascript = {
+							preferences = {
+								importModuleSpecifierPreference = "non-relative",
+								importModuleSpecifierEnding = "auto",
+							},
+						},
+					},
+					single_file_support = false,
+				},
 				tailwindcss = {
 					filetypes = { "astro", "html", "mdx", "css", "javascriptreact", "typescriptreact" },
 				},
@@ -145,6 +169,8 @@ require("lazy").setup({
 			require("mason-tool-installer").setup({ ensure_installed = ensure_installed })
 
 			require("mason-lspconfig").setup({
+				ensure_installed = { "ts_ls", "lua_ls" },
+				automatic_installation = true,
 				handlers = {
 					function(server_name)
 						local server = servers[server_name] or {}
