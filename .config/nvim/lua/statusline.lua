@@ -128,7 +128,7 @@ gls.right = {
 			provider = function()
 				local connected = not vim.tbl_isempty(vim.lsp.get_clients())
 				if connected then
-					return " " .. u("f0e7") .. " "
+					return "" .. u("f0e7") .. " "
 				else
 					return ""
 				end

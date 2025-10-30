@@ -146,29 +146,34 @@ vim.cmd([[au BufNewFile,BufRead *.qjs set filetype=javascript]])
 
 -- Indentation specific for certain files:
 u.create_augroup("fmt", {
-	{ "FileType",           "mkd",      "set",      "ts=4",              "sw=4", "sts=4", "noet" }, -- Makefile: tab = 4 wide (no spaces)
+	{ "FileType", "mkd", "set", "ts=4", "sw=4", "sts=4", "noet" }, -- Makefile: tab = 4 wide (no spaces)
 	-- Python, C, C++, Elm, css, scss: tab = 4 spaces
-	{ "FileType",           "python",   "set",      "ts=4",              "sw=4", "sts=4" },
-	{ "FileType",           "c",        "set",      "ts=4",              "sw=4", "sts=4" },
-	{ "FileType",           "cpp",      "set",      "ts=4",              "sw=4", "sts=4" },
-	{ "FileType",           "elm",      "set",      "ts=4",              "sw=4", "sts=4" },
-	{ "FileType",           "css",      "set",      "ts=4",              "sw=4", "sts=4" },
-	{ "FileType",           "scss",     "set",      "ts=4",              "sw=4", "sts=4" },
-	{ "FileType",           "astro",    "set",      "ts=2",              "sw=2", "sts=2" },
-	{ "BufRead,BufNewFile", "*.md",     "setlocal", "textwidth=80" }, -- max 80 chars for markdown files
-	{ "BufRead,BufNewFile", "*.wsdl",   "set",      "filetype=xml" }, -- Treat WSDL as XML
-	{ 'BufRead,BufNewFile', '*.tfvars', 'set',      'filetype=terraform' }, -- Also use terraform syntax for .tfvars
+	{ "FileType", "python", "set", "ts=4", "sw=4", "sts=4" },
+	{ "FileType", "c", "set", "ts=4", "sw=4", "sts=4" },
+	{ "FileType", "cpp", "set", "ts=4", "sw=4", "sts=4" },
+	{ "FileType", "elm", "set", "ts=4", "sw=4", "sts=4" },
+	{ "FileType", "css", "set", "ts=4", "sw=4", "sts=4" },
+	{ "FileType", "scss", "set", "ts=4", "sw=4", "sts=4" },
+	{ "FileType", "astro", "set", "ts=2", "sw=2", "sts=2" },
+	{ "FileType", "javascript", "set", "ts=4", "sw=4", "sts=4" },
+	{ "FileType", "typescript", "set", "ts=4", "sw=4", "sts=4" },
+	{ "FileType", "javascriptreact", "set", "ts=4", "sw=4", "sts=4" },
+	{ "FileType", "typescriptreact", "set", "ts=4", "sw=4", "sts=4" },
+	{ "BufRead,BufNewFile", "*.md", "setlocal", "textwidth=80" }, -- max 80 chars for markdown files
+	{ "BufRead,BufNewFile", "*.wsdl", "set", "filetype=xml" }, -- Treat WSDL as XML
+	{ "BufRead,BufNewFile", "*.tfvars", "set", "filetype=terraform" }, -- Also use terraform syntax for .tfvars
 })
+
 -- TODO fix formatoptions: reset after each new buffer
 opt.formatoptions = opt.formatoptions
-    + "q" -- Allow formatting comments w/ gq
-    + "j" -- Auto-remove comments if possible.
-    + "n" -- Auto-indent text in numbered lists.
-    - "a" -- Don't autoformat paragraphs
-    - "t" -- Don't auto wrap text (code)
-    - "c" -- Dont'add comments on next line automatically.
-    - "r" -- Don't continue comments when pressing enter.
-    - "o" -- O and o don't continue comments
+	+ "q" -- Allow formatting comments w/ gq
+	+ "j" -- Auto-remove comments if possible.
+	+ "n" -- Auto-indent text in numbered lists.
+	- "a" -- Don't autoformat paragraphs
+	- "t" -- Don't auto wrap text (code)
+	- "c" -- Dont'add comments on next line automatically.
+	- "r" -- Don't continue comments when pressing enter.
+	- "o" -- O and o don't continue comments
 
 strip_trailing_whitespace = function()
 	local pos = vim.api.nvim_win_get_cursor(0)
@@ -178,7 +183,7 @@ end
 
 u.create_augroup("opening", {
 	-- Center buffer around cursor when opening files:
-	{ "BufRead",     "*", "normal",                         "zz" },
+	{ "BufRead", "*", "normal", "zz" },
 	-- Deletes trailing whitespace before writing a buffer:
 	{ "BufWritePre", "*", "lua strip_trailing_whitespace()" },
 })

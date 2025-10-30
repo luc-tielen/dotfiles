@@ -109,11 +109,11 @@ require("lazy").setup({
 				-- tsserver = {
 				-- 	root_dir = require("lspconfig.util").root_pattern("package.json"),
 				-- },
-				-- TODO turn tailwindcss lsp only on for following filetypes:
-				-- tailwindcss = {
-				--   filetypes = { "astro", "html", "mdx", "css", "javascriptreact", "typescriptreact" }
-				-- },
+				tailwindcss = {
+					filetypes = { "astro", "html", "mdx", "css", "javascriptreact", "typescriptreact" },
+				},
 				-- pyright = {},
+				-- "eslint-lsp" = {}
 			}
 
 			-- require('lspconfig.configs').eclair = {
@@ -185,10 +185,49 @@ require("lazy").setup({
 				-- Conform can also run multiple formatters sequentially
 				python = { "isort", "black" },
 				-- You can use a sub-list to tell conform to run *until* a formatter is found.
-				javascript = { { "prettierd", "prettier" } },
-				javascriptreact = { { "prettierd", "prettier" } },
-				typescript = { { "prettierd", "prettier" } },
-				typescriptreact = { { "prettierd", "prettier" } },
+				javascript = { "pkg_prettier", "prettierd", "prettier", stop_after_first = true },
+				javascriptreact = { "pkg_prettier", "prettierd", "prettier", stop_after_first = true },
+				typescript = { "pkg_prettier", "prettierd", "prettier", stop_after_first = true },
+				typescriptreact = { "pkg_prettier", "prettierd", "prettier", stop_after_first = true },
+			},
+			formatters = {
+				pkg_prettier = function(bufnr)
+					local find_prettier_in_project = function()
+						local buf_path = vim.api.nvim_buf_get_name(bufnr)
+						local dir = vim.fn.fnamemodify(buf_path, ":h")
+
+						-- Walk up until we find a package.json
+						while dir ~= "/" do
+							if vim.fn.filereadable(dir .. "/package.json") == 1 then
+								local prettier_path = dir .. "/node_modules/.bin/prettier"
+								if vim.fn.executable(prettier_path) == 1 then
+									return prettier_path
+								end
+							end
+							dir = vim.fn.fnamemodify(dir, ":h") -- go one level up
+						end
+
+						-- fallback to cwd
+						local fallback = vim.fn.getcwd() .. "/node_modules/.bin/prettier"
+						if vim.fn.executable(fallback) == 1 then
+							return fallback
+						end
+
+						return "prettier" -- last resort, global
+					end
+
+					local prettier_exe = find_prettier_in_project()
+					if vim.fn.executable(prettier_exe) == 0 then
+						return nil
+					end
+
+					return {
+						command = prettier_exe,
+						args = { "--stdin-filepath", "$FILENAME" },
+						stdin = true,
+						cwd = require("conform.util").root_file({ "package.json" }),
+					}
+				end,
 			},
 		},
 	},
