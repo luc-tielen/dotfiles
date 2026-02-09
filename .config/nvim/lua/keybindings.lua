@@ -42,13 +42,19 @@ vim.keymap.set("", "<C-h>", "<C-w><left>", { noremap = true })
 vim.keymap.set("", "<C-j>", "<C-w><down>", { noremap = true })
 vim.keymap.set("", "<C-k>", "<C-w><up>", { noremap = true })
 vim.keymap.set("", "<C-l>", "<C-w><right>", { noremap = true })
+-- Allow Ctrl-h/j/k/l to navigate windows from terminal buffers (ClaudeCode)
+vim.keymap.set("t", "<C-h>", [[<C-\><C-n><C-w>h]], { noremap = true, silent = true })
+vim.keymap.set("t", "<C-j>", [[<C-\><C-n><C-w>j]], { noremap = true, silent = true })
+vim.keymap.set("t", "<C-k>", [[<C-\><C-n><C-w>k]], { noremap = true, silent = true })
+vim.keymap.set("t", "<C-l>", [[<C-\><C-n><C-w>l]], { noremap = true, silent = true })
 
 -- No need for ex mode
 vim.keymap.set("n", "Q", "<nop>", { noremap = true })
 
 -- Neovim terminal mapping
 -- terminal 'normal mode'
-vim.keymap.set("t", "<esc>", "<c-\\><c-n><esc><cr>")
+-- vim.keymap.set("t", "<esc>", "<c-\\><c-n><esc><cr>")
+vim.keymap.set("t", "<esc>", "<C-\\><C-n>", { noremap = true, silent = true })
 
 -- Copy to OSX clipboard (only enable on OSX)
 if vim.fn.has("macunix") == "1" then
