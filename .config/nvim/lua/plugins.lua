@@ -574,12 +574,49 @@ require("lazy").setup({
 				once = true,
 			})
 
-			vim.api.nvim_set_keymap(
-				"n",
-				"<leader>c",
-				[[<cmd>Copilot toggle<CR><cmd>Copilot status<CR>]],
-				{ noremap = true, silent = true }
-			)
+			-- vim.api.nvim_set_keymap(
+			-- 	"n",
+			-- 	"<leader>c",
+			-- 	[[<cmd>Copilot toggle<CR><cmd>Copilot status<CR>]],
+			-- 	{ noremap = true, silent = true }
+			-- )
 		end,
+	},
+	{
+		"coder/claudecode.nvim",
+		dependencies = { "folke/snacks.nvim" },
+		config = true,
+		keys = {
+			{ "<leader>C", "<cmd>ClaudeCode<cr>", desc = "Toggle Claude" },
+			-- { "<leader>cf", "<cmd>ClaudeCodeFocus<cr>", desc = "Focus Claude" },
+			-- { "<leader>cr", "<cmd>ClaudeCode --resume<cr>", desc = "Resume Claude" },
+			-- { "<leader>cC", "<cmd>ClaudeCode --continue<cr>", desc = "Continue Claude" },
+			{ "<leader>cm", "<cmd>ClaudeCodeSelectModel<cr>", desc = "Select Claude model" },
+			{ "<leader>cb", "<cmd>ClaudeCodeAdd %<cr>", desc = "Add current buffer" },
+			{ "<leader>s", "<cmd>ClaudeCodeSend<cr>", mode = "v", desc = "Send to Claude" },
+			{
+				"<leader>s",
+				"<cmd>ClaudeCodeTreeAdd<cr>",
+				desc = "Add file",
+				ft = { "NvimTree", "neo-tree", "oil", "minifiles", "netrw" },
+			},
+			{ "<leader>cs", "<cmd>ClaudeCodeSend<cr>", mode = "v", desc = "Send to Claude" },
+			{
+				"<leader>cs",
+				"<cmd>ClaudeCodeTreeAdd<cr>",
+				desc = "Add file",
+				ft = { "NvimTree", "neo-tree", "oil", "minifiles", "netrw" },
+			},
+			{
+				"<leader>s",
+				"V<leader>cs",
+				desc = "Send current line to Claude",
+				mode = "n",
+				remap = true,
+			},
+			-- Diff management
+			{ "<leader>ca", "<cmd>ClaudeCodeDiffAccept<cr>", desc = "Accept diff" },
+			{ "<leader>cd", "<cmd>ClaudeCodeDiffDeny<cr>", desc = "Deny diff" },
+		},
 	},
 })
