@@ -593,14 +593,34 @@ require("lazy").setup({
 			-- { "<leader>cC", "<cmd>ClaudeCode --continue<cr>", desc = "Continue Claude" },
 			{ "<leader>cm", "<cmd>ClaudeCodeSelectModel<cr>", desc = "Select Claude model" },
 			{ "<leader>cb", "<cmd>ClaudeCodeAdd %<cr>", desc = "Add current buffer" },
-			{ "<leader>s", "<cmd>ClaudeCodeSend<cr>", mode = "v", desc = "Send to Claude" },
+			{
+			"<leader>s",
+			function()
+				vim.cmd("ClaudeCodeSend")
+				vim.defer_fn(function()
+					vim.cmd("ClaudeCodeFocus")
+				end, 100)
+			end,
+			mode = "v",
+			desc = "Send to Claude",
+		},
 			{
 				"<leader>s",
 				"<cmd>ClaudeCodeTreeAdd<cr>",
 				desc = "Add file",
 				ft = { "NvimTree", "neo-tree", "oil", "minifiles", "netrw" },
 			},
-			{ "<leader>cs", "<cmd>ClaudeCodeSend<cr>", mode = "v", desc = "Send to Claude" },
+			{
+			"<leader>cs",
+			function()
+				vim.cmd("ClaudeCodeSend")
+				vim.defer_fn(function()
+					vim.cmd("ClaudeCodeFocus")
+				end, 100)
+			end,
+			mode = "v",
+			desc = "Send to Claude",
+		},
 			{
 				"<leader>cs",
 				"<cmd>ClaudeCodeTreeAdd<cr>",
