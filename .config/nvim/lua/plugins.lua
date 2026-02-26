@@ -308,7 +308,6 @@ require("lazy").setup({
 					end, { "i", "s" }),
 				}),
 				sources = cmp.config.sources({
-					{ name = "copilot", group_index = 1 },
 					{ name = "nvim_lsp", keyword_length = 2, group_index = 1, max_item_count = 30 },
 					-- { name = 'buffer', keyword_length = 4 },  -- disabled, too spammy / got in the way
 					{ name = "path" },
@@ -550,39 +549,6 @@ require("lazy").setup({
 		end,
 	},
 	{
-		"zbirenbaum/copilot.lua",
-		cmd = "Copilot",
-		build = ":Copilot auth",
-		event = "InsertEnter",
-		config = function()
-			require("copilot").setup({
-				suggestion = {
-					auto_trigger = false, -- to avoid some issues while plugin is not loaded yet
-					keymap = {
-						accept = "<leader><Tab>",
-					},
-				},
-			})
-
-			-- toggle auto_trigger after 1s upon entering insert mode
-			vim.api.nvim_create_autocmd("InsertEnter", {
-				callback = function()
-					vim.defer_fn(function()
-						require("copilot.suggestion").toggle_auto_trigger()
-					end, 1000)
-				end,
-				once = true,
-			})
-
-			-- vim.api.nvim_set_keymap(
-			-- 	"n",
-			-- 	"<leader>c",
-			-- 	[[<cmd>Copilot toggle<CR><cmd>Copilot status<CR>]],
-			-- 	{ noremap = true, silent = true }
-			-- )
-		end,
-	},
-	{
 		"coder/claudecode.nvim",
 		dependencies = { "folke/snacks.nvim" },
 		config = true,
@@ -594,16 +560,16 @@ require("lazy").setup({
 			{ "<leader>cm", "<cmd>ClaudeCodeSelectModel<cr>", desc = "Select Claude model" },
 			{ "<leader>cb", "<cmd>ClaudeCodeAdd %<cr>", desc = "Add current buffer" },
 			{
-			"<leader>s",
-			function()
-				vim.cmd("ClaudeCodeSend")
-				vim.defer_fn(function()
-					vim.cmd("ClaudeCodeFocus")
-				end, 100)
-			end,
-			mode = "v",
-			desc = "Send to Claude",
-		},
+				"<leader>s",
+				function()
+					vim.cmd("ClaudeCodeSend")
+					vim.defer_fn(function()
+						vim.cmd("ClaudeCodeFocus")
+					end, 100)
+				end,
+				mode = "v",
+				desc = "Send to Claude",
+			},
 			{
 				"<leader>s",
 				"<cmd>ClaudeCodeTreeAdd<cr>",
@@ -611,16 +577,16 @@ require("lazy").setup({
 				ft = { "NvimTree", "neo-tree", "oil", "minifiles", "netrw" },
 			},
 			{
-			"<leader>cs",
-			function()
-				vim.cmd("ClaudeCodeSend")
-				vim.defer_fn(function()
-					vim.cmd("ClaudeCodeFocus")
-				end, 100)
-			end,
-			mode = "v",
-			desc = "Send to Claude",
-		},
+				"<leader>cs",
+				function()
+					vim.cmd("ClaudeCodeSend")
+					vim.defer_fn(function()
+						vim.cmd("ClaudeCodeFocus")
+					end, 100)
+				end,
+				mode = "v",
+				desc = "Send to Claude",
+			},
 			{
 				"<leader>cs",
 				"<cmd>ClaudeCodeTreeAdd<cr>",
