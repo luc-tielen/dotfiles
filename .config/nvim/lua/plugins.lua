@@ -368,6 +368,7 @@ require("lazy").setup({
 				"haskell",
 				"bash",
 				"terraform",
+				"just",
 			},
 			auto_install = true,
 			highlight = { enable = true, disable = {} },
